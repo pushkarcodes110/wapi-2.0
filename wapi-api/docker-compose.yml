@@ -1,0 +1,82 @@
+services:
+  api:
+    build:
+      context: ./wapi-api
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - mongo
+      - redis
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+
+      MONGO_URI: mongodb://wapi:${MONGO_PASSWORD}@mongo:27017/wapi?authSource=admin
+      MONGODB_URI: mongodb://wapi:${MONGO_PASSWORD}@mongo:27017/wapi?authSource=admin
+
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ""
+      REDIS_URL: redis://redis:6379
+
+      JWT_SECRET: ${JWT_SECRET}
+      SESSION_SECRET: ${SESSION_SECRET}
+
+      APP_URL: https://api.yourdomain.com
+      APP_FRONTEND_URL: https://app.yourdomain.com
+      FRONTEND_URL: https://app.yourdomain.com
+      ALLOWED_ORIGINS: https://app.yourdomain.com,https://admin.yourdomain.com
+
+      ADMIN_NAME: ${ADMIN_NAME}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+
+      WHATSAPP_VERIFY_TOKEN: ${WHATSAPP_VERIFY_TOKEN}
+
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASS: ${SMTP_PASS}
+      MAIL_FROM_NAME: ${MAIL_FROM_NAME}
+      MAIL_FROM_EMAIL: ${MAIL_FROM_EMAIL}
+      SUPPORT_EMAIL: ${SUPPORT_EMAIL}
+
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+      STRIPE_PUBLISHABLE_KEY: ${STRIPE_PUBLISHABLE_KEY}
+
+      RAZORPAY_KEY_ID: ${RAZORPAY_KEY_ID}
+      RAZORPAY_KEY_SECRET: ${RAZORPAY_KEY_SECRET}
+      RAZORPAY_WEBHOOK_SECRET: ${RAZORPAY_WEBHOOK_SECRET}
+
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      GOOGLE_REDIRECT_URI: https://api.yourdomain.com/api/google/callback
+
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      MAINTENANCE_MODE: "false"
+    volumes:
+      - wapi_uploads:/app/uploads
+      - wapi_storage:/app/storage
+
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: wapi
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - wapi_mongo:/data/db
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - wapi_redis:/data
+
+volumes:
+  wapi_uploads:
+  wapi_storage:
+  wapi_mongo:
+  wapi_redis:
