@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Chat Inbox - Wapi documentation</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Wapi - WhatsApp Marketing & Automation Platform - Complete SaaS Solution for Business Communication" />
+  <meta name="keywords"
+    content="Wapi, WhatsApp Marketing, Business Automation, SaaS Platform, Customer Communication, Chatbot, Broadcast Messaging" />
+  <meta name="author" content="pixelstrap" />
+  <link rel="icon" href="assets/images/favicon.svg" type="image/x-icon" />
+  <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/x-icon" />
+  <!-- Google font-->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <!-- Font Awesome-->
+  <link rel="stylesheet" type="text/css" href="assets/css/fontawesome.css" />
+  <!-- Feather icon-->
+  <link rel="stylesheet" type="text/css" href="assets/css/vendors/feather-icon.css" />
+  <!-- Remix icon-->
+  <link rel="stylesheet" type="text/css" href="assets/css/vendors/remixicon.css" />
+  <!-- Remix icon-->
+  <link rel="stylesheet" type="text/css" href="assets/css/vendors/remixicon.css" />
+  <!-- animate-->
+  <link rel="stylesheet" type="text/css" href="assets/css/vendors/animate.css" />
+  <!-- Bootstrap css-->
+  <link rel="stylesheet" type="text/css" href="assets/css/vendors/bootstrap.css" />
+  <!-- App css-->
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+  <!-- Global Search css-->
+  <link rel="stylesheet" type="text/css" href="assets/css/global-search.css" />
+  <!-- Custom Documentation css-->
+  <link rel="stylesheet" type="text/css" href="assets/css/docs-custom.css" />
+</head>
+
+<body>
+  <!-- tap on top starts-->
+  <a href="javascript:void(0)" class="sidebar-overlay"></a>
+  <div class="tap-top">
+    <i data-feather="chevrons-up"></i>
+    <p>Top</p>
+
+  </div>
+  <!-- tap on tap ends-->
+  <div>
+    <div class="home-section">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container custom-container">
+          <div class="main-menu">
+            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+              aria-label="Toggle navigation">
+              <i class="fa fa-bars"> </i>
+            </button>
+            <a class="navbar-brand" href="index.html">
+              <img src="assets/images/logo/logo.svg" alt="WAPI - WhatsApp Marketing Platform" /></a>
+            <div>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav menu">
+                  <li class="nav-item">
+                    <a class="nav-link"
+                      href="https://codecanyon.net/item/wapi-whatsapp-marketing-automation-platform-saas-solution/60857765"
+                      role="button" aria-haspopup="true" aria-expanded="false" target="_blank">Purchase</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="https://support.pixelstrap.com/" role="button" aria-haspopup="true"
+                      aria-expanded="false" target="_blank">Support</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="https://wapi-frontend.vercel.app/" role="button" aria-haspopup="true"
+                      aria-expanded="false" target="_blank">Frontend</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="https://wapi-admin.vercel.app/" role="button" aria-haspopup="true"
+                      aria-expanded="false" target="_blank">Admin
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <ul class="nav-right">
+              <li>
+                <div class="btn-group">
+                  <a class="decrease btn btn-doc" href="#" title="Decrease font size">A-</a><a class="reset btn btn-doc"
+                    href="#" title="Default font size">A</a><a class="increase btn btn-doc" href="#"
+                    title="Increase font size">A+</a>
+                </div>
+              </li>
+              <li>
+                <a class="btn btn-light mode" href="#" title="Dark"><i class="fa fa-moon-o"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="container custom-container">
+        <div class="document">Wapi documentation</div>
+        <div class="top-heading">
+          <h2>Chat Inbox Overview</h2>
+          <div class="home-search">
+            <input type="search" name="text" placeholder="Search..." />
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container custom-container" id="mainRightNavbar">
+    <div class="document-main">
+      <div class="left-sidebar">
+        <div class="card">
+          <div class="card-body">
+            <aside>
+              <button class="btn button-close">
+                <span>Close</span>
+                <i data-feather="x"></i>
+              </button>
+              <ul class="list-unstyled nav-sidebar doc-nav">
+                <li class="nav-item">
+                  <div class="title">
+                    <a class="nav-link" href="index.html">Introduction</a>
+                  </div>
+                </li>
+                <li class="nav-item ">
+                  <div class="title">
+                    <a class="nav-link" href="prerequisite.html">Prerequisite</a>
+                  </div>
+                </li>
+                <li class="nav-item menu ">
+                  <div class="title">
+                    <a class="nav-link" href="#!">Wapi Installation <i class="fa fa-angle-down"
+                        aria-hidden="true"></i></a>
+                  </div>
+                  <ul class="sub-menu">
+                    <li class="nav-item"><a href="overview.html" class="nav-link ">Overview</a></li>
+                    <li class="nav-item"><a href="quick-installation.html" class="nav-link ">Quick Installation</a></li>
+                    <li class="nav-item menu ">
+                      <div class="title">
+                        <a class="nav-link" href="#!">Backend Installation <i class="fa fa-angle-down"
+                            aria-hidden="true"></i></a>
+                      </div>
+                      <ul class="sub-menu nested-sub-menu">
+                        <li class="nav-item"><a href="local-server.html" class="nav-link ">Local Server</a></li>
+                        <li class="nav-item"><a href="virtual-server.html" class="nav-link ">Virtual Private Server</a>
+                        </li>
+                        <li class="nav-item"><a href="cpanel.html" class="nav-link ">C-panel</a></li>
+
+                      </ul>
+                    </li>
+                    <li class="nav-item menu ">
+                      <div class="title">
+                        <a class="nav-link" href="#!">Frontend Installation <i class="fa fa-angle-down"
+                            aria-hidden="true"></i></a>
+                      </div>
+                      <ul class="sub-menu nested-sub-menu">
+                        <li class="nav-item"><a href="frontend-local.html" class="nav-link ">Local Server</a></li>
+                        <li class="nav-item"><a href="frontend-vps.html" class="nav-link ">Virtual Private Server</a>
+                        </li>
+                        <li class="nav-item"><a href="vercel.html" class="nav-link ">Vercel</a></li>
+                      </ul>
+                    </li>
+                </li>
+                <li class="nav-item">
+                  <div class="title">
+                    <a class="nav-link" href="update.html"> Update</a>
+                  </div>
+                </li>
+              </ul>
+              </li>
+              <li class="nav-item ">
+                <div class="title">
+                  <a class="nav-link" href="core-features.html">Core Features</a>
+                </div>
+              </li>
+              <li class="nav-item ">
+                <div class="title">
+                  <a class="nav-link" href="advanced-features.html">Advanced Features</a>
+                </div>
+              </li>
+              <li class="nav-item menu ">
+                <div class="title">
+                  <a class="nav-link" href="#!">Admin Meta Details <i class="fa fa-angle-down"
+                      aria-hidden="true"></i></a>
+                </div>
+                <ul class="sub-menu">
+                  <li class="nav-item"><a href="become-partner-with-meta.html" class="nav-link ">Become a Partner with
+                      Meta</a></li>
+                  <li class="nav-item"><a href="meta-pricing.html" class="nav-link ">Meta Pricing</a></li>
+                  <li class="nav-item"><a href="meta-limits.html" class="nav-link ">Meta Limits</a></li>
+                  <li class="nav-item"><a href="meta-permissions.html" class="nav-link ">Meta Permissions</a></li>
+                  <li class="nav-item"><a href="meta-billing.html" class="nav-link ">Meta Billing & Payment Setup</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item menu ">
+                <div class="title">
+                  <a class="nav-link" href="#!">Usage <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                </div>
+                <ul class="sub-menu">
+                  <li class="nav-item"><a href="admin-usage.html" class="nav-link ">Admin Usage</a></li>
+                  <li class="nav-item"><a href="tenant-usage.html" class="nav-link ">Tenant Usage</a></li>
+                  <li class="nav-item"><a href="agent-usage.html" class="nav-link ">Agent Usage</a></li>
+                </ul>
+              </li>
+
+              <li class="nav-item menu ">
+                <div class="title">
+                  <a class="nav-link" href="#!">
+                    Admin Guide <i class="fa fa-angle-down"></i>
+                  </a>
+                </div>
+
+                <ul class="sub-menu">
+
+                  <!-- Dashboard -->
+                  <li class="nav-item">
+                    <a href="admin-dashboard.html" class="nav-link ">Dashboard</a>
+                  </li>
+                  <!-- Payment Transactions -->
+                  <li class="nav-item">
+                    <a href="admin-payment-transactions.html" class="nav-link ">Payment Transactions</a>
+                  </li>
+                  <!-- Users Short Links -->
+                  <li class="nav-item">
+                    <a href="admin-users-short-links.html" class="nav-link ">Users Short Links</a>
+                  </li>
+
+                  <!-- Subscription -->
+                  <li class="nav-item menu ">
+                    <div class="title">
+                      <a class="nav-link" href="#!">Subscription <i class="fa fa-angle-down"></i></a>
+                    </div>
+
+                    <ul class="sub-menu nested-sub-menu">
+                      <li class="nav-item"><a href="admin-plan-management.html" class="nav-link ">Manage Plans</a>
+                      </li>
+                      <li class="nav-item"><a href="admin-user-subscriptions.html" class="nav-link ">Subscriber
+                          Plans</a></li>
+                    </ul>
+                  </li>
+
+                  <!-- Manage Users -->
+                  <li class="nav-item menu ">
+                    <div class="title">
+                      <a class="nav-link" href="#!">Manage Users <i class="fa fa-angle-down"></i></a>
+                    </div>
+                    <ul class="sub-menu nested-sub-menu">
+                      <li class="nav-item"><a href="admin-manage-users.html" class="nav-link ">All Users</a></li>
+                      <li class="nav-item"><a href="admin-add-user.html" class="nav-link ">Add User</a></li>
+                    </ul>
+                  </li>
+
+                  <!-- Content Management -->
+                  <li class="nav-item menu ">
+                    <div class="title">
+                      <a class="nav-link" href="#!">Content Management <i class="fa fa-angle-down"></i></a>
+                    </div>
+                    <ul class="sub-menu nested-sub-menu">
+                      <li class="nav-item"><a href="admin-manage-faqs.html" class="nav-link ">Manage FAQs</a></li>
+                      <li class="nav-item"><a href="admin-manage-testimonials.html" class="nav-link ">Manage
+                          Testimonials</a></li>
+                      <li class="nav-item"><a href="admin-pages.html" class="nav-link ">Pages</a></li>
+                      <li class="nav-item"><a href="role-permissions.html" class="nav-link ">Roles & Permissions</a>
+                      </li>
+                      <li class="nav-item"><a href="admin-landing-page.html" class="nav-link ">Manage Landing</a></li>
+                      <li class="nav-item"><a href="template-library.html" class="nav-link ">Templates Library</a>
+                      </li>
+                    </ul>
+                  </li>
+
+                  <!-- System Settings -->
+                  <li class="nav-item menu ">
+                    <div class="title">
+                      <a class="nav-link" href="#!">System Settings <i class="fa fa-angle-down"></i></a>
+                    </div>
+                    <ul class="sub-menu nested-sub-menu">
+                      <li class="nav-item"><a href="admin-payment-gateways.html" class="nav-link ">Payment
+                          Gateways</a>
+                      </li>
+                      <li class="nav-item"><a href="admin-settings.html" class="nav-link ">Settings</a></li>
+                      <li class="nav-item"><a href="admin-ai-models.html" class="nav-link ">AI Models</a></li>
+                      <li class="nav-item"><a href="admin-languages.html" class="nav-link ">Languages</a></li>
+                      <li class="nav-item"><a href="admin-currencies.html" class="nav-link ">Currencies</a></li>
+                      <li class="nav-item"><a href="admin-taxes.html" class="nav-link ">Taxes</a></li>
+                      <li class="nav-item"><a href="contact-inquiries.html" class="nav-link ">Contact
+                          Inquiries</a></li>
+                    </ul>
+                  </li>
+
+
+                </ul>
+              </li>
+
+              <!-- FRONTEND GUIDE -->
+              <li class="nav-item menu ">
+                <div class="title">
+                  <a class="nav-link" href="#!">
+                    Frontend Guide <i class="fa fa-angle-down"></i>
+                  </a>
+                </div>
+
+                <ul class="sub-menu">
+
+                  <li class="nav-item"><a href="frontend-dashboard.html" class="nav-link ">Dashboard</a></li>
+                  <li class="nav-item"><a href="chat-inbox.html" class="nav-link ">WA Chat</a></li>
+                  <li class="nav-item"><a href="chat-appearance.html" class="nav-link ">Chat Appearance</a></li>
+
+                  <!-- INTEGRATIONS -->
+                  <li class="nav-item menu ">
+                    <div class="title">
+                      <a class="nav-link" href="#!">Integrations <i class="fa fa-angle-down"></i></a>
+                    </div>
+
+                    <ul class="sub-menu nested-sub-menu">
+                      <li class="nav-item"><a href="integrate-waba.html" class="nav-link ">Integrate WABA</a></li>
+                      <li class="nav-item"><a href="waba-phone.html" class="nav-link ">WABA Phone Numbers</a></li>
+                      <li class="nav-item menu ">
+                        <div class="title">
+                          <a class="nav-link" href="#!">Templates <i class="fa fa-angle-down"></i></a>
+                        </div>
+                        <ul class="sub-menu nested-sub-menu">
+                          <li class="nav-item"><a href="templates-creation.html" class="nav-link ">Overview</a></li>
+                          <li class="nav-item"><a href="utility-template.html" class="nav-link ">Utility Template</a>
+                          </li>
+                          <li class="nav-item"><a href="marketing-template.html" class="nav-link ">Marketing
+                              Template</a></li>
+                          <li class="nav-item"><a href="authentication-template.html" class="nav-link ">Authentication
+                              Template</a></li>
+                        </ul>
+                      </li>
+                      <li class="nav-item"><a href="google-account.html" class="nav-link ">Google Account</a></li>
+                      <li class="nav-item"><a href="tools.html" class="nav-link ">Tools</a></li>
+                      <li class="nav-item"><a href="badges.html" class="nav-link ">Badges</a></li>
+                      <li class="nav-item"><a href="media-library.html" class="nav-link ">Media</a></li>
+                      <li class="nav-item"><a href="team-management.html" class="nav-link ">Teams</a></li>
+                      <li class="nav-item"><a href="agent-management.html" class="nav-link ">Agents</a></li>
+                    </ul>
+                  </li>
+
+                  <!-- AUTOMATIONS -->
+                  <li class="nav-item menu ">
+                    <div class="title">
+                      <a class="nav-link" href="#!">Automations <i class="fa fa-angle-down"></i></a>
+                    </div>
+
+                    <ul class="sub-menu nested-sub-menu">
+                      <li class="nav-item"><a href="automation-flow.html" class="nav-link ">Automation Builder</a>
+                      </li>
+                      <li class="nav-item"><a href="default-action.html" class="nav-link ">Predefined Actions</a></li>
+                      <li class="nav-item"><a href="reply-materials.html" class="nav-link ">Response Resources</a>
+                      </li>
+                      <li class="nav-item"><a href="quick-replies.html" class="nav-link ">Quick Replies </a></li>
+                      <li class="nav-item"><a href="keyword-trigger.html" class="nav-link ">Keyword Trigger</a></li>
+                      <li class="nav-item"><a href="ai-call-assistant.html" class="nav-link ">AI Call Assistant</a>
+                      </li>
+                      <li class="nav-item"><a href="whatsapp-form.html" class="nav-link ">WhatsApp Form</a></li>
+                      <li class="nav-item"><a href="appointment-booking.html" class="nav-link ">Appointment
+                          Booking</a></li>
+
+                    </ul>
+                  </li>
+
+                  <!-- MY SUBSCRIPTION -->
+                  <li class="nav-item menu ">
+                    <div class="title">
+                      <a class="nav-link" href="#!">My Subscription <i class="fa fa-angle-down"></i></a>
+                    </div>
+
+                    <ul class="sub-menu nested-sub-menu">
+                      <li class="nav-item"><a href="billing-plans.html" class="nav-link ">Billing & Plans</a>
+                      </li>
+                      <li class="nav-item"><a href="payment-gateway.html" class="nav-link ">Payment Gateway</a>
+                      </li>
+                      <li class="nav-item"><a href="payment-transactions.html" class="nav-link ">Payment
+                          Transactions</a>
+                      </li>
+                    </ul>
+                  </li>
+
+                  <!-- MARKETING -->
+                  <li class="nav-item menu ">
+                    <div class="title">
+                      <a class="nav-link" href="#!">Marketing <i class="fa fa-angle-down"></i></a>
+                    </div>
+
+                    <ul class="sub-menu nested-sub-menu">
+                      <li class="nav-item"><a href="click-to-whatsapp-ads.html" class="nav-link ">Click To WhatsApp
+                          Ads</a></li>
+                      <li class="nav-item"><a href="campaigns-creation.html" class="nav-link ">Campaigns</a></li>
+                      <li class="nav-item"><a href="order-management.html" class="nav-link ">Orders</a></li>
+                      <li class="nav-item"><a href="catalogues.html" class="nav-link ">Catalogues</a></li>
+                      <li class="nav-item"><a href="webhook-integration.html" class="nav-link ">Webhooks</a></li>
+                      <li class="nav-item"><a href="contacts.html" class="nav-link ">Contacts</a></li>
+                      <li class="nav-item"><a href="  custom-data-fields.html" class="nav-link ">Data Fields</a>
+                      </li>
+                      <li class="nav-item"><a href="import-jobs.html" class="nav-link ">Import Jobs</a></li>
+                      <li class="nav-item"><a href="ai-config.html" class="nav-link ">AI Config</a></li>
+                      <li class="nav-item"><a href="developer-api.html" class="nav-link ">Developer</a></li>
+                    </ul>
+                  </li>
+
+                </ul>
+              </li>
+
+              </ul>
+            </aside>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="row">
+          <div class="col-sm-12">
+            <button class="btn sidebar-button">Menu</button>
+            <h4 class="main-title mb-4">
+              <img src="assets/images/favicon.svg" alt="" /> Welcome to WAPI!
+            </h4>
+            <!-- AI Summary Quick-Links -->
+            <div class="col-12 mb-4">
+              <div class="ai-summary-card">
+                <div class="ai-summary-title">
+                  <i class="fa fa-magic"></i> Get an AI summary of this page
+                </div>
+                <div class="ai-summary-buttons">
+                  <a href="https://chatgpt.com/?q=Summarize%20this%20page:%20https://docs.pixelstrap.net/wapi/index.html"
+                    target="_blank" class="ai-btn btn-chatgpt">
+                    <i class="fa fa-comment"></i> ChatGPT
+                  </a>
+                  <a href="https://gemini.google.com/app?q=Summarize%20this%20page:%20https://docs.pixelstrap.net/wapi/index.html"
+                    target="_blank" class="ai-btn btn-gemini">
+                    <i class="fa fa-google"></i> Gemini
+                  </a>
+                  <a href="https://x.com/i/grok?text=Summarize%20this%20page:%20https://docs.pixelstrap.net/wapi/index.html"
+                    target="_blank" class="ai-btn btn-grok">
+                    <i class="ri-twitter-x-line"></i> Grok
+                  </a>
+                  <a href="https://www.perplexity.ai/search?q=Summarize%20this%20page:%20https://docs.pixelstrap.net/wapi/index.html"
+                    target="_blank" class="ai-btn btn-perplexity">
+                    <i class="fa fa-search"></i> Perplexity
+                  </a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- 1. Overview -->
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body ul-body">
+                <h4 class="main-sub-title mt-0">
+                  1. Overview
+                </h4>
+                <p style="color: var(--wp-slate-800);">
+                  WA Chat is the heart of the Wapi platform. It serves as a <strong>shared
+                    inbox</strong> where your
+                  entire team can communicate with WhatsApp Business Account (WABA) contacts in
+                  real-time.
+                </p>
+                <div class="info-box"
+                  style="background: var(--wp-slate-100); border-left: 4px solid var(--wp-blue-500); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                  <p style="margin-bottom: 0; color: var(--wp-slate-900);">
+                    <i class="fa fa-info-circle" style="color: var(--wp-blue-500); margin-right: 8px;"></i>
+                    <strong>WABA Connection Required:</strong> To use the WA Chat module, you must
+                    first connect your
+                    WhatsApp Business Account.
+                    <a href="integrate-waba.html"
+                      style="color: var(--wp-blue-600); font-weight: 600; text-decoration: underline;">Click
+                      here for
+                      the WABA Connection Guide</a>.
+                  </p>
+                </div>
+                <ul class="square">
+                  <li><strong>Real-time Messaging:</strong> Instant communication with your customers.
+                  </li>
+                  <li><strong>Prerequisite:</strong> Works only after your <strong>WABA is
+                      successfully
+                      connected</strong>.</li>
+                  <li><strong>Multi-Agent System:</strong> Multiple agents can manage conversations
+                    simultaneously.</li>
+                </ul>
+                <div class="col-lg-12">
+                  <div class="border rounded p-2 bg-white shadow-sm text-center">
+                    <img src="assets/images/user/chat-inbox.png" class="img-fluid">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Chat Interface Layout -->
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body ul-body">
+                <h4 class="main-sub-title">
+                  2. Chat Interface Layout
+                </h4>
+                <p style="color: var(--wp-slate-800);">The interface is strategically designed into
+                  three panels for
+                  maximum efficiency.</p>
+
+                <div class="overview-grid mt-4">
+                  <!-- Left Sidebar -->
+                  <div class="overview-card">
+                    <div class="overview-card-icon"><i class="ri-chat-history-line"></i></div>
+                    <div class="overview-card-title">Left Sidebar (Chats List)</div>
+                    <div class="overview-card-content">
+                      <ul class="square m-0 p-0" style="list-style-position: inside;">
+                        <li>List of all active conversations.</li>
+                        <li>Contact name or phone number.</li>
+                        <li>Last message preview & status.</li>
+                        <li>Dynamic Tags (e.g., Interested, Lead).</li>
+                        <li>Search and filter functionality.</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <!-- Center Panel -->
+                  <div class="overview-card">
+                    <div class="overview-card-icon"><i class="ri-message-3-line"></i></div>
+                    <div class="overview-card-title">Center Panel (Conversation)</div>
+                    <div class="overview-card-content">
+                      <ul class="square m-0 p-0" style="list-style-position: inside;">
+                        <li>Full chat conversation thread.</li>
+                        <li>Sent and received message history.</li>
+                        <li>Precise message timestamps.</li>
+                        <li>Meta Template message picker.</li>
+                        <li><strong>24-hour session status indicator.</strong></li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <!-- Right Sidebar -->
+                  <div class="overview-card">
+                    <div class="overview-card-icon"><i class="ri-user-settings-line"></i></div>
+                    <div class="overview-card-title">Right Sidebar (Contact Info)</div>
+                    <div class="overview-card-content">
+                      <ul class="square m-0 p-0" style="list-style-position: inside;">
+                        <li>Detailed Contact Metadata.</li>
+                        <li>Advanced Tags management.</li>
+                        <li>Add internal collaboration notes.</li>
+                        <li>Assign chat to specific agents.</li>
+                        <li>Centralized Media & Files gallery.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Key Features -->
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body ul-body">
+                <h4 class="main-sub-title">3. Key Features</h4>
+                <p class="mb-5">Unlock the full potential of your WhatsApp communication with these
+                  essential inbox
+                  features.</p>
+
+                <div class="row g-4">
+                  <!-- A. Send & Receive Messages -->
+                  <div class="col-md-6 mb-4">
+                    <div class="p-4 h-100"
+                      style="border-left: 3px solid var(--wp-brand); background: var(--wp-slate-50); border-radius: 4px;">
+                      <h6 class="mb-2" style="font-weight: 700; color: var(--wp-slate-900);">A.
+                        Send & Receive Messages
+                      </h6>
+                      <p class="mb-0 small" style="color: var(--wp-slate-700); line-height: 1.6;">
+                        Chat with WABA
+                        contacts in real-time using standard text or rich media messages.</p>
+                    </div>
+                  </div>
+
+                  <!-- B. Template Messaging -->
+                  <div class="col-md-6 mb-4">
+                    <div class="p-4 h-100"
+                      style="border-left: 3px solid var(--wp-brand); background: var(--wp-slate-50); border-radius: 4px;">
+                      <h6 class="mb-2" style="font-weight: 700; color: var(--wp-slate-900);">B.
+                        Template Messaging</h6>
+                      <p class="mb-0 small" style="color: var(--wp-slate-700); line-height: 1.6;">
+                        Use pre-approved Meta
+                        templates to initiate new chats or re-open conversations after the
+                        24-hour window.</p>
+                    </div>
+                  </div>
+
+                  <!-- C. 24-Hour Messaging Window -->
+                  <div class="col-md-6 mb-4">
+                    <div class="p-4 h-100"
+                      style="border-left: 3px solid var(--wp-brand); background: var(--wp-slate-50); border-radius: 4px;">
+                      <h6 class="mb-2" style="font-weight: 700; color: var(--wp-slate-900);">C.
+                        24-Hour Messaging Window
+                      </h6>
+                      <ul class="square mb-0 small" style="color: var(--wp-slate-700); line-height: 1.6;">
+                        <li>Opens automatically on user reply</li>
+                        <li>Allows <strong>unlimited free-form messaging</strong></li>
+                        <li>Locks after 24 hours of inactivity</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <!-- D. Re-open Conversation -->
+                  <div class="col-md-6 mb-4">
+                    <div class="p-4 h-100"
+                      style="border-left: 3px solid var(--wp-brand); background: var(--wp-slate-50); border-radius: 4px;">
+                      <h6 class="mb-2" style="font-weight: 700; color: var(--wp-slate-900);">D.
+                        Re-open Conversation
+                      </h6>
+                      <p class="mb-0 small" style="color: var(--wp-slate-700); line-height: 1.6;">
+                        To restart a locked
+                        chat, send a template message. Once the user replies, the window
+                        re-opens.</p>
+                    </div>
+                  </div>
+
+                  <!-- E. Assign Chats to Agents -->
+                  <div class="col-md-6 mb-4">
+                    <div class="p-4 h-100"
+                      style="border-left: 3px solid var(--wp-brand); background: var(--wp-slate-50); border-radius: 4px;">
+                      <h6 class="mb-2" style="font-weight: 700; color: var(--wp-slate-900);">E.
+                        Assign Chats to Agents
+                      </h6>
+                      <p class="mb-2 small" style="color: var(--wp-slate-700); line-height: 1.6;">
+                        Distribute the
+                        workload by assigning specific chats to your team members for better
+                        accountability.</p>
+
+                    </div>
+                  </div>
+
+                  <!-- F. Contact Tagging -->
+                  <div class="col-md-6 mb-4">
+                    <div class="p-4 h-100"
+                      style="border-left: 3px solid var(--wp-brand); background: var(--wp-slate-50); border-radius: 4px;">
+                      <h6 class="mb-2" style="font-weight: 700; color: var(--wp-slate-900);">F.
+                        Contact Tagging</h6>
+                      <p class="mb-2 small" style="color: var(--wp-slate-700); line-height: 1.6;">
+                        Categorize users with
+                        custom tags (e.g., Interested, Lead, VIP) for advanced segmentation.</p>
+
+                    </div>
+                  </div>
+
+                  <!-- G. Notes & CRM Features -->
+                  <div class="col-md-6 mb-md-0 mb-4">
+                    <div class="p-4 h-100"
+                      style="border-left: 3px solid var(--wp-brand); background: var(--wp-slate-50); border-radius: 4px;">
+                      <h6 class="mb-2" style="font-weight: 700; color: var(--wp-slate-900);">G.
+                        Internal Notes</h6>
+                      <p class="mb-0 small" style="color: var(--wp-slate-700); line-height: 1.6;">
+                        Add private internal
+                        notes to track lead history or specific client requirements directly
+                        within the chat.</p>
+                    </div>
+                  </div>
+
+                  <!-- H. Media & Gallery -->
+                  <div class="col-md-6">
+                    <div class="p-4 h-100"
+                      style="border-left: 3px solid var(--wp-brand); background: var(--wp-slate-50); border-radius: 4px;">
+                      <h6 class="mb-2" style="font-weight: 700; color: var(--wp-slate-900);">H.
+                        Media & Gallery</h6>
+                      <p class="mb-0 small" style="color: var(--wp-slate-700); line-height: 1.6;">
+                        Quickly access all
+                        images, videos, and documents shared within the conversation in a
+                        centralized gallery.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. AI Suggestions & Transformation -->
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body ul-body">
+                <h4 class="main-sub-title">4. AI Suggestions & Transformation</h4>
+                <p class="mb-5">Enhance your customer communication with powerful AI-driven features for instant
+                  reply suggestions and message transformations.</p>
+
+                <div class="row g-4">
+                  <!-- A. AI Suggestion -->
+                  <div class="col-md-6 mb-4">
+                    <div class="p-4 h-100"
+                      style="border-left: 3px solid var(--wp-brand); background: var(--wp-slate-50); border-radius: 4px;">
+                      <h6 class="mb-2" style="font-weight: 700; color: var(--wp-slate-900);">A. AI Suggestion</h6>
+                      <p class="mb-3 small" style="color: var(--wp-slate-700); line-height: 1.6;">
+                        Suggest text messages based on previous chat context. AI will suggest a reply based on the tone
+                        you have selected (e.g., Professional, Friendly, Casual).
+                      </p>
+                      <div class="border rounded p-2 bg-white shadow-sm text-center mb-3">
+                        <img src="assets/images/user/ai2.png" class="img-fluid" alt="AI Suggest Icon">
+                      </div>
+                      <div class="border rounded p-2 bg-white shadow-sm text-center">
+                        <img src="assets/images/user/ai3.png" class="img-fluid" alt="AI Suggest Reply Dialog">
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- B. Transform Text Message -->
+                  <div class="col-md-6 mb-4">
+                    <div class="p-4 h-100"
+                      style="border-left: 3px solid var(--wp-brand); background: var(--wp-slate-50); border-radius: 4px;">
+                      <h6 class="mb-2" style="font-weight: 700; color: var(--wp-slate-900);">B. Transform Text Message
+                      </h6>
+                      <p class="mb-3 small" style="color: var(--wp-slate-700); line-height: 1.6;">
+                        Transform your draft messages based on selected criteria such as Summarize, Improve, Translate,
+                        Casualize, or Formalize.
+                      </p>
+                      <div class="border rounded p-2 bg-white shadow-sm text-center mb-3">
+                        <img src="assets/images/user/aisuggest.png" class="img-fluid" alt="AI Transform Icon">
+                      </div>
+                      <div class="border rounded p-2 bg-white shadow-sm text-center">
+                        <img src="assets/images/user/ai1.png" class="img-fluid" alt="AI Text Transform Dialog">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Setup Note -->
+                <div class="info-box mt-4"
+                  style="background: var(--wp-slate-100); border-left: 4px solid var(--wp-brand); padding: 15px; border-radius: 8px;">
+                  <p style="margin-bottom: 0; color: var(--wp-slate-900);">
+                    <i class="fa fa-cog" style="color: var(--wp-brand); margin-right: 8px;"></i>
+                    <strong>Setup AI Suggestion:</strong> To use this feature, you must first set up an API key for your
+                    preferred AI model.
+                    Go to <strong>AI Settings</strong> &rarr; <strong>Choose AI Model</strong> &rarr; <strong>Set API
+                      Key</strong> &rarr; <strong>Save</strong>.
+                    <a href="ai-config.html"
+                      style="color: var(--wp-brand); font-weight: 600; text-decoration: underline;">Click here for more
+                      details in AI Config</a>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Chat Workflow -->
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body ul-body">
+                <h4 class="main-sub-title">5. Chat Workflow (Step-by-Step)</h4>
+                <p class="mb-4">Follow this standard operating procedure to manage your customer
+                  conversations
+                  effectively.</p>
+
+                <div class="workflow-minimal mt-2">
+                  <div class="d-flex mb-3 pb-3" style="border-bottom: 1px solid var(--wp-slate-50);">
+                    <span class="mr-3" style="font-weight: 700; color: var(--wp-brand); min-width: 25px;">01</span>
+                    <div>
+                      <h6 class="mb-1" style="font-weight: 700;">Connect & Navigate</h6>
+                      <p class="mb-0 small text-muted">Ensure WABA is linked and open the
+                        <strong>WA Chat</strong>
+                        module from the dashboard.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="d-flex mb-3 pb-3" style="border-bottom: 1px solid var(--wp-slate-50);">
+                    <span class="mr-3" style="font-weight: 700; color: var(--wp-brand); min-width: 25px;">02</span>
+                    <div>
+                      <h6 class="mb-1" style="font-weight: 700;">Select & Initialize</h6>
+                      <p class="mb-0 small text-muted">Select a contact. If the chat is new or
+                        locked, send a
+                        <strong>Meta Template</strong> to start.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="d-flex mb-3 pb-3" style="border-bottom: 1px solid var(--wp-slate-50);">
+                    <span class="mr-3" style="font-weight: 700; color: var(--wp-brand); min-width: 25px;">03</span>
+                    <div>
+                      <h6 class="mb-1" style="font-weight: 700;">Active Communication</h6>
+                      <p class="mb-0 small text-muted">On user reply, the 24-hour window starts
+                        for <strong>unlimited
+                          free-form messaging</strong>.</p>
+                    </div>
+                  </div>
+                  <div class="d-flex">
+                    <span class="mr-3" style="font-weight: 700; color: var(--wp-brand); min-width: 25px;">04</span>
+                    <div>
+                      <h6 class="mb-1" style="font-weight: 700;">Organize & Assign</h6>
+                      <p class="mb-0 small text-muted">Assign chats to agents, add notes, and
+                        apply tags for better lead
+                        management.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. Important Rules -->
+          <div class="col-12">
+            <div class="card" style="border-top: 3px solid var(--wp-red-500);">
+              <div class="card-body ul-body">
+                <h4 class="main-sub-title text-danger">6. Important Rules (WhatsApp Policy)</h4>
+                <div class="p-4 rounded mt-3" style="background: var(--wp-red-50);">
+                  <ul class="square m-0" style="color: var(--wp-slate-900); font-weight: 500;">
+                    <li class="mb-1"><strong>No Free Messages:</strong> Unlimited chatting works
+                      only within the 24-hour
+                      window.</li>
+                    <li class="mb-1"><strong>Template Required:</strong> Use pre-approved templates
+                      to initiate or
+                      restart conversations.</li>
+                    <li><strong>Meta Approval:</strong> All templates must be pre-approved by Meta
+                      before appearing in
+                      Wapi.</li>
+                  </ul>
+                </div>
+                <div class="mt-4 text-center">
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7. Best Practices -->
+          <div class="col-12">
+            <div class="card" style="border-top: 3px solid var(--wp-green-500);">
+              <div class="card-body ul-body">
+                <h4 class="main-sub-title text-success">7. Best Practices</h4>
+                <div class="row g-3 mt-2">
+                  <div class="col-md-6 mb-3">
+                    <div class="p-3 h-100 rounded"
+                      style="background: var(--wp-green-50); border: 1px solid var(--wp-green-100);">
+                      <h6 class="mb-1" style="font-weight: 700; color: var(--wp-green-700);">
+                        Response Speed</h6>
+                      <p class="mb-0 small">Respond within 2 hours of a user's message to maintain
+                        conversion momentum.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="p-3 h-100 rounded"
+                      style="background: var(--wp-green-50); border: 1px solid var(--wp-green-100);">
+                      <h6 class="mb-1" style="font-weight: 700; color: var(--wp-green-700);">
+                        Segment with Tags</h6>
+                      <p class="mb-0 small">Consistently tag contacts (e.g., Lead, VIP) to filter
+                        high-value
+                        conversations.</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-md-0 mb-3">
+                    <div class="p-3 h-100 rounded"
+                      style="background: var(--wp-green-50); border: 1px solid var(--wp-green-100);">
+                      <h6 class="mb-1" style="font-weight: 700; color: var(--wp-green-700);">
+                        Ownership</h6>
+                      <p class="mb-0 small">Assign ownership to specific agents to ensure
+                        accountability and faster
+                        resolution.</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="p-3 h-100 rounded"
+                      style="background: var(--wp-green-50); border: 1px solid var(--wp-green-100);">
+                      <h6 class="mb-1" style="font-weight: 700; color: var(--wp-green-700);">
+                        Template Library</h6>
+                      <p class="mb-0 small">Prepare templates for common follow-up scenarios to
+                        restart chats instantly.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="container">
+        <div class="row footer-theme partition-f">
+          <div class="col-12">Copyright 2026 © WAPI - WhatsApp Marketing Platform by PixelStrap</div>
+        </div>
+      </div>
+    </footer>
+    <div class="bg-overlay"></div>
+</body>
+<!-- latest jquery-->
+<script src="assets/js/jquery-3.5.1.min.js"></script>
+<!-- Bootstrap js-->
+<script src="assets/js/bootstrap/bootstrap.bundle.min.js"></script>
+<!-- feather icon js-->
+<script src="assets/js/icons/feather-icon/feather.min.js"></script>
+<script src="assets/js/icons/feather-icon/feather-icon.js"></script>
+<script src="assets/js/document/main.js"></script>
+<script src="assets/js/script.js"></script>
+<!-- Global Search js-->
+<script src="assets/js/global-search.js"></script>
+
+</html>

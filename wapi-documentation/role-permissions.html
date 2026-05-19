@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Roles & Permissions - WAPI Documentation</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Wapi - WhatsApp Marketing & Automation Platform - Comprehensive Guide for Managing Role-Based Access Control (RBAC) and Permissions" />
+  <meta name="keywords"
+    content="Wapi, Roles & Permissions, RBAC, User Access, Security, Permission Matrix, Administrative Control, Roles Management" />
+  <meta name="author" content="pixelstrap" />
+  <link rel="icon" href="assets/images/favicon.svg" type="image/x-icon" />
+  <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/x-icon" />
+  <!-- Google font-->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <!-- Font Awesome-->
+  <link rel="stylesheet" type="text/css" href="assets/css/fontawesome.css" />
+  <!-- Feather icon-->
+  <link rel="stylesheet" type="text/css" href="assets/css/vendors/feather-icon.css" />
+  <!-- Remix icon-->
+  <link rel="stylesheet" type="text/css" href="assets/css/vendors/remixicon.css" />
+  <!-- animate-->
+  <link rel="stylesheet" type="text/css" href="assets/css/vendors/bootstrap.css" />
+  <!-- App css-->
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+  <!-- Global Search css-->
+  <link rel="stylesheet" type="text/css" href="assets/css/global-search.css" />
+  <!-- Custom Documentation css-->
+  <link rel="stylesheet" type="text/css" href="assets/css/docs-custom.css" />
+</head>
+
+<body>
+  <a href="javascript:void(0)" class="sidebar-overlay"></a>
+  <div class="tap-top">
+    <i data-feather="chevrons-up"></i>
+    <p>Top</p>
+
+  </div>
+  <div>
+    <div class="home-section">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container custom-container">
+          <div class="main-menu">
+            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+              aria-label="Toggle navigation">
+              <i class="fa fa-bars"> </i>
+            </button>
+            <a class="navbar-brand" href="index.html">
+              <img src="assets/images/logo/logo.svg" alt="WAPI - WhatsApp Marketing Platform" /></a>
+            <div>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav menu">
+                  <li class="nav-item">
+                    <a class="nav-link"
+                      href="https://codecanyon.net/item/wapi-whatsapp-marketing-automation-platform-saas-solution/60857765"
+                      role="button" aria-haspopup="true" aria-expanded="false" target="_blank">Purchase</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="https://support.pixelstrap.com/" role="button" aria-haspopup="true"
+                      aria-expanded="false" target="_blank">Support</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="https://wapi-frontend.vercel.app/" role="button" aria-haspopup="true"
+                      aria-expanded="false" target="_blank">Frontend</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="https://wapi-admin.vercel.app/" role="button" aria-haspopup="true"
+                      aria-expanded="false" target="_blank">Admin
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <ul class="nav-right">
+              <li>
+                <div class="btn-group">
+                  <a class="decrease btn btn-doc" href="#" title="Decrease font size">A-</a><a class="reset btn btn-doc"
+                    href="#" title="Default font size">A</a><a class="increase btn btn-doc" href="#"
+                    title="Increase font size">A+</a>
+                </div>
+              </li>
+              <li>
+                <a class="btn btn-light mode" href="#" title="Dark"><i class="fa fa-moon-o"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="container custom-container">
+        <div class="document">Wapi documentation</div>
+        <div class="top-heading">
+          <h2>Roles & Permissions</h2>
+          <div class="home-search">
+            <input type="search" name="text" placeholder="Search access control guides..." />
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container custom-container" id="mainRightNavbar">
+    <div class="document-main">
+      <div class="left-sidebar">
+        <div class="card">
+          <div class="card-body">
+            <aside>
+              <button class="btn button-close">
+                <span>Close</span>
+                <i data-feather="x"></i>
+              </button>
+              <ul class="list-unstyled nav-sidebar doc-nav">
+                <li class="nav-item">
+                  <div class="title">
+                    <a class="nav-link" href="index.html">Introduction</a>
+                  </div>
+                </li>
+                <li class="nav-item ">
+                  <div class="title">
+                    <a class="nav-link" href="prerequisite.html">Prerequisite</a>
+                  </div>
+                </li>
+                <li class="nav-item menu ">
+                  <div class="title">
+                    <a class="nav-link" href="#!">Wapi Installation <i class="fa fa-angle-down"
+                        aria-hidden="true"></i></a>
+                  </div>
+                  <ul class="sub-menu">
+                    <li class="nav-item"><a href="overview.html" class="nav-link ">Overview</a></li>
+                    <li class="nav-item"><a href="quick-installation.html" class="nav-link ">Quick Installation</a></li>
+                    <li class="nav-item menu ">
+                      <div class="title">
+                        <a class="nav-link" href="#!">Backend Installation <i class="fa fa-angle-down"
+                            aria-hidden="true"></i></a>
+                      </div>
+                      <ul class="sub-menu nested-sub-menu">
+                        <li class="nav-item"><a href="local-server.html" class="nav-link ">Local Server</a></li>
+                        <li class="nav-item"><a href="virtual-server.html" class="nav-link ">Virtual Private Server</a>
+                        </li>
+                        <li class="nav-item"><a href="cpanel.html" class="nav-link ">C-panel</a></li>
+
+                      </ul>
+                    </li>
+                    <li class="nav-item menu ">
+                      <div class="title">
+                        <a class="nav-link" href="#!">Frontend Installation <i class="fa fa-angle-down"
+                            aria-hidden="true"></i></a>
+                      </div>
+                      <ul class="sub-menu nested-sub-menu">
+                        <li class="nav-item"><a href="frontend-local.html" class="nav-link ">Local Server</a></li>
+                        <li class="nav-item"><a href="frontend-vps.html" class="nav-link ">Virtual Private Server</a>
+                        </li>
+                        <li class="nav-item"><a href="vercel.html" class="nav-link ">Vercel</a></li>
+                      </ul>
+                    </li>
+                </li>
+                <li class="nav-item">
+                  <div class="title">
+                    <a class="nav-link" href="update.html"> Update</a>
+                  </div>
+                </li>
+              </ul>
+              </li>
+              <li class="nav-item ">
+                <div class="title">
+                  <a class="nav-link" href="core-features.html">Core Features</a>
+                </div>
+              </li>
+              <li class="nav-item ">
+                <div class="title">
+                  <a class="nav-link" href="advanced-features.html">Advanced Features</a>
+                </div>
+              </li>
+              <li class="nav-item menu ">
+                <div class="title">
+                  <a class="nav-link" href="#!">Admin Meta Details <i class="fa fa-angle-down"
+                      aria-hidden="true"></i></a>
+                </div>
+                <ul class="sub-menu">
+                  <li class="nav-item"><a href="become-partner-with-meta.html" class="nav-link ">Become a Partner with
+                      Meta</a></li>
+                  <li class="nav-item"><a href="meta-pricing.html" class="nav-link ">Meta Pricing</a></li>
+                  <li class="nav-item"><a href="meta-limits.html" class="nav-link ">Meta Limits</a></li>
+                  <li class="nav-item"><a href="meta-permissions.html" class="nav-link ">Meta Permissions</a></li>
+                  <li class="nav-item"><a href="meta-billing.html" class="nav-link ">Meta Billing & Payment Setup</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item menu ">
+                <div class="title">
+                  <a class="nav-link" href="#!">Usage <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                </div>
+                <ul class="sub-menu">
+                  <li class="nav-item"><a href="admin-usage.html" class="nav-link ">Admin Usage</a></li>
+                  <li class="nav-item"><a href="tenant-usage.html" class="nav-link ">Tenant Usage</a></li>
+                  <li class="nav-item"><a href="agent-usage.html" class="nav-link ">Agent Usage</a></li>
+                </ul>
+              </li>
+
+              <li class="nav-item menu ">
+                <div class="title">
+                  <a class="nav-link" href="#!">
+                    Admin Guide <i class="fa fa-angle-down"></i>
+                  </a>
+                </div>
+
+                <ul class="sub-menu">
+
+                  <!-- Dashboard -->
+                  <li class="nav-item">
+                    <a href="admin-dashboard.html" class="nav-link ">Dashboard</a>
+                  </li>
+                  <!-- Payment Transactions -->
+                  <li class="nav-item">
+                    <a href="admin-payment-transactions.html" class="nav-link ">Payment Transactions</a>
+                  </li>
+                  <!-- Users Short Links -->
+                  <li class="nav-item">
+                    <a href="admin-users-short-links.html" class="nav-link ">Users Short Links</a>
+                  </li>
+
+                  <!-- Subscription -->
+                  <li class="nav-item menu ">
+                    <div class="title">
+                      <a class="nav-link" href="#!">Subscription <i class="fa fa-angle-down"></i></a>
+                    </div>
+
+                    <ul class="sub-menu nested-sub-menu">
+                      <li class="nav-item"><a href="admin-plan-management.html" class="nav-link ">Manage Plans</a>
+                      </li>
+                      <li class="nav-item"><a href="admin-user-subscriptions.html" class="nav-link ">Subscriber
+                          Plans</a></li>
+                    </ul>
+                  </li>
+
+                  <!-- Manage Users -->
+                  <li class="nav-item menu ">
+                    <div class="title">
+                      <a class="nav-link" href="#!">Manage Users <i class="fa fa-angle-down"></i></a>
+                    </div>
+                    <ul class="sub-menu nested-sub-menu">
+                      <li class="nav-item"><a href="admin-manage-users.html" class="nav-link ">All Users</a></li>
+                      <li class="nav-item"><a href="admin-add-user.html" class="nav-link ">Add User</a></li>
+                    </ul>
+                  </li>
+
+                  <!-- Content Management -->
+                  <li class="nav-item menu ">
+                    <div class="title">
+                      <a class="nav-link" href="#!">Content Management <i class="fa fa-angle-down"></i></a>
+                    </div>
+                    <ul class="sub-menu nested-sub-menu">
+                      <li class="nav-item"><a href="admin-manage-faqs.html" class="nav-link ">Manage FAQs</a></li>
+                      <li class="nav-item"><a href="admin-manage-testimonials.html" class="nav-link ">Manage
+                          Testimonials</a></li>
+                      <li class="nav-item"><a href="admin-pages.html" class="nav-link ">Pages</a></li>
+                      <li class="nav-item"><a href="role-permissions.html" class="nav-link ">Roles & Permissions</a>
+                      </li>
+                      <li class="nav-item"><a href="admin-landing-page.html" class="nav-link ">Manage Landing</a></li>
+                      <li class="nav-item"><a href="template-library.html" class="nav-link ">Templates Library</a>
+                      </li>
+                    </ul>
+                  </li>
+
+                  <!-- System Settings -->
+                  <li class="nav-item menu ">
+                    <div class="title">
+                      <a class="nav-link" href="#!">System Settings <i class="fa fa-angle-down"></i></a>
+                    </div>
+                    <ul class="sub-menu nested-sub-menu">
+                      <li class="nav-item"><a href="admin-payment-gateways.html" class="nav-link ">Payment
+                          Gateways</a>
+                      </li>
+                      <li class="nav-item"><a href="admin-settings.html" class="nav-link ">Settings</a></li>
+                      <li class="nav-item"><a href="admin-ai-models.html" class="nav-link ">AI Models</a></li>
+                      <li class="nav-item"><a href="admin-languages.html" class="nav-link ">Languages</a></li>
+                      <li class="nav-item"><a href="admin-currencies.html" class="nav-link ">Currencies</a></li>
+                      <li class="nav-item"><a href="admin-taxes.html" class="nav-link ">Taxes</a></li>
+                      <li class="nav-item"><a href="contact-inquiries.html" class="nav-link ">Contact
+                          Inquiries</a></li>
+                    </ul>
+                  </li>
+
+
+                </ul>
+              </li>
+
+              <!-- FRONTEND GUIDE -->
+              <li class="nav-item menu ">
+                <div class="title">
+                  <a class="nav-link" href="#!">
+                    Frontend Guide <i class="fa fa-angle-down"></i>
+                  </a>
+                </div>
+
+                <ul class="sub-menu">
+
+                  <li class="nav-item"><a href="frontend-dashboard.html" class="nav-link ">Dashboard</a></li>
+                  <li class="nav-item"><a href="chat-inbox.html" class="nav-link ">WA Chat</a></li>
+                  <li class="nav-item"><a href="chat-appearance.html" class="nav-link ">Chat Appearance</a></li>
+
+                  <!-- INTEGRATIONS -->
+                  <li class="nav-item menu ">
+                    <div class="title">
+                      <a class="nav-link" href="#!">Integrations <i class="fa fa-angle-down"></i></a>
+                    </div>
+
+                    <ul class="sub-menu nested-sub-menu">
+                      <li class="nav-item"><a href="integrate-waba.html" class="nav-link ">Integrate WABA</a></li>
+                      <li class="nav-item"><a href="waba-phone.html" class="nav-link ">WABA Phone Numbers</a></li>
+                      <li class="nav-item menu ">
+                        <div class="title">
+                          <a class="nav-link" href="#!">Templates <i class="fa fa-angle-down"></i></a>
+                        </div>
+                        <ul class="sub-menu nested-sub-menu">
+                          <li class="nav-item"><a href="templates-creation.html" class="nav-link ">Overview</a></li>
+                          <li class="nav-item"><a href="utility-template.html" class="nav-link ">Utility Template</a>
+                          </li>
+                          <li class="nav-item"><a href="marketing-template.html" class="nav-link ">Marketing
+                              Template</a></li>
+                          <li class="nav-item"><a href="authentication-template.html" class="nav-link ">Authentication
+                              Template</a></li>
+                        </ul>
+                      </li>
+                      <li class="nav-item"><a href="google-account.html" class="nav-link ">Google Account</a></li>
+                      <li class="nav-item"><a href="tools.html" class="nav-link ">Tools</a></li>
+                      <li class="nav-item"><a href="badges.html" class="nav-link ">Badges</a></li>
+                      <li class="nav-item"><a href="media-library.html" class="nav-link ">Media</a></li>
+                      <li class="nav-item"><a href="team-management.html" class="nav-link ">Teams</a></li>
+                      <li class="nav-item"><a href="agent-management.html" class="nav-link ">Agents</a></li>
+                    </ul>
+                  </li>
+
+                  <!-- AUTOMATIONS -->
+                  <li class="nav-item menu ">
+                    <div class="title">
+                      <a class="nav-link" href="#!">Automations <i class="fa fa-angle-down"></i></a>
+                    </div>
+
+                    <ul class="sub-menu nested-sub-menu">
+                      <li class="nav-item"><a href="automation-flow.html" class="nav-link ">Automation Builder</a>
+                      </li>
+                      <li class="nav-item"><a href="default-action.html" class="nav-link ">Predefined Actions</a></li>
+                      <li class="nav-item"><a href="reply-materials.html" class="nav-link ">Response Resources</a>
+                      </li>
+                      <li class="nav-item"><a href="quick-replies.html" class="nav-link ">Quick Replies </a></li>
+                      <li class="nav-item"><a href="keyword-trigger.html" class="nav-link ">Keyword Trigger</a></li>
+                      <li class="nav-item"><a href="ai-call-assistant.html" class="nav-link ">AI Call Assistant</a>
+                      </li>
+                      <li class="nav-item"><a href="whatsapp-form.html" class="nav-link ">WhatsApp Form</a></li>
+                      <li class="nav-item"><a href="appointment-booking.html" class="nav-link ">Appointment
+                          Booking</a></li>
+
+                    </ul>
+                  </li>
+
+                  <!-- MY SUBSCRIPTION -->
+                  <li class="nav-item menu ">
+                    <div class="title">
+                      <a class="nav-link" href="#!">My Subscription <i class="fa fa-angle-down"></i></a>
+                    </div>
+
+                    <ul class="sub-menu nested-sub-menu">
+                      <li class="nav-item"><a href="billing-plans.html" class="nav-link ">Billing & Plans</a>
+                      </li>
+                      <li class="nav-item"><a href="payment-gateway.html" class="nav-link ">Payment Gateway</a>
+                      </li>
+                      <li class="nav-item"><a href="payment-transactions.html" class="nav-link ">Payment
+                          Transactions</a>
+                      </li>
+                    </ul>
+                  </li>
+
+                  <!-- MARKETING -->
+                  <li class="nav-item menu ">
+                    <div class="title">
+                      <a class="nav-link" href="#!">Marketing <i class="fa fa-angle-down"></i></a>
+                    </div>
+
+                    <ul class="sub-menu nested-sub-menu">
+                      <li class="nav-item"><a href="click-to-whatsapp-ads.html" class="nav-link ">Click To WhatsApp
+                          Ads</a></li>
+                      <li class="nav-item"><a href="campaigns-creation.html" class="nav-link ">Campaigns</a></li>
+                      <li class="nav-item"><a href="order-management.html" class="nav-link ">Orders</a></li>
+                      <li class="nav-item"><a href="catalogues.html" class="nav-link ">Catalogues</a></li>
+                      <li class="nav-item"><a href="webhook-integration.html" class="nav-link ">Webhooks</a></li>
+                      <li class="nav-item"><a href="contacts.html" class="nav-link ">Contacts</a></li>
+                      <li class="nav-item"><a href="  custom-data-fields.html" class="nav-link ">Data Fields</a>
+                      </li>
+                      <li class="nav-item"><a href="import-jobs.html" class="nav-link ">Import Jobs</a></li>
+                      <li class="nav-item"><a href="ai-config.html" class="nav-link ">AI Config</a></li>
+                      <li class="nav-item"><a href="developer-api.html" class="nav-link ">Developer</a></li>
+                    </ul>
+                  </li>
+
+                </ul>
+              </li>
+
+              </ul>
+            </aside>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="row">
+          <div class="col-sm-12">
+            <button class="btn sidebar-button">Menu</button>
+            <h4 class="main-title mb-4">
+              <img src="assets/images/favicon.svg" alt="" /> Welcome to WAPI!
+            </h4>
+            <!-- AI Summary Quick-Links -->
+            <div class="col-12 mb-4">
+              <div class="ai-summary-card">
+                <div class="ai-summary-title">
+                  <i class="fa fa-magic"></i> Get an AI summary of this page
+                </div>
+                <div class="ai-summary-buttons">
+                  <a href="https://chatgpt.com/?q=Summarize%20this%20page:%20https://docs.pixelstrap.net/wapi/index.html"
+                    target="_blank" class="ai-btn btn-chatgpt">
+                    <i class="fa fa-comment"></i> ChatGPT
+                  </a>
+                  <a href="https://gemini.google.com/app?q=Summarize%20this%20page:%20https://docs.pixelstrap.net/wapi/index.html"
+                    target="_blank" class="ai-btn btn-gemini">
+                    <i class="fa fa-google"></i> Gemini
+                  </a>
+                  <a href="https://x.com/i/grok?text=Summarize%20this%20page:%20https://docs.pixelstrap.net/wapi/index.html"
+                    target="_blank" class="ai-btn btn-grok">
+                    <i class="ri-twitter-x-line"></i> Grok
+                  </a>
+                  <a href="https://www.perplexity.ai/search?q=Summarize%20this%20page:%20https://docs.pixelstrap.net/wapi/index.html"
+                    target="_blank" class="ai-btn btn-perplexity">
+                    <i class="fa fa-search"></i> Perplexity
+                  </a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- 1. Strategic Overview -->
+          <div class="col-12 mb-4">
+            <div class="card shadow-sm border-0 bg-white">
+              <div class="card-body ul-body">
+                <h4 class="main-sub-title mt-0">Overview</h4>
+                <p>The **Roles & Permissions** module implements a robust **Role-Based Access Control (RBAC)**
+                  architecture designed to secure your WAPI instance while enabling seamless team collaboration. This
+                  module empowers administrators to define granular access levels, ensuring that staff members only
+                  interact with the tools and data necessary for their specific functions.</p>
+                <p>By leveraging RBAC, organizations can significantly reduce the risk of unauthorized data exposure and
+                  accidental configuration changes, providing a centralized platform for operational governance and
+                  security compliance.</p>
+
+                <div class="doc-alert doc-alert-important">
+                  <div class="doc-alert-title small font-weight-bold">System Role Constraints</div>
+                  <p class="m-0 x-small">Default roles (Admin, User, agent) are protected system entities. While you
+                    can
+                    view their configuration, they cannot be deleted to ensure platform stability and baseline
+                    access.
+                    Permissions are not assigned directly to agents—they are managed through teams.
+                  </p>
+                </div>
+                <div class="col-lg-12">
+                  <div class="border rounded p-2 bg-white shadow-sm text-center">
+                    <img src="assets/images/admin/16.png" class="img-fluid">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Key Features -->
+          <div class="col-12 mb-4">
+            <div class="card shadow-sm border-0 bg-white">
+              <div class="card-body ul-body">
+                <h4 class="main-sub-title">Key Features</h4>
+                <ul class="professional-feature-list medium mb-0">
+                  <li class="mb-3"><strong>Granular RBAC Architecture:</strong> Define access at the module level (e.g.,
+                    Agents, AI Models, Campaigns) with precise action controls.</li>
+                  <li class="mb-3"><strong>System & Custom Roles:</strong> Utilize protected system roles (Admin, User)
+                    or build custom roles tailored to your unique team structure.</li>
+                  <li class="mb-3"><strong>Real-time Permission Inheritance:</strong> Users assigned to a role
+                    immediately inherit its capabilities, simplifying the provisioning process.</li>
+                  <li class="mb-3"><strong>Invisibility Governance:</strong> Restrict entire modules from the sidebar
+                    for unauthorized users, maintaining a clean and focused staff interface.</li>
+                  <li><strong>Centralized Toggle:</strong> Quickly activate or deactivate roles to manage staff
+                    availability without deleting established configurations.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Navigation Flow -->
+          <div class="col-12 mb-4">
+            <div class="card shadow-sm border-0 bg-white">
+              <div class="card-body ul-body">
+                <h4 class="main-sub-title">Navigation Flow</h4>
+                <div class="doc-steps">
+                  <div class="doc-step-item">Log in to the <strong>WAPI Admin Panel</strong> with super-administrative
+                    credentials.</div>
+                  <div class="doc-step-item">From the left sidebar, navigate to <strong>Roles & Permissions</strong>
+                    under the Content section.</div>
+                  <div class="doc-step-item">You will land on the <strong>Roles List Page</strong>, the primary table
+                    for managing your organization's access tiers.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Roles List Page -->
+          <div class="col-12 mb-4">
+            <div class="card shadow-sm border-0 bg-white">
+              <div class="card-body ul-body">
+                <h4 class="main-sub-title">Roles List Overview</h4>
+                <p class=" text-muted mb-4">The Roles List provides a comprehensive summary of all established
+                  access tiers:</p>
+
+                <ul class="professional-feature-list medium mb-4">
+                  <li class="mb-2"><strong>Role Name & Description:</strong> Displays the functional title and a brief
+                    summary of the role's scope.</li>
+                  <li class="mb-2"><strong>Role Type:</strong> Identifies if the role is a protected **SYSTEM** entity
+                    or a **CUSTOM** administrative creation.</li>
+                  <li class="mb-2"><strong>Status Toggle:</strong> Visual indicators for active deployment vs. internal
+                    deactivation.</li>
+                  <li class="mb-2"><strong>Search Bar:</strong> Real-time keyword filtering to locate specific roles
+                    within the inventory.</li>
+                  <li><strong>Action Protocols:</strong> Direct entry points for **Editing** permissions or **Deleting**
+                    custom roles.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Creation Flow -->
+          <div class="col-12 mb-4">
+            <div class="card shadow-sm border-0 bg-white">
+              <div class="card-body ul-body">
+                <h4 class="main-sub-title">How to Create a New Role</h4>
+
+                <h5 class="font-weight-bold mb-3 small-title">Step 1: Initiation</h5>
+                <div class="doc-steps mb-4 d-flex justify-content-between gap-4">
+
+                  <div>
+                    <div>Navigate to **Roles & Permissions**.</div>
+                    <div>Click the green <strong>+ Add Role</strong> button in
+                      the top-right header zone.</div>
+
+                    <br>
+                    <h5 class="font-weight-bold mb-3 small-title">Step 2: General Information</h5>
+                    <div class="table-responsive mb-4">
+                      <table class="table table-bordered small">
+                        <thead class="bg-light">
+                          <tr>
+                            <th>Field</th>
+                            <th>Functional Requirement</th>
+                            <th class="text-center">Required</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td><strong>Role Display Name</strong></td>
+                            <td>A precise functional name for the role (e.g., "Support Manager").</td>
+                            <td class="text-center text-danger font-weight-bold">Yes</td>
+                          </tr>
+                          <tr>
+                            <td><strong>Description</strong></td>
+                            <td>A brief explanation of what this role can do within the platform.</td>
+                            <td class="text-center text-muted">Optional</td>
+                          </tr>
+                          <tr>
+                            <td><strong>Active Status</strong></td>
+                            <td>Toggle ON to make the role immediately available for user assignment.</td>
+                            <td class="text-center text-muted">Optional</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                  </div>
+
+                  <div class="col-lg-5">
+                    <div class="border rounded p-2 bg-white shadow-sm text-center">
+                      <img src="assets/images/admin/17.png" class="img-fluid">
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+                <h5 class="font-weight-bold mb-3 small-title">Step 3: Access Permissions Configuration</h5>
+                <p class="small text-muted mb-3">Permissions are organized by module (Agents, AI Models, AI Prompts,
+                  etc.). For every module, you can assign the following actions:</p>
+                <ul class="professional-feature-list  mb-4">
+                  <li class="mb-2"><strong>View:</strong> Grants visibility to the module and its data list.</li>
+                  <li class="mb-2"><strong>Create:</strong> Permits the provisioning of new records within the module.
+                  </li>
+                  <li class="mb-2"><strong>Update:</strong> Allows modification of existing records.</li>
+                  <li><strong>Delete:</strong> Enables the permanent removal of records.</li>
+                </ul>
+
+                <h5 class="font-weight-bold mb-3 small-title">Step 4: Role Provisioning</h5>
+                <div class="doc-steps">
+                  <div>Review the permission matrix for security compliance.</div>
+                  <div>Click **Create Role Now** to finalize the Tier.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. Management Protocols -->
+          <div class="col-12 mb-4">
+            <div class="card shadow-sm border-0 bg-white">
+              <div class="card-body ul-body">
+                <h4 class="main-sub-title">Managing Established Roles</h4>
+                <div class="row g-4">
+                  <div class="col-md-4">
+                    <div class="p-3 border rounded bg-light-soft h-100">
+                      <strong class="small d-block mb-1">Edit Permissions</strong>
+                      <p class="x-small text-muted mb-0">Dynamically update a role's capabilities. Assigned users
+                        inherit changes instantly upon their next interaction.</p>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="p-3 border rounded bg-light-soft h-100">
+                      <strong class="small d-block mb-1">Status Governance</strong>
+                      <p class="x-small text-muted mb-0">Deactivate roles to prevent new assignments while keeping
+                        historical permission mapping intact.</p>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="p-3 border rounded bg-light-soft h-100">
+                      <strong class="small d-block mb-1">Role Assignment</strong>
+                      <p class="x-small text-muted mb-0">Apply roles via the **Manage Users** module during provisioning
+                        or profile editing.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7. Strategic Deployment Workflow -->
+          <div class="col-12 mb-4">
+            <div class="card shadow-sm border-0 bg-white">
+              <div class="card-body ul-body">
+                <h4 class="main-sub-title">Workflow Example: Provisioning a Support Tier</h4>
+                <div class="doc-steps">
+                  <div class="doc-step-item"><strong>Define:</strong> Identify the functional needs (e.g., Support
+                    Agents need to view and update chats only).</div>
+                  <div class="doc-step-item"><strong>Create:</strong> Provision a "Support Agent" role with restricted
+                    module access.</div>
+                  <div class="doc-step-item"><strong>Configure:</strong> Grant 'View' and 'Update' for chats, but deny
+                    'Delete' and access to 'AI Models'.</div>
+                  <div class="doc-step-item"><strong>Assign:</strong> Link the role to new staff members via the User
+                    dashboard.</div>
+                  <div class="doc-step-item"><strong>Verify:</strong> Ensure the user logs in and can only see the
+                    allowed operational zones.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 8. Best Practices & Optimization -->
+          <div class="col-12 mb-4">
+            <div class="row g-4">
+              <div class="col-md-12 border-right">
+                <div class="card h-100 shadow-sm border-0 bg-white">
+                  <div class="card-body ul-body">
+                    <h5 class="font-weight-bold mb-3">Security Best Practices</h5>
+                    <ul class="professional-feature-list medium mb-0">
+                      <li class="mb-2"><strong>Least Privilege:</strong> Only grant the minimum level of access required
+                        for a staff member's function.</li>
+                      <li class="mb-2"><strong>System Role Protection:</strong> Avoid using the Super Admin role for
+                        daily operational tasks.</li>
+                      <li class="mb-2"><strong>Regular Audits:</strong> Review role permissions every quarter to ensure
+                        operational alignment.</li>
+                      <li><strong>Naming Precision:</strong> Use clear, descriptive names to avoid confusion during
+                        assignment.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="container">
+      <div class="row footer-theme partition-f">
+        <div class="col-12">Copyright 2026 © WAPI - WhatsApp Marketing Platform by PixelStrap</div>
+      </div>
+    </div>
+  </footer>
+  <div class="bg-overlay"></div>
+  <script src="assets/js/jquery-3.5.1.min.js"></script>
+  <script src="assets/js/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/icons/feather-icon/feather.min.js"></script>
+  <script src="assets/js/icons/feather-icon/feather-icon.js"></script>
+  <script src="assets/js/document/main.js"></script>
+  <script src="assets/js/script.js"></script>
+  <script src="assets/js/global-search.js"></script>
+</body>
+
+</html>

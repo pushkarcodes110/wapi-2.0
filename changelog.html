@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAPI V2.0 - Project Changelog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --secondary: #a855f7;
+            --accent: #f43f5e;
+            --bg-dark: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --text-main: #f1f5f9;
+            --text-dim: #94a3b8;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 40%);
+        }
+
+        header {
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.8), transparent);
+            position: relative;
+        }
+
+        .version-badge {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p {
+            color: var(--text-dim);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 50px;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+        }
+
+        .tab-btn {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 12px 24px;
+            border-radius: 12px;
+            color: var(--text-dim);
+            font-family: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn i { font-style: normal; font-size: 1.2rem; }
+
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary-light);
+            box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .category-group {
+            margin-bottom: 60px;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .category-header h2 {
+            font-size: 1.8rem;
+            color: #fff;
+        }
+
+        .category-header .line {
+            flex-grow: 1;
+            height: 1px;
+            background: linear-gradient(to right, var(--border), transparent);
+        }
+
+        .change-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .change-card:hover {
+            border-color: var(--primary-light);
+            background: rgba(30, 41, 59, 0.9);
+            transform: scale(1.01);
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .badge {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+
+        .badge-added { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
+        .badge-improved { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+        .badge-renamed { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .badge-fixed { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+
+        .change-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .change-card p {
+            color: var(--text-dim);
+            font-size: 1rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: 15px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 12px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .feature-item i {
+            color: var(--primary-light);
+            font-style: normal;
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-dim);
+            border-top: 1px solid var(--border);
+            margin-top: 50px;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--glass);
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .stat-card .num {
+            display: block;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-light);
+        }
+
+        .stat-card .label {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .tabs { flex-wrap: wrap; }
+            .tab-btn { width: calc(50% - 10px); justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="version-badge">VERSION 2.0 RELEASE</div>
+        <h1>WAPI Ecosystem</h1>
+        <p>A comprehensive overhaul of the ultimate WhatsApp automation suite. Experience faster performance, smarter AI, and deeper integrations.</p>
+    </header>
+
+    <div class="container">
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('front')"><i>🚀</i> Frontend</button>
+            <button class="tab-btn" onclick="showTab('admin')"><i>🛠️</i> Admin Panel</button>
+            <button class="tab-btn" onclick="showTab('api')"><i>⚙️</i> Core API</button>
+        </div>
+
+        <!-- FRONTEND SECTION -->
+        <div id="front" class="content-section active">
+            
+            <div class="stat-grid">
+                <div class="stat-card"><span class="num">92</span><span class="label">Files Added</span></div>
+                <div class="stat-card"><span class="num">293</span><span class="label">Files Modified</span></div>
+                <div class="stat-card"><span class="num">2</span><span class="label">Renamed</span></div>
+                <div class="stat-card"><span class="num">0</span><span class="label">Deleted</span></div>
+            </div>
+
+            <div class="category-group">
+                <div class="category-header">
+                    <h2>✨ New Features</h2>
+                    <div class="line"></div>
+                </div>
+
+                <div class="change-card">
+                    <div class="card-top">
+                        <h3>Google Ecosystem Integration</h3>
+                        <span class="badge badge-added">Added</span>
+                    </div>
+                    <p>Direct connectivity with Google services, enabling seamless data flow between WhatsApp and your workspace.</p>
+                    <ul class="feature-list">
+                        <li class="feature-item"><i>📅</i> Google Calendar Event Sync</li>
+                        <li class="feature-item"><i>📊</i> Google Sheets Data Read/Write</li>
+                        <li class="feature-item"><i>🔑</i> OAuth2 Connection Flow</li>
+                    </ul>
+                </div>
+
+                <div class="change-card">
+                    <div class="card-top">
+                        <h3>WhatsApp Appointment Booking</h3>
+                        <span class="badge badge-added">Added</span>
+                    </div>
+                    <p>A full-featured booking system built directly into the chat interface.</p>
+                    <ul class="feature-list">
+                        <li class="feature-item"><i>⏱️</i> Availability Management</li>
+                        <li class="feature-item"><i>💳</i> Payment Link Integration</li>
+                        <li class="feature-item"><i>📝</i> Booking Questionnaire</li>
+                    </ul>
+                </div>
+
+                <div class="change-card">
+                    <div class="card-top">
+                        <h3>Advanced Automation Nodes</h3>
+                        <span class="badge badge-improved">Improved</span>
+                    </div>
+                    <p>The Flow Builder (now Automation Builder) has been supercharged with powerful new logic nodes.</p>
+                    <ul class="feature-list">
+                        <li class="feature-item"><i>🔗</i> External API Request Node</li>
+                        <li class="feature-item"><i>🏷️</i> Dynamic Tagging Node</li>
+                        <li class="feature-item"><i>⏳</i> Wait For Reply Logic</li>
+                        <li class="feature-item"><i>🤖</i> Assign Chatbot Node</li>
+                    </ul>
+                </div>
+
+                <div class="change-card">
+                    <div class="card-top">
+                        <h3>Facebook Ad Integration</h3>
+                        <span class="badge badge-added">Added</span>
+                    </div>
+                    <p>Complete management of "Click-to-WhatsApp" ads and Meta lead forms directly from your dashboard.</p>
+                    <ul class="feature-list">
+                        <li class="feature-item"><i>📢</i> Ad Campaign Wizard</li>
+                        <li class="feature-item"><i>📈</i> Performance Insights</li>
+                        <li class="feature-item"><i>🎯</i> Lead Form Sync</li>
+                    </ul>
+                </div>
+
+                <div class="change-card">
+                    <div class="card-top">
+                        <h3>Visual Pipeline Board</h3>
+                        <span class="badge badge-added">Added</span>
+                    </div>
+                    <p>A drag-and-drop Kanban interface for managing contact stages and sales funnels.</p>
+                    <ul class="feature-list">
+                        <li class="feature-item"><i>📋</i> Multiple Pipeline Support</li>
+                        <li class="feature-item"><i>🖱️</i> Drag-and-Drop Movement</li>
+                        <li class="feature-item"><i>🏷️</i> Custom Stage Mapping</li>
+                    </ul>
+                </div>
+
+                <div class="change-card">
+                    <div class="card-top">
+                        <h3>Customer Segmentation</h3>
+                        <span class="badge badge-added">Added</span>
+                    </div>
+                    <p>Dynamically group your contacts based on behavior, attributes, or interaction history.</p>
+                    <ul class="feature-list">
+                        <li class="feature-item"><i>👥</i> Dynamic Segment Rules</li>
+                        <li class="feature-item"><i>🚀</i> Segment-based Broadcasts</li>
+                        <li class="feature-item"><i>🔍</i> Advanced Contact Filters</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="category-group">
+                <div class="category-header">
+                    <h2>🎨 UI/UX Overhaul</h2>
+                    <div class="line"></div>
+                </div>
+
+                <div class="change-card">
+                    <div class="card-top">
+                        <h3>Semantic Navigation Refactor</h3>
+                        <span class="badge badge-renamed">Renamed</span>
+                    </div>
+                    <p>Complete reorganization of the application architecture for better discoverability and professional clarity.</p>
+                    <ul class="feature-list">
+                        <li class="feature-item"><i>✅</i> Flow Builder → <b>Automation Builder</b></li>
+                        <li class="feature-item"><i>✅</i> WhatsApp Calling → <b>AI Call Assistant</b></li>
+                        <li class="feature-item"><i>✅</i> Campaigns → <b>Broadcast Campaigns</b></li>
+                        <li class="feature-item"><i>✅</i> Teams → <b>Organization Teams</b></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADMIN SECTION -->
+        <div id="admin" class="content-section">
+            
+            <div class="stat-grid">
+                <div class="stat-card"><span class="num">14</span><span class="label">Files Added</span></div>
+                <div class="stat-card"><span class="num">121</span><span class="label">Files Modified</span></div>
+                <div class="stat-card"><span class="num">0</span><span class="label">Renamed</span></div>
+                <div class="stat-card"><span class="num">0</span><span class="label">Deleted</span></div>
+            </div>
+
+            <div class="category-group">
+                <div class="category-header">
+                    <h2>🚀 Management Features</h2>
+                    <div class="line"></div>
+                </div>
+
+                <div class="change-card">
+                    <div class="card-top">
+                        <h3>Quick Replies Library</h3>
+                        <span class="badge badge-added">Added</span>
+                    </div>
+                    <p>New centralized management system for canned responses used by agents and bots.</p>
+                    <ul class="feature-list">
+                        <li class="feature-item"><i>⭐</i> Favorite Response Support</li>
+                        <li class="feature-item"><i>🔍</i> Global Search & Filtering</li>
+                        <li class="feature-item"><i>📂</i> Category Management</li>
+                    </ul>
+                </div>
+
+                <div class="change-card">
+                    <div class="card-top">
+                        <h3>Enhanced Dashboards</h3>
+                        <span class="badge badge-improved">Improved</span>
+                    </div>
+                    <p>Updated visualization components for better business insights.</p>
+                    <ul class="feature-list">
+                        <li class="feature-item"><i>📈</i> Admin Interactive Charts</li>
+                        <li class="feature-item"><i>📇</i> Performance Stat Cards</li>
+                        <li class="feature-item"><i>📋</i> Real-time Activity Tables</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="category-group">
+                <div class="category-header">
+                    <h2>⚙️ Configuration Updates</h2>
+                    <div class="line"></div>
+                </div>
+
+                <div class="change-card">
+                    <div class="card-top">
+                        <h3>Payment Gateway Setup</h3>
+                        <span class="badge badge-improved">Improved</span>
+                    </div>
+                    <p>Refined configuration interfaces for all major supported gateways.</p>
+                    <ul class="feature-list">
+                        <li class="feature-item"><i>💳</i> Stripe Integration UI</li>
+                        <li class="feature-item"><i>💰</i> PayPal Management</li>
+                        <li class="feature-item"><i>🇮🇳</i> Razorpay Specialized Support</li>
+                    </ul>
+                </div>
+
+                <div class="change-card">
+                    <div class="card-top">
+                        <h3>Global Provider Settings</h3>
+                        <span class="badge badge-added">Added</span>
+                    </div>
+                    <p>Centralized management for all external service providers and integrations.</p>
+                    <ul class="feature-list">
+                        <li class="feature-item"><i>☁️</i> AWS Storage Configuration</li>
+                        <li class="feature-item"><i>📧</i> SMTP & Email Providers</li>
+                        <li class="feature-item"><i>🔑</i> Google API Key Management</li>
+                    </ul>
+                </div>
+
+                <div class="change-card">
+                    <div class="card-top">
+                        <h3>Subscription Override</h3>
+                        <span class="badge badge-improved">Improved</span>
+                    </div>
+                    <p>Administrative tools for manual limit adjustments and custom plan overrides for specific users.</p>
+                    <ul class="feature-list">
+                        <li class="feature-item"><i>🔓</i> Manual Limit Overrides</li>
+                        <li class="feature-item"><i>🔄</i> Custom Reset Cycles</li>
+                        <li class="feature-item"><i>🛡️</i> Granular Feature Access</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- API SECTION -->
+        <div id="api" class="content-section">
+            
+            <div class="stat-grid">
+                <div class="stat-card"><span class="num">25</span><span class="label">Files Added</span></div>
+                <div class="stat-card"><span class="num">108</span><span class="label">Files Modified</span></div>
+                <div class="stat-card"><span class="num">0</span><span class="label">Renamed</span></div>
+                <div class="stat-card"><span class="num">0</span><span class="label">Deleted</span></div>
+            </div>
+
+            <div class="category-group">
+                <div class="category-header">
+                    <h2>🧠 Core Logic & Security</h2>
+                    <div class="line"></div>
+                </div>
+
+                <div class="change-card">
+                    <div class="card-top">
+                        <h3>Admin Impersonation Mode</h3>
+                        <span class="badge badge-added">Added</span>
+                    </div>
+                    <p>Highly requested feature allowing administrators to view and debug the system from a specific user's perspective.</p>
+                    <ul class="feature-list">
+                        <li class="feature-item"><i>🛡️</i> Secure Token Handling</li>
+                        <li class="feature-item"><i>👀</i> Session View Mirroring</li>
+                        <li class="feature-item"><i>📝</i> Audit Logging Support</li>
+                    </ul>
+                </div>
+
+                <div class="change-card">
+                    <div class="card-top">
+                        <h3>Appointment Backend Engine</h3>
+                        <span class="badge badge-added">Added</span>
+                    </div>
+                    <p>Comprehensive service layer for managing complex booking logic and external sync.</p>
+                    <ul class="feature-list">
+                        <li class="feature-item"><i>🔄</i> Webhook Processor</li>
+                        <li class="feature-item"><i>📧</i> Payment Link Generator</li>
+                        <li class="feature-item"><i>🔔</i> Reminder Queue System</li>
+                    </ul>
+                </div>
+
+                <div class="change-card">
+                    <div class="card-top">
+                        <h3>Facebook Ecosystem Core</h3>
+                        <span class="badge badge-added">Added</span>
+                    </div>
+                    <p>New backend engine for high-performance interaction with Meta Graph APIs.</p>
+                    <ul class="feature-list">
+                        <li class="feature-item"><i>🔗</i> Ad Account Handlers</li>
+                        <li class="feature-item"><i>📥</i> Lead Webhook Service</li>
+                        <li class="feature-item"><i>📑</i> Page Connection Logic</li>
+                    </ul>
+                </div>
+
+                <div class="change-card">
+                    <div class="card-top">
+                        <h3>Kanban & Segment Engine</h3>
+                        <span class="badge badge-added">Added</span>
+                    </div>
+                    <p>Sophisticated data models and services for managing complex contact flows and segment logic.</p>
+                    <ul class="feature-list">
+                        <li class="feature-item"><i>📊</i> Segment Query Builder</li>
+                        <li class="feature-item"><i>🚦</i> Pipeline Stage Controllers</li>
+                        <li class="feature-item"><i>⚡</i> Fast Item Movement API</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="category-group">
+                <div class="category-header">
+                    <h2>🌍 Localization & Scale</h2>
+                    <div class="line"></div>
+                </div>
+
+                <div class="change-card">
+                    <div class="card-top">
+                        <h3>Global Language Support</h3>
+                        <span class="badge badge-added">Added</span>
+                    </div>
+                    <p>Expanded internationalization with new native support for multiple regions.</p>
+                    <ul class="feature-list">
+                        <li class="feature-item"><i>🇸🇦</i> Arabic (AR)</li>
+                        <li class="feature-item"><i>🇩🇪</i> German (DE)</li>
+                        <li class="feature-item"><i>🇪🇸</i> Spanish (ES)</li>
+                        <li class="feature-item"><i>🇫🇷</i> French (FR)</li>
+                        <li class="feature-item"><i>🇵🇹</i> Portuguese (PT)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 WAPI Project. Built with excellence.</p>
+        <p style="margin-top: 10px; font-size: 0.8rem;">Generated by Antigravity AI Assistant</p>
+    </footer>
+
+    <script>
+        function showTab(tabId) {
+            // Update buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+
+            // Update content
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Admin Settings - WAPI Documentation</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Wapi - WhatsApp Marketing & Automation Platform - Comprehensive Guide for Configuring Application-Wide Settings and Branding" />
+  <meta name="keywords"
+    content="Wapi, Admin Settings, Branding, WhatsApp API, SMTP Config, Usage Limits, Maintenance Mode, SaaS Configuration" />
+  <meta name="author" content="pixelstrap" />
+  <link rel="icon" href="assets/images/favicon.svg" type="image/x-icon" />
+  <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/x-icon" />
+  <!-- Google font-->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <!-- Font Awesome-->
+  <link rel="stylesheet" type="text/css" href="assets/css/fontawesome.css" />
+  <!-- Feather icon-->
+  <link rel="stylesheet" type="text/css" href="assets/css/vendors/feather-icon.css" />
+  <!-- Remix icon-->
+  <link rel="stylesheet" type="text/css" href="assets/css/vendors/remixicon.css" />
+  <!-- animate-->
+  <link rel="stylesheet" type="text/css" href="assets/css/vendors/bootstrap.css" />
+  <!-- App css-->
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+  <!-- Global Search css-->
+  <link rel="stylesheet" type="text/css" href="assets/css/global-search.css" />
+  <!-- Custom Documentation css-->
+  <link rel="stylesheet" type="text/css" href="assets/css/docs-custom.css" />
+</head>
+
+<body>
+  <a href="javascript:void(0)" class="sidebar-overlay"></a>
+  <div class="tap-top">
+    <i data-feather="chevrons-up"></i>
+    <p>Top</p>
+
+  </div>
+  <div>
+    <div class="home-section">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container custom-container">
+          <div class="main-menu">
+            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+              aria-label="Toggle navigation">
+              <i class="fa fa-bars"> </i>
+            </button>
+            <a class="navbar-brand" href="index.html">
+              <img src="assets/images/logo/logo.svg" alt="WAPI - WhatsApp Marketing Platform" /></a>
+            <div>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav menu">
+                  <li class="nav-item">
+                    <a class="nav-link"
+                      href="https://codecanyon.net/item/wapi-whatsapp-marketing-automation-platform-saas-solution/60857765"
+                      role="button" aria-haspopup="true" aria-expanded="false" target="_blank">Purchase</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="https://support.pixelstrap.com/" role="button" aria-haspopup="true"
+                      aria-expanded="false" target="_blank">Support</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="https://wapi-frontend.vercel.app/" role="button" aria-haspopup="true"
+                      aria-expanded="false" target="_blank">Frontend</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="https://wapi-admin.vercel.app/" role="button" aria-haspopup="true"
+                      aria-expanded="false" target="_blank">Admin
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <ul class="nav-right">
+              <li>
+                <div class="btn-group">
+                  <a class="decrease btn btn-doc" href="#" title="Decrease font size">A-</a><a class="reset btn btn-doc"
+                    href="#" title="Default font size">A</a><a class="increase btn btn-doc" href="#"
+                    title="Increase font size">A+</a>
+                </div>
+              </li>
+              <li>
+                <a class="btn btn-light mode" href="#" title="Dark"><i class="fa fa-moon-o"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="container custom-container">
+        <div class="document">Wapi documentation</div>
+        <div class="top-heading">
+          <h2>Admin Settings</h2>
+          <div class="home-search">
+            <input type="search" name="text" placeholder="Search system configuration guides..." />
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container custom-container" id="mainRightNavbar">
+    <div class="document-main">
+      <div class="left-sidebar">
+        <div class="card">
+          <div class="card-body">
+            <aside>
+              <button class="btn button-close">
+                <span>Close</span>
+                <i data-feather="x"></i>
+              </button>
+              <ul class="list-unstyled nav-sidebar doc-nav">
+                <li class="nav-item">
+                  <div class="title">
+                    <a class="nav-link" href="index.html">Introduction</a>
+                  </div>
+                </li>
+                <li class="nav-item ">
+                  <div class="title">
+                    <a class="nav-link" href="prerequisite.html">Prerequisite</a>
+                  </div>
+                </li>
+                <li class="nav-item menu ">
+                  <div class="title">
+                    <a class="nav-link" href="#!">Wapi Installation <i class="fa fa-angle-down"
+                        aria-hidden="true"></i></a>
+                  </div>
+                  <ul class="sub-menu">
+                    <li class="nav-item"><a href="overview.html" class="nav-link ">Overview</a></li>
+                    <li class="nav-item"><a href="quick-installation.html" class="nav-link ">Quick Installation</a></li>
+                    <li class="nav-item menu ">
+                      <div class="title">
+                        <a class="nav-link" href="#!">Backend Installation <i class="fa fa-angle-down"
+                            aria-hidden="true"></i></a>
+                      </div>
+                      <ul class="sub-menu nested-sub-menu">
+                        <li class="nav-item"><a href="local-server.html" class="nav-link ">Local Server</a></li>
+                        <li class="nav-item"><a href="virtual-server.html" class="nav-link ">Virtual Private Server</a>
+                        </li>
+                        <li class="nav-item"><a href="cpanel.html" class="nav-link ">C-panel</a></li>
+
+                      </ul>
+                    </li>
+                    <li class="nav-item menu ">
+                      <div class="title">
+                        <a class="nav-link" href="#!">Frontend Installation <i class="fa fa-angle-down"
+                            aria-hidden="true"></i></a>
+                      </div>
+                      <ul class="sub-menu nested-sub-menu">
+                        <li class="nav-item"><a href="frontend-local.html" class="nav-link ">Local Server</a></li>
+                        <li class="nav-item"><a href="frontend-vps.html" class="nav-link ">Virtual Private Server</a>
+                        </li>
+                        <li class="nav-item"><a href="vercel.html" class="nav-link ">Vercel</a></li>
+                      </ul>
+                    </li>
+                </li>
+                <li class="nav-item">
+                  <div class="title">
+                    <a class="nav-link" href="update.html"> Update</a>
+                  </div>
+                </li>
+              </ul>
+              </li>
+              <li class="nav-item ">
+                <div class="title">
+                  <a class="nav-link" href="core-features.html">Core Features</a>
+                </div>
+              </li>
+              <li class="nav-item ">
+                <div class="title">
+                  <a class="nav-link" href="advanced-features.html">Advanced Features</a>
+                </div>
+              </li>
+              <li class="nav-item menu ">
+                <div class="title">
+                  <a class="nav-link" href="#!">Admin Meta Details <i class="fa fa-angle-down"
+                      aria-hidden="true"></i></a>
+                </div>
+                <ul class="sub-menu">
+                  <li class="nav-item"><a href="become-partner-with-meta.html" class="nav-link ">Become a Partner with
+                      Meta</a></li>
+                  <li class="nav-item"><a href="meta-pricing.html" class="nav-link ">Meta Pricing</a></li>
+                  <li class="nav-item"><a href="meta-limits.html" class="nav-link ">Meta Limits</a></li>
+                  <li class="nav-item"><a href="meta-permissions.html" class="nav-link ">Meta Permissions</a></li>
+                  <li class="nav-item"><a href="meta-billing.html" class="nav-link ">Meta Billing & Payment Setup</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item menu ">
+                <div class="title">
+                  <a class="nav-link" href="#!">Usage <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                </div>
+                <ul class="sub-menu">
+                  <li class="nav-item"><a href="admin-usage.html" class="nav-link ">Admin Usage</a></li>
+                  <li class="nav-item"><a href="tenant-usage.html" class="nav-link ">Tenant Usage</a></li>
+                  <li class="nav-item"><a href="agent-usage.html" class="nav-link ">Agent Usage</a></li>
+                </ul>
+              </li>
+
+              <li class="nav-item menu ">
+                <div class="title">
+                  <a class="nav-link" href="#!">
+                    Admin Guide <i class="fa fa-angle-down"></i>
+                  </a>
+                </div>
+
+                <ul class="sub-menu">
+
+                  <!-- Dashboard -->
+                  <li class="nav-item">
+                    <a href="admin-dashboard.html" class="nav-link ">Dashboard</a>
+                  </li>
+                  <!-- Payment Transactions -->
+                  <li class="nav-item">
+                    <a href="admin-payment-transactions.html" class="nav-link ">Payment Transactions</a>
+                  </li>
+                  <!-- Users Short Links -->
+                  <li class="nav-item">
+                    <a href="admin-users-short-links.html" class="nav-link ">Users Short Links</a>
+                  </li>
+
+                  <!-- Subscription -->
+                  <li class="nav-item menu ">
+                    <div class="title">
+                      <a class="nav-link" href="#!">Subscription <i class="fa fa-angle-down"></i></a>
+                    </div>
+
+                    <ul class="sub-menu nested-sub-menu">
+                      <li class="nav-item"><a href="admin-plan-management.html" class="nav-link ">Manage Plans</a>
+                      </li>
+                      <li class="nav-item"><a href="admin-user-subscriptions.html" class="nav-link ">Subscriber
+                          Plans</a></li>
+                    </ul>
+                  </li>
+
+                  <!-- Manage Users -->
+                  <li class="nav-item menu ">
+                    <div class="title">
+                      <a class="nav-link" href="#!">Manage Users <i class="fa fa-angle-down"></i></a>
+                    </div>
+                    <ul class="sub-menu nested-sub-menu">
+                      <li class="nav-item"><a href="admin-manage-users.html" class="nav-link ">All Users</a></li>
+                      <li class="nav-item"><a href="admin-add-user.html" class="nav-link ">Add User</a></li>
+                    </ul>
+                  </li>
+
+                  <!-- Content Management -->
+                  <li class="nav-item menu ">
+                    <div class="title">
+                      <a class="nav-link" href="#!">Content Management <i class="fa fa-angle-down"></i></a>
+                    </div>
+                    <ul class="sub-menu nested-sub-menu">
+                      <li class="nav-item"><a href="admin-manage-faqs.html" class="nav-link ">Manage FAQs</a></li>
+                      <li class="nav-item"><a href="admin-manage-testimonials.html" class="nav-link ">Manage
+                          Testimonials</a></li>
+                      <li class="nav-item"><a href="admin-pages.html" class="nav-link ">Pages</a></li>
+                      <li class="nav-item"><a href="role-permissions.html" class="nav-link ">Roles & Permissions</a>
+                      </li>
+                      <li class="nav-item"><a href="admin-landing-page.html" class="nav-link ">Manage Landing</a></li>
+                      <li class="nav-item"><a href="template-library.html" class="nav-link ">Templates Library</a>
+                      </li>
+                    </ul>
+                  </li>
+
+                  <!-- System Settings -->
+                  <li class="nav-item menu ">
+                    <div class="title">
+                      <a class="nav-link" href="#!">System Settings <i class="fa fa-angle-down"></i></a>
+                    </div>
+                    <ul class="sub-menu nested-sub-menu">
+                      <li class="nav-item"><a href="admin-payment-gateways.html" class="nav-link ">Payment
+                          Gateways</a>
+                      </li>
+                      <li class="nav-item"><a href="admin-settings.html" class="nav-link ">Settings</a></li>
+                      <li class="nav-item"><a href="admin-ai-models.html" class="nav-link ">AI Models</a></li>
+                      <li class="nav-item"><a href="admin-languages.html" class="nav-link ">Languages</a></li>
+                      <li class="nav-item"><a href="admin-currencies.html" class="nav-link ">Currencies</a></li>
+                      <li class="nav-item"><a href="admin-taxes.html" class="nav-link ">Taxes</a></li>
+                      <li class="nav-item"><a href="contact-inquiries.html" class="nav-link ">Contact
+                          Inquiries</a></li>
+                    </ul>
+                  </li>
+
+
+                </ul>
+              </li>
+
+              <!-- FRONTEND GUIDE -->
+              <li class="nav-item menu ">
+                <div class="title">
+                  <a class="nav-link" href="#!">
+                    Frontend Guide <i class="fa fa-angle-down"></i>
+                  </a>
+                </div>
+
+                <ul class="sub-menu">
+
+                  <li class="nav-item"><a href="frontend-dashboard.html" class="nav-link ">Dashboard</a></li>
+                  <li class="nav-item"><a href="chat-inbox.html" class="nav-link ">WA Chat</a></li>
+                  <li class="nav-item"><a href="chat-appearance.html" class="nav-link ">Chat Appearance</a></li>
+
+                  <!-- INTEGRATIONS -->
+                  <li class="nav-item menu ">
+                    <div class="title">
+                      <a class="nav-link" href="#!">Integrations <i class="fa fa-angle-down"></i></a>
+                    </div>
+
+                    <ul class="sub-menu nested-sub-menu">
+                      <li class="nav-item"><a href="integrate-waba.html" class="nav-link ">Integrate WABA</a></li>
+                      <li class="nav-item"><a href="waba-phone.html" class="nav-link ">WABA Phone Numbers</a></li>
+                      <li class="nav-item menu ">
+                        <div class="title">
+                          <a class="nav-link" href="#!">Templates <i class="fa fa-angle-down"></i></a>
+                        </div>
+                        <ul class="sub-menu nested-sub-menu">
+                          <li class="nav-item"><a href="templates-creation.html" class="nav-link ">Overview</a></li>
+                          <li class="nav-item"><a href="utility-template.html" class="nav-link ">Utility Template</a>
+                          </li>
+                          <li class="nav-item"><a href="marketing-template.html" class="nav-link ">Marketing
+                              Template</a></li>
+                          <li class="nav-item"><a href="authentication-template.html" class="nav-link ">Authentication
+                              Template</a></li>
+                        </ul>
+                      </li>
+                      <li class="nav-item"><a href="google-account.html" class="nav-link ">Google Account</a></li>
+                      <li class="nav-item"><a href="tools.html" class="nav-link ">Tools</a></li>
+                      <li class="nav-item"><a href="badges.html" class="nav-link ">Badges</a></li>
+                      <li class="nav-item"><a href="media-library.html" class="nav-link ">Media</a></li>
+                      <li class="nav-item"><a href="team-management.html" class="nav-link ">Teams</a></li>
+                      <li class="nav-item"><a href="agent-management.html" class="nav-link ">Agents</a></li>
+                    </ul>
+                  </li>
+
+                  <!-- AUTOMATIONS -->
+                  <li class="nav-item menu ">
+                    <div class="title">
+                      <a class="nav-link" href="#!">Automations <i class="fa fa-angle-down"></i></a>
+                    </div>
+
+                    <ul class="sub-menu nested-sub-menu">
+                      <li class="nav-item"><a href="automation-flow.html" class="nav-link ">Automation Builder</a>
+                      </li>
+                      <li class="nav-item"><a href="default-action.html" class="nav-link ">Predefined Actions</a></li>
+                      <li class="nav-item"><a href="reply-materials.html" class="nav-link ">Response Resources</a>
+                      </li>
+                      <li class="nav-item"><a href="quick-replies.html" class="nav-link ">Quick Replies </a></li>
+                      <li class="nav-item"><a href="keyword-trigger.html" class="nav-link ">Keyword Trigger</a></li>
+                      <li class="nav-item"><a href="ai-call-assistant.html" class="nav-link ">AI Call Assistant</a>
+                      </li>
+                      <li class="nav-item"><a href="whatsapp-form.html" class="nav-link ">WhatsApp Form</a></li>
+                      <li class="nav-item"><a href="appointment-booking.html" class="nav-link ">Appointment
+                          Booking</a></li>
+
+                    </ul>
+                  </li>
+
+                  <!-- MY SUBSCRIPTION -->
+                  <li class="nav-item menu ">
+                    <div class="title">
+                      <a class="nav-link" href="#!">My Subscription <i class="fa fa-angle-down"></i></a>
+                    </div>
+
+                    <ul class="sub-menu nested-sub-menu">
+                      <li class="nav-item"><a href="billing-plans.html" class="nav-link ">Billing & Plans</a>
+                      </li>
+                      <li class="nav-item"><a href="payment-gateway.html" class="nav-link ">Payment Gateway</a>
+                      </li>
+                      <li class="nav-item"><a href="payment-transactions.html" class="nav-link ">Payment
+                          Transactions</a>
+                      </li>
+                    </ul>
+                  </li>
+
+                  <!-- MARKETING -->
+                  <li class="nav-item menu ">
+                    <div class="title">
+                      <a class="nav-link" href="#!">Marketing <i class="fa fa-angle-down"></i></a>
+                    </div>
+
+                    <ul class="sub-menu nested-sub-menu">
+                      <li class="nav-item"><a href="click-to-whatsapp-ads.html" class="nav-link ">Click To WhatsApp
+                          Ads</a></li>
+                      <li class="nav-item"><a href="campaigns-creation.html" class="nav-link ">Campaigns</a></li>
+                      <li class="nav-item"><a href="order-management.html" class="nav-link ">Orders</a></li>
+                      <li class="nav-item"><a href="catalogues.html" class="nav-link ">Catalogues</a></li>
+                      <li class="nav-item"><a href="webhook-integration.html" class="nav-link ">Webhooks</a></li>
+                      <li class="nav-item"><a href="contacts.html" class="nav-link ">Contacts</a></li>
+                      <li class="nav-item"><a href="  custom-data-fields.html" class="nav-link ">Data Fields</a>
+                      </li>
+                      <li class="nav-item"><a href="import-jobs.html" class="nav-link ">Import Jobs</a></li>
+                      <li class="nav-item"><a href="ai-config.html" class="nav-link ">AI Config</a></li>
+                      <li class="nav-item"><a href="developer-api.html" class="nav-link ">Developer</a></li>
+                    </ul>
+                  </li>
+
+                </ul>
+              </li>
+
+              </ul>
+            </aside>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="row">
+          <div class="col-sm-12">
+            <button class="btn sidebar-button">Menu</button>
+            <h4 class="main-title mb-4">
+              <img src="assets/images/favicon.svg" alt="" /> Welcome to WAPI!
+            </h4>
+            <!-- AI Summary Quick-Links -->
+            <div class="col-12 mb-4">
+              <div class="ai-summary-card">
+                <div class="ai-summary-title">
+                  <i class="fa fa-magic"></i> Get an AI summary of this page
+                </div>
+                <div class="ai-summary-buttons">
+                  <a href="https://chatgpt.com/?q=Summarize%20this%20page:%20https://docs.pixelstrap.net/wapi/index.html"
+                    target="_blank" class="ai-btn btn-chatgpt">
+                    <i class="fa fa-comment"></i> ChatGPT
+                  </a>
+                  <a href="https://gemini.google.com/app?q=Summarize%20this%20page:%20https://docs.pixelstrap.net/wapi/index.html"
+                    target="_blank" class="ai-btn btn-gemini">
+                    <i class="fa fa-google"></i> Gemini
+                  </a>
+                  <a href="https://x.com/i/grok?text=Summarize%20this%20page:%20https://docs.pixelstrap.net/wapi/index.html"
+                    target="_blank" class="ai-btn btn-grok">
+                    <i class="ri-twitter-x-line"></i> Grok
+                  </a>
+                  <a href="https://www.perplexity.ai/search?q=Summarize%20this%20page:%20https://docs.pixelstrap.net/wapi/index.html"
+                    target="_blank" class="ai-btn btn-perplexity">
+                    <i class="fa fa-search"></i> Perplexity
+                  </a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- 1. Strategic Overview -->
+          <div class="col-12 mb-4">
+            <div class="card shadow-sm border-0 bg-white">
+              <div class="card-body ul-body">
+                <h4 id="overview" class="main-sub-title mt-0">Overview</h4>
+                <p>The **Admin Settings** module is the centralized command center for your WAPI platform. It provides
+                  administrators with absolute control over global application behavior, ranging from front-end branding
+                  and identity to deep technical integrations like WhatsApp API credentials and SMTP mail servers.</p>
+                <p>By leveraging this module, you can fine-tune the platform's persona, enforce usage limits, manage
+                  system availability through maintenance modes, and ensure that every automated communication remains
+                  on-brand and deliverable.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Settings Navigation Hierarchy -->
+          <div class="col-12 mb-4">
+            <div class="card shadow-sm border-0 bg-white">
+              <div class="card-body ul-body">
+                <h4 class="main-sub-title">Settings Navigation</h4>
+                <p class=" text-muted mb-4">The Settings interface is organized into eight functional zones:</p>
+
+                <div class="settings-nav-grid">
+                  <a href="#general" class="settings-nav-card nav-general">
+                    <div class="settings-nav-icon"><i class="ri-settings-4-line"></i></div>
+                    <p class="settings-nav-label">General</p>
+                    <span class="settings-nav-sub">App info & preferences</span>
+                  </a>
+                  <a href="#branding" class="settings-nav-card nav-branding">
+                    <div class="settings-nav-icon"><i class="ri-palette-line"></i></div>
+                    <p class="settings-nav-label">Branding</p>
+                    <span class="settings-nav-sub">Logos & icons</span>
+                  </a>
+                  <a href="#whatsapp" class="settings-nav-card nav-whatsapp">
+                    <div class="settings-nav-icon"><i class="ri-whatsapp-line"></i></div>
+                    <p class="settings-nav-label">WhatsApp</p>
+                    <span class="settings-nav-sub">API credentials</span>
+                  </a>
+                  <a href="#email" class="settings-nav-card nav-email">
+                    <div class="settings-nav-icon"><i class="ri-mail-line"></i></div>
+                    <p class="settings-nav-label">Email</p>
+                    <span class="settings-nav-sub">SMTP configuration</span>
+                  </a>
+                  <a href="#google" class="settings-nav-card nav-google">
+                    <div class="settings-nav-icon"><i class="ri-google-line"></i></div>
+                    <p class="settings-nav-label">Google</p>
+                    <span class="settings-nav-sub">Google API credentials</span>
+                  </a>
+                  <a href="#aws" class="settings-nav-card nav-aws">
+                    <div class="settings-nav-icon"><i class="ri-cloud-line"></i></div>
+                    <p class="settings-nav-label">AWS</p>
+                    <span class="settings-nav-sub">AWS S3 configuration</span>
+                  </a>
+                  <a href="#limits" class="settings-nav-card nav-limits">
+                    <div class="settings-nav-icon"><i class="ri-scales-line"></i></div>
+                    <p class="settings-nav-label">Limits</p>
+                    <span class="settings-nav-sub">File & group limits</span>
+                  </a>
+                  <a href="#maintenance" class="settings-nav-card nav-maintenance">
+                    <div class="settings-nav-icon"><i class="ri-tools-line"></i></div>
+                    <p class="settings-nav-label">Maintenance</p>
+                    <span class="settings-nav-sub">Maintenance & error pages</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="settings-content-wrapper">
+
+            <!-- 3. General (Detailed) -->
+            <div class="col-12 mb-4 settings-section active" id="general">
+              <div class="card shadow-sm border-0 bg-white">
+                <div class="card-body ul-body">
+                  <h4 class="main-sub-title">General Settings</h4>
+                  <p class="text-muted mb-4">Manage core application identity and global functional behaviors.</p>
+
+                  <!-- Application Info Subsection -->
+                  <h5 class="font-weight-bold mb-3 small-title">Application Info</h5>
+                  <div class="table-responsive mb-4">
+                    <table class="table table-bordered small">
+                      <thead class="bg-light">
+                        <tr>
+                          <th style="width: 30%">Setting Field</th>
+                          <th>Functional Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><strong>App Name</strong></td>
+                          <td>The primary display name of the platform (e.g., "Wapi"). Appears in titles and emails.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td><strong>App Email</strong></td>
+                          <td>The primary system email used for administrative notifications and status updates.</td>
+                        </tr>
+                        <tr>
+                          <td><strong>App Description</strong></td>
+                          <td>A concise summary of the platform's purpose (e.g., "WhatsApp Marketing Platform").</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Support Email</strong></td>
+                          <td>The customer-facing email address where users can report issues or request help.</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Default Theme Mode</strong></td>
+                          <td>Sets the global visual preference (Light or Dark) for new users.</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Session Expiration</strong></td>
+                          <td>Defines the duration (in days) that a user session remains active before requiring
+                            re-login.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- Preferences Subsection -->
+                  <h5 class="font-weight-bold mb-3 small-title">Global Preferences</h5>
+                  <div class="row g-4">
+                    <div class="col-md-6">
+                      <div class="p-3 border rounded bg-light-soft">
+                        <strong>Allow User Signup</strong>
+                        <p class="x-small text-muted mb-0">When enabled, new users can register for accounts directly
+                          from the landing page.</p>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="p-3 border rounded bg-light-soft">
+                        <strong>Demo Mode</strong>
+                        <p class="x-small text-muted mb-0">Protects sensitive data by masking credentials and preventing
+                          critical system changes.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 mt-4">
+                    <div class="border rounded p-2 bg-white shadow-sm text-center">
+                      <img src="assets/images/admin/s1.png" class="img-fluid">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. Branding (Detailed) -->
+            <div class="col-12 mb-4 settings-section" id="branding">
+              <div class="card shadow-sm border-0 bg-white">
+                <div class="card-body ul-body">
+                  <h4 class="main-sub-title">Logos & Icons</h4>
+                  <p class="text-muted mb-4">Set URLs or upload images for your application logos and icons.</p>
+
+                  <div class="row g-4">
+                    <!-- Favicon -->
+                    <div class="col-md-6">
+                      <div class="p-3 border rounded bg-light-soft h-100">
+                        <div class="d-flex align-items-center mb-2">
+
+                          <strong>Favicon</strong>
+                        </div>
+                        <p class="x-small text-muted mb-0">The small icon appearing in browser tabs. Recommended size:
+                          32x32px or 64x64px.</p>
+                      </div>
+                    </div>
+
+                    <!-- Logo (Light Mode) -->
+                    <div class="col-md-6">
+                      <div class="p-3 border rounded bg-light-soft h-100">
+                        <div class="d-flex align-items-center mb-2">
+
+                          <strong>Logo (Light Mode)</strong>
+                        </div>
+                        <p class="x-small text-muted mb-0">The primary logo displayed on light backgrounds (e.g.,
+                          standard layout).</p>
+                      </div>
+                    </div>
+
+                    <!-- Logo (Dark Mode) -->
+                    <div class="col-md-6">
+                      <div class="p-3 border rounded bg-light-soft h-100">
+                        <div class="d-flex align-items-center mb-2">
+
+                          <strong class="ml-2">Logo (Dark Mode)</strong>
+                        </div>
+                        <p class="x-small text-muted mb-0">High-contrast logo for dark theme modes or dark navigation
+                          bars.</p>
+                      </div>
+                    </div>
+
+                    <!-- Sidebar Favicon (Light) -->
+                    <div class="col-md-6">
+                      <div class="p-3 border rounded bg-light-soft h-100">
+                        <div class="d-flex align-items-center mb-2">
+
+                          <strong>Sidebar Favicon (Light)</strong>
+                        </div>
+                        <p class="x-small text-muted mb-0">Specialized icon used when the sidebar is collapsed in light
+                          mode.</p>
+                      </div>
+                    </div>
+
+                    <!-- Sidebar Favicon (Dark) -->
+                    <div class="col-md-6">
+                      <div class="p-3 border rounded bg-light-soft h-100">
+                        <div class="d-flex align-items-center mb-2">
+
+                          <strong class="ml-2">Sidebar Favicon (Dark)</strong>
+                        </div>
+                        <p class="x-small text-muted mb-0">Specialized icon used when the sidebar is collapsed in dark
+                          mode.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 mt-4">
+                    <div class="border rounded p-2 bg-white shadow-sm text-center">
+                      <img src="assets/images/admin/s2.png" class="img-fluid">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 5. WhatsApp (Detailed) -->
+            <div class="col-12 mb-4 settings-section" id="whatsapp">
+              <div class="card shadow-sm border-0 bg-white">
+                <div class="card-body ul-body">
+                  <h4 class="main-sub-title">WhatsApp API Credentials</h4>
+                  <p class="text-muted mb-4">Configure your Meta WhatsApp Business API credentials to enable messaging.
+                  </p>
+
+                  <div class="table-responsive mb-4">
+                    <table class="table table-bordered small">
+                      <thead class="bg-light">
+                        <tr>
+                          <th style="width: 30%">Credential Field</th>
+                          <th>Functional Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><strong>App ID</strong></td>
+                          <td>The unique identifier for your Meta Application (found in Meta App Dashboard).</td>
+                        </tr>
+                        <tr>
+                          <td><strong>App Secret</strong></td>
+                          <td>The secret authentication key used to verify your app's identity with Meta.</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Configuration ID</strong></td>
+                          <td>The specific WhatsApp Configuration ID assigned to your business account.</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Webhook Verification Token</strong></td>
+                          <td>A custom secret string (e.g., `v3r1fY_T0k3n_9x8z7`) used by Meta to verify your webhook's
+                            authenticity.</td>
+                        </tr>
+                        <tr>
+                          <td><strong>WhatsApp Webhook URL</strong></td>
+                          <td>The server endpoint (e.g., `http://localhost:5000/whatsapp/webhook`) where Meta sends
+                            message updates.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- Visual Reference -->
+                  <div class="col-lg-12 mt-4">
+                    <div class="border rounded p-2 bg-white shadow-sm text-center">
+                      <img src="assets/images/admin/s3.png" class="img-fluid" alt="WhatsApp API Setup Reference">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6. Email (Detailed) -->
+            <div class="col-12 mb-4 settings-section" id="email">
+              <div class="card shadow-sm border-0 bg-white">
+                <div class="card-body ul-body">
+                  <h4 class="main-sub-title">SMTP Configuration</h4>
+                  <p class="text-muted mb-4">Configure outgoing email via SMTP to enable system alerts and user
+                    notifications.</p>
+
+                  <h5 class="font-weight-bold mb-3 small-title">Server Settings</h5>
+                  <div class="table-responsive mb-4">
+                    <table class="table table-bordered small">
+                      <thead class="bg-light">
+                        <tr>
+                          <th style="width: 30%">SMTP Field</th>
+                          <th>Functional Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><strong>SMTP Host</strong></td>
+                          <td>The address of your mail server (e.g., `smtp.gmail.com` or `smtp.sendgrid.net`).</td>
+                        </tr>
+                        <tr>
+                          <td><strong>SMTP Port</strong></td>
+                          <td>The protocol port (usually `587` for TLS or `465` for SSL encryption).</td>
+                        </tr>
+                        <tr>
+                          <td><strong>SMTP Username</strong></td>
+                          <td>The account email or username used to authenticate with the mail server.</td>
+                        </tr>
+                        <tr>
+                          <td><strong>SMTP Password</strong></td>
+                          <td>The secret password or app-specific token for mail server authentication.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <h5 class="font-weight-bold mb-3 small-title">Sender Details</h5>
+                  <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                      <div class="p-3 border rounded bg-light-soft h-100">
+                        <strong>From Name</strong>
+                        <p class="x-small text-muted mb-0">The name recipients will see in their 'From' field (e.g., "My
+                          Application").</p>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="p-3 border rounded bg-light-soft h-100">
+                        <strong>From Email</strong>
+                        <p class="x-small text-muted mb-0">The email address used as the sender (e.g.,
+                          "noreply@yourdomain.com").</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Visual Reference -->
+                  <div class="col-lg-12 mt-4">
+                    <div class="border rounded p-2 bg-white shadow-sm text-center">
+                      <img src="assets/images/admin/s4.png" class="img-fluid" alt="Email SMTP Setup Reference">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 7. Google (Detailed) -->
+            <div class="col-12 mb-4 settings-section" id="google">
+              <div class="card shadow-sm border-0 bg-white">
+                <div class="card-body ul-body">
+                  <h4 class="main-sub-title">Google Cloud Integration</h4>
+                  <p class="text-muted mb-4">Configure Google OAuth2 credentials to enable features like Google Calendar
+                    integration and Login with Google.</p>
+
+                  <div class="table-responsive mb-4">
+                    <table class="table table-bordered small">
+                      <thead class="bg-light">
+                        <tr>
+                          <th style="width: 30%">Credential Field</th>
+                          <th>Functional Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><strong>Google Client ID</strong></td>
+                          <td>The unique public identifier for your Google Cloud project application.</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Google Client Secret</strong></td>
+                          <td>The private secret key used to authenticate your application with Google services.</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Google Redirect URI</strong></td>
+                          <td>The authorized callback URL (e.g., `https://yourdomain.com/api/auth/google/callback`).
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- Visual Reference -->
+                  <div class="col-lg-12 mt-4 mb-4">
+                    <div class="border rounded p-2 bg-white shadow-sm text-center">
+                      <img src="assets/images/admin/s5.png" class="img-fluid" alt="Google API Setup Reference">
+                    </div>
+                  </div>
+
+                  <h5 class="font-weight-bold mb-3 small-title">Setup Instructions</h5>
+                  <div class="setup-steps">
+                    <div class="step-item mb-3">
+                      <strong>Step 1: Go to Google Cloud Console</strong>
+                      <p class="mb-1">Open <a href="https://console.cloud.google.com/"
+                          target="_blank">https://console.cloud.google.com/</a> and sign in.</p>
+                    </div>
+                    <div class="step-item mb-3">
+                      <strong>Step 2: Create a New Project</strong>
+                      <p class="mb-1">Click the project dropdown (top left) → <strong>New Project</strong>. Enter a name
+                        and click Create.</p>
+                      <div class="col-lg-12">
+                        <div class="border rounded p-2 bg-white shadow-sm text-center">
+                          <img src="assets/images/admin/g1.png" class="img-fluid">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="step-item mb-3">
+                      <strong>Step 3: Enable Required API</strong>
+                      <p class="mb-1">Go to <strong>APIs & Services → Credentials</strong>. Search for and enable
+                        <strong>Google
+                          OAuth API</strong> or <strong>Google People API</strong>.
+                      </p>
+                      <div class="col-lg-12">
+                        <div class="border rounded p-2 bg-white shadow-sm text-center">
+                          <img src="assets/images/admin/g2.png" class="img-fluid">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="step-item mb-3">
+                      <strong>Step 4: Create OAuth Credentials</strong>
+                      <p class="mb-1">Go to <strong>APIs & Services → Credentials</strong>. Click <strong>+ Create
+                          Credentials</strong> → <strong>OAuth client ID</strong>. Choose <strong>Web
+                          Application</strong>.
+                      </p>
+                      <div class="col-lg-12">
+                        <div class="border rounded p-2 bg-white shadow-sm text-center">
+                          <img src="assets/images/admin/g3.png" class="img-fluid">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="step-item mb-3">
+                      <strong>Step 5: Add Redirect URI</strong>
+                      <p class="mb-1">Under <strong>Authorized Redirect URIs</strong>, add your callback URL (e.g.,
+                        <code>http://localhost:3000/auth/google/callback</code> or your production domain).
+                      </p>
+                      <div class="col-lg-12">
+                        <div class="border rounded p-2 bg-white shadow-sm text-center">
+                          <img src="assets/images/admin/g4.png" class="img-fluid">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="step-item">
+                      <strong>Step 6: Copy Credentials</strong>
+                      <p class="mb-0">After creating, copy the <strong>Client ID</strong> and <strong>Client
+                          Secret</strong>
+                        into your admin settings.</p>
+                      <div class="col-lg-12">
+                        <div class="border rounded p-2 bg-white shadow-sm text-center">
+                          <img src="assets/images/admin/g5.png" class="img-fluid">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="step-item mb-4">
+                      <strong>Step 7: Configure OAuth Consent Screen</strong>
+                      <p class="mb-2">Go to <strong>APIs & Services → OAuth consent screen</strong>. Choose "External"
+                        and
+                        fill in the required app details.</p>
+                      <div class="p-3 border rounded bg-warning-soft">
+                        <strong class="d-block mb-1 text-warning"><i class="fa fa-envelope"></i> Test Email (Testing
+                          Mode)</strong>
+                        <p>Go to “Audience” or “Test Users”</p>
+
+                        <p class="x-small text-muted mb-0">While your app is in "Testing" status, only users added to
+                          the
+                          <strong>Test users</strong> list can log in. Click <strong>+ Add users</strong> and enter the
+                          Gmail addresses you'll use for testing.
+                        </p>
+                      </div>
+                      <div class="col-lg-12">
+                        <div class="border rounded p-2 bg-white shadow-sm text-center">
+                          <img src="assets/images/admin/g6.png" class="img-fluid">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 8. AWS S3 (Detailed) -->
+            <div class="col-12 mb-4 settings-section" id="aws">
+              <div class="card shadow-sm border-0 bg-white">
+                <div class="card-body ul-body">
+                  <h4 class="main-sub-title">AWS Configuration</h4>
+                  <p class="text-muted mb-4">Configure your AWS S3 credentials for scalable media storage.</p>
+                  <p>Purpose: After enable AWS, your data will be stored in AWS S3 bucket.</p>
+                  <div class="table-responsive mb-4">
+                    <table class="table table-bordered small">
+                      <thead class="bg-light">
+                        <tr>
+                          <th style="width: 30%">Credential Field</th>
+                          <th>Functional Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><strong>AWS Access Key ID</strong></td>
+                          <td>Your unique identification key for AWS S3 access. Found in IAM Security Credentials.</td>
+                        </tr>
+                        <tr>
+                          <td><strong>AWS Secret Access Key</strong></td>
+                          <td>The primary authentication key. (Visible only once during creation).</td>
+                        </tr>
+                        <tr>
+                          <td><strong>AWS Region</strong></td>
+                          <td>The physical location of your bucket server (e.g., `us-east-1` or `ap-south-1`).</td>
+                        </tr>
+                        <tr>
+                          <td><strong>AWS S3 Bucket</strong></td>
+                          <td>The unique name of the bucket you created for storing application files.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="col-lg-12 mt-4">
+                      <div class="border rounded p-2 bg-white shadow-sm text-center">
+                        <img src="assets/images/admin/s6.png" class="img-fluid" alt="AWS S3 Setup Reference">
+                      </div>
+                    </div>
+                  </div>
+
+                  <h5 class="font-weight-bold mb-3 small-title">AWS S3 Setup Guide</h5>
+                  <div class="setup-steps">
+                    <!-- Step 1 -->
+                    <div class="step-item mb-4">
+                      <strong>1. Create an S3 Bucket</strong>
+                      <p class="mb-2 text-muted x-small">Go to <strong>AWS Dashboard → Search Amazon S3 → Create
+                          bucket</strong>.</p>
+                      <div class="col-lg-12 mt-4">
+                        <div class="border rounded p-2 bg-white shadow-sm text-center">
+                          <img src="assets/images/admin/dashboard.png" class="img-fluid" alt="AWS S3 Setup Reference">
+                        </div>
+                      </div>
+                      <br>
+                      <ul class="professional-feature-list mb-2">
+                        <li><strong>Bucket Type:</strong> Select <strong>General purpose</strong>.</li>
+                        <li><strong>Bucket name:</strong> Enter a unique name (e.g., <code>wapi-storage-bucket</code>).
+                        </li>
+                        <li><strong>AWS Region:</strong> Select your preferred server location (e.g.,
+                          <code>ap-south-1</code>).
+                        </li>
+                        <li><strong>Object Ownership:</strong> Select <strong>ACLs enabled</strong> and <strong>Bucket
+                            owner preferred</strong>.</li>
+                        <li><strong>Block Public Access:</strong> Uncheck <strong>Block all public access</strong> to
+                          allow external file retrieval.</li>
+                        <li><strong>Encryption:</strong> Keep default <strong>SSE-S3</strong> and <strong>Enable Bucket
+                            Key</strong> for optimized cost.</li>
+                      </ul>
+                      <div class="col-lg-12 mt-4">
+                        <div class="border rounded p-2 bg-white shadow-sm text-center">
+                          <img src="assets/images/admin/create_bucket_1.png" class="img-fluid"
+                            alt="AWS S3 Setup Reference">
+                        </div>
+                      </div>
+                      <br>
+                      <div class="col-lg-12 mt-4">
+                        <div class="border rounded p-2 bg-white shadow-sm text-center">
+                          <img src="assets/images/admin/create_bucket_2.png" class="img-fluid"
+                            alt="AWS S3 Setup Reference">
+                        </div>
+                      </div>
+                      <br>
+                      <div class="col-lg-12 mt-4">
+                        <div class="border rounded p-2 bg-white shadow-sm text-center">
+                          <img src="assets/images/admin/create_bucket_3.png" class="img-fluid"
+                            alt="AWS S3 Setup Reference">
+                        </div>
+                      </div>
+                      <br>
+                      <p>As per the given image, fill the details and click on <strong>Create bucket</strong>.</p>
+
+                      <p>You will get the bucket name and bucket region. Copy them and save them somewhere safe.</p>
+                      <div class="col-lg-12 ">
+                        <div class="border rounded p-2 bg-white shadow-sm text-center">
+                          <img src="assets/images/admin/aws_region.png" class="img-fluid" alt="AWS S3 Setup Reference">
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="step-item mb-4">
+                      <strong>2. Create IAM User & Access Keys</strong><br>
+                      <p class="mb-2 text-muted x-small">Search <strong>IAM</strong> in the AWS Management Console
+                        search bar and navigate to <strong>Users</strong> → <strong>Create user</strong>.</p>
+
+                      <!-- IAM Step 1 -->
+                      <br>
+                      <p class="mb-2 small"><strong>Step A: Specify User Details</strong></p>
+                      <ul class="professional-feature-list mb-3">
+                        <li>Enter a descriptive name (e.g., <code>wapi-s3-user</code>).</li>
+                      </ul>
+                      <div class="col-lg-12 mb-4">
+                        <div class="border rounded p-2 bg-white shadow-sm text-center">
+                          <img src="assets/images/admin/aws_user_create_1.png" class="img-fluid"
+                            alt="IAM Specify User Details">
+                        </div>
+                      </div>
+
+                      <!-- IAM Step 2 -->
+                      <p class="mb-2 small"><strong>Step B: Set Permissions</strong></p>
+                      <ul class="professional-feature-list mb-3">
+                        <li>Select <strong>Attach policies directly</strong>.</li>
+                        <li>Search for <strong>AmazonS3FullAccess</strong> and ensure it is checked.</li>
+                      </ul>
+                      <div class="col-lg-12 mb-4">
+                        <div class="border rounded p-2 bg-white shadow-sm text-center">
+                          <img src="assets/images/admin/aws_user_create_2.png" class="img-fluid"
+                            alt="IAM Set Permissions">
+                        </div>
+                      </div>
+
+                      <!-- IAM Step 3 -->
+                      <p class="mb-2 small"><strong>Step C: Review & Create</strong></p>
+                      <ul class="professional-feature-list mb-3">
+                        <li>Verify the details and click <strong>Create user</strong>.</li>
+                      </ul>
+                      <div class="col-lg-12 mb-4">
+                        <div class="border rounded p-2 bg-white shadow-sm text-center">
+                          <img src="assets/images/admin/aws_create_user_3.png" class="img-fluid"
+                            alt="IAM Review and Create">
+                        </div>
+                      </div>
+
+                      <!-- Generating Keys -->
+                      <p class="mb-2 small"><strong>Step D: Generate Access Keys</strong></p>
+                      <ul class="professional-feature-list mb-3">
+                        <li>Navigate to the newly created user and click on the <strong>Security credentials</strong>
+                          tab.</li>
+                        <li>Scroll down to the <strong>Access keys</strong> section and click <strong>Create access
+                            key</strong>.</li>
+                      </ul>
+                      <div class="col-lg-12 mb-4">
+                        <div class="border rounded p-2 bg-white shadow-sm text-center">
+                          <img src="assets/images/admin/create_user_3.png" class="img-fluid"
+                            alt="IAM Security Credentials Tab">
+                        </div>
+                      </div>
+
+                      <ul class="professional-feature-list mb-3">
+                        <li>Select <strong>Application running outside AWS</strong> from the best practices list and
+                          click <strong>Next</strong>.</li>
+                      </ul>
+                      <div class="col-lg-12 mb-4">
+                        <div class="border rounded p-2 bg-white shadow-sm text-center">
+                          <img src="assets/images/admin/access_key_1.png" class="img-fluid"
+                            alt="Access Key Best Practices">
+                        </div>
+                      </div>
+
+                      <ul class="professional-feature-list mb-3">
+                        <li>(Optional) Set a description tag and click <strong>Create access key</strong>.</li>
+                      </ul>
+                      <div class="col-lg-12 mb-4">
+                        <div class="border rounded p-2 bg-white shadow-sm text-center">
+                          <img src="assets/images/admin/access_key_3.png" class="img-fluid" alt="Set Description Tag">
+                        </div>
+                      </div>
+
+                      <ul class="professional-feature-list mb-3">
+                        <li><strong>Critical:</strong> Copy your <strong>Access Key ID</strong> and <strong>Secret
+                            Access Key</strong> immediately and save them securely.</li>
+                      </ul>
+                      <div class="col-lg-12 mb-4">
+                        <div class="border rounded p-2 bg-white shadow-sm text-center">
+                          <img src="assets/images/admin/access_key_2.png" class="img-fluid" alt="Retrieve Access Keys">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="step-item mb-4">
+                      <strong>5. Storage Monitoring</strong>
+                      <p class="mb-2 text-muted x-small">You can track your storage usage and manage your uploaded files
+                        by navigating to the <strong>Buckets</strong> section in the Amazon S3 console.</p>
+                      <div class="col-lg-12">
+                        <div class="border rounded p-2 bg-white shadow-sm text-center">
+                          <img src="assets/images/admin/bucket_name.png" class="img-fluid"
+                            alt="S3 Buckets Monitoring Reference">
+                        </div>
+                      </div>
+                      <div class="col-lg-12">
+                        <div class="border rounded p-2 bg-white shadow-sm text-center">
+                          <img src="assets/images/admin/bucket_object.png" class="img-fluid"
+                            alt="S3 Buckets Monitoring Reference">
+                        </div>
+                      </div>
+                      <p>click on bucket name to monitor your storage</p>
+                    </div>
+
+
+                  </div>
+
+                  <div>
+                    <p><strong>Note:</strong>after collecting all the details, go to the <strong>Admin Settings</strong>
+                      page and click on the <strong>AWS</strong> tab and enter the details in the respective
+                      fields.</p>
+                  </div>
+
+                  <!-- Visual Reference -->
+                  <div class="col-lg-12 mt-4">
+                    <div class="border rounded p-2 bg-white shadow-sm text-center">
+                      <img src="assets/images/admin/s6.png" class="img-fluid" alt="AWS S3 Setup Reference">
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <!-- 5. Resource Limits -->
+            <div class="col-12 mb-4 settings-section" id="limits">
+              <div class="card shadow-sm border-0 bg-white">
+                <div class="card-body ul-body">
+                  <h4 class="main-sub-title">Infrastructure & Governance (Limits)</h4>
+
+                  <!-- Communication Features -->
+                  <h5 class="font-weight-bold mb-3 small-title">Communication Features</h5>
+                  <div class="table-responsive mb-4">
+                    <table class="table table-bordered professional-table mb-0">
+                      <thead class="bg-light">
+                        <tr>
+                          <th>Feature</th>
+                          <th>Description</th>
+                          <th>Default State</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><strong>Media Sharing</strong></td>
+                          <td>Enable or disable the capability for users to send media files across the platform.</td>
+                          <td><span class="badge badge-success">Enabled</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- File Upload Limits -->
+                  <h5 class="font-weight-bold mb-3 small-title">File Upload & Storage Limits</h5>
+                  <div class="table-responsive mb-4">
+                    <table class="table table-bordered professional-table mb-0">
+                      <thead class="bg-light">
+                        <tr>
+                          <th>Category</th>
+                          <th>Field Name</th>
+                          <th>Value (MB / Count)</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><strong>Documents</strong></td>
+                          <td>Document Limit</td>
+                          <td><code>15 MB</code></td>
+                          <td>Maximum size for PDF, DOC, etc.</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Audio</strong></td>
+                          <td>Audio Limit</td>
+                          <td><code>15 MB</code></td>
+                          <td>Maximum size for MP3, WAV, etc.</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Video</strong></td>
+                          <td>Video Limit</td>
+                          <td><code>20 MB</code></td>
+                          <td>Maximum size for MP4, MOV, etc.</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Images</strong></td>
+                          <td>Image Limit</td>
+                          <td><code>10 MB</code></td>
+                          <td>Maximum size for JPG, PNG, etc.</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Batching</strong></td>
+                          <td>Multi-file Share Limit</td>
+                          <td><code>10</code></td>
+                          <td>Max number of files per single share operation.</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Quota</strong></td>
+                          <td>Total Storage Limit</td>
+                          <td><code>100 MB</code></td>
+                          <td>Global storage cap per user/group.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div class="alert alert-light border rounded mb-4">
+                    <strong>Allowed File Upload Types:</strong>
+                    <p class="mb-0 text-muted x-small">
+                      jpg, jpeg, png, gif, webp, svg, mp4, mpeg, mov, webm, mp3, wav, ogg, pdf, doc, docx, xls, xlsx,
+                      ppt, pptx, txt, json, csv
+                    </p>
+                  </div>
+
+                  <!-- Storage Management -->
+                  <h5 class="font-weight-bold mb-3 small-title">Storage Management</h5>
+                  <ul class="professional-feature-list mb-4">
+                    <li><strong>Restore Storage on Delete:</strong> If enabled, deleted files will be subtracted from
+                      the user's total storage usage, freeing up quota.</li>
+                  </ul>
+
+                  <div class="col-lg-12 mt-4">
+                    <div class="border rounded p-2 bg-white shadow-sm text-center">
+                      <img src="assets/images/admin/s7.png" class="img-fluid" alt="Limits Configuration Reference">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6. Maintenance Protocols -->
+            <div class="col-12 mb-4 settings-section" id="maintenance">
+              <div class="card shadow-sm border-0 bg-white">
+                <div class="card-body ul-body">
+                  <h4 class="main-sub-title">Maintenance Protocols</h4>
+
+                  <!-- Maintenance Mode Configuration -->
+                  <h5 class="font-weight-bold mb-3 small-title">Maintenance Mode</h5>
+                  <div class="table-responsive mb-4">
+                    <table class="table table-bordered professional-table mb-0">
+                      <thead class="bg-light">
+                        <tr>
+                          <th>Setting</th>
+                          <th>Field Name</th>
+                          <th>Example / Default</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><strong>Status</strong></td>
+                          <td>Enable Maintenance Mode</td>
+                          <td><span class="badge badge-secondary">Disabled</span></td>
+                          <td>When enabled, users will see the maintenance page instead of the app.</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Title</strong></td>
+                          <td>Maintenance Title</td>
+                          <td><code>Under Maintenance</code></td>
+                          <td>Main heading displayed on the maintenance screen.</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Message</strong></td>
+                          <td>Maintenance Message</td>
+                          <td><code>We are performing some maintenance...</code></td>
+                          <td>Detailed information explaining the reason for downtime.</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Whitelisting</strong></td>
+                          <td>Allowed IPs</td>
+                          <td><code>eg. 192.168.1.1</code></td>
+                          <td>IP addresses that can bypass maintenance mode to access the app.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- Visual Assets -->
+                  <h5 class="font-weight-bold mb-3 small-title">Maintenance Page Visuals</h5>
+                  <ul class="professional-feature-list mb-4">
+                    <li><strong>Maintenance Page Image:</strong> Upload a custom graphic or provide a URL to style the
+                      maintenance experience.</li>
+                  </ul>
+
+                  <div class="col-lg-12 mt-4">
+                    <div class="border rounded p-2 bg-white shadow-sm text-center">
+                      <img src="assets/images/admin/s8.png" class="img-fluid" alt="Maintenance Protocols Reference">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div> <!-- End settings-content-wrapper -->
+
+          <!-- 6. Management Workflow & Best Practices -->
+          <div class="col-12 mb-4">
+            <div class="row g-4">
+              <div class="col-md-12 border-right">
+                <div class="card h-100 shadow-sm border-0 bg-white">
+                  <div class="card-body ul-body">
+                    <h5 class="font-weight-bold mb-3">Operational Best Practices</h5>
+                    <ul class="professional-feature-list  mb-0">
+                      <li class="mb-2"><strong>Incremental Saves:</strong> Each section (General, Branding, etc.)
+                        requires a separate <strong>Save Changes</strong> click.</li>
+                      <li class="mb-2"><strong>SMTP Verification:</strong> Always use the <strong>Test
+                          Configuration</strong> button
+                        after updating mail server details.</li>
+                      <li class="mb-2"><strong>Google Synchronization:</strong> Ensure your Google Cloud Project
+                        remains active and the Redirect URIs match your current environment.</li>
+                      <li class="mb-2"><strong>Meta Synchronization:</strong> Regularly review WhatsApp API credentials
+                        to ensure tokens haven't expired.</li>
+                      <li><strong>Live Verification:</strong> After enabling Maintenance Mode, verify the appearance of
+                        your custom 503 error page.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="container">
+      <div class="row footer-theme partition-f">
+        <div class="col-12">Copyright 2026 © WAPI - WhatsApp Marketing Platform by PixelStrap</div>
+      </div>
+    </div>
+  </footer>
+  <div class="bg-overlay"></div>
+  <script src="assets/js/jquery-3.5.1.min.js"></script>
+  <script src="assets/js/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/icons/feather-icon/feather.min.js"></script>
+  <script src="assets/js/icons/feather-icon/feather-icon.js"></script>
+  <script src="assets/js/document/main.js"></script>
+  <script src="assets/js/script.js"></script>
+  <script src="assets/js/global-search.js"></script>
+  <script>
+    $(document).ready(function () {
+      // Settings Tab Logic
+      $('.settings-nav-card').on('click', function (e) {
+        e.preventDefault();
+        const targetId = $(this).attr('href').substring(1);
+
+        // Update Nav Cards
+        $('.settings-nav-card').removeClass('active');
+        $(this).addClass('active');
+
+        // Switch Sections
+        $('.settings-section').removeClass('active');
+        $('#' + targetId).addClass('active');
+
+        // Scroll to content top
+        $('html, body').animate({
+          scrollTop: $("#settings-content-wrapper").offset().top - 100
+        }, 500);
+      });
+
+      // Default active card
+      $('.nav-general').addClass('active');
+    });
+  </script>
+</body>
+
+</html>
