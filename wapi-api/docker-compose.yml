@@ -25,7 +25,7 @@ services:
       APP_URL: https://api.yourdomain.com
       APP_FRONTEND_URL: https://app.yourdomain.com
       FRONTEND_URL: https://app.yourdomain.com
-      ALLOWED_ORIGINS: https://app.yourdomain.com,https://admin.yourdomain.com
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
 
       ADMIN_NAME: ${ADMIN_NAME}
       ADMIN_EMAIL: ${ADMIN_EMAIL}
