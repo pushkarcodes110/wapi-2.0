@@ -90,21 +90,30 @@ export const handleIncomingMessage = async (req, res, io = null) => {
 
     const contact = await import('../models/index.js');
     const Contact = contact.Contact;
-    let contactDoc = await Contact.findOne({
-      phone_number: message.from,
-      created_by: whatsappPhoneNumber.user_id
-    });
-
-    if (!contactDoc) {
-      contactDoc = await Contact.create({
+    let contactDoc = await Contact.findOneAndUpdate(
+      {
         phone_number: message.from,
-        name: message.from,
-        source: 'whatsapp',
-        user_id: whatsappPhoneNumber.user_id,
-        created_by: whatsappPhoneNumber.user_id,
-        status: 'lead'
-      });
-    }
+        user_id: whatsappPhoneNumber.user_id
+      },
+      {
+        $set: {
+          deleted_at: null
+        },
+        $setOnInsert: {
+          phone_number: message.from,
+          name: message.from,
+          source: 'whatsapp',
+          user_id: whatsappPhoneNumber.user_id,
+          created_by: whatsappPhoneNumber.user_id,
+          status: 'lead'
+        }
+      },
+      {
+        new: true,
+        setDefaultsOnInsert: true,
+        upsert: true
+      }
+    );
 
 
     contactDoc = await Contact.findById(contactDoc._id);

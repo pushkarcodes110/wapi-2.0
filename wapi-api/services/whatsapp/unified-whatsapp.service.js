@@ -421,7 +421,7 @@ class UnifiedWhatsAppService {
 
     if (recipientNumber) {
       await Contact.updateOne(
-        { phone_number: recipientNumber, created_by: userId },
+        { phone_number: recipientNumber, user_id: userId },
         { last_outgoing_message_at: new Date() }
       );
     }

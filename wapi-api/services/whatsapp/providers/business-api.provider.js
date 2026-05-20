@@ -346,22 +346,31 @@ export default class BusinessAPIProvider extends BaseProvider {
 
     let contact = null;
     if (!params.fromCampaignSystem) {
-      contact = await Contact.findOne({
-        phone_number: recipientNumber,
-        created_by: userId,
-        deleted_at: null
-      });
-
-      if (!contact) {
-        contact = await Contact.create({
+      contact = await Contact.findOneAndUpdate(
+        {
           phone_number: recipientNumber,
-          name: recipientNumber,
-          source: 'whatsapp',
-          user_id: userId,
-          created_by: userId,
-          status: 'lead'
-        });
-      }
+          user_id: userId
+        },
+        {
+          $set: {
+            deleted_at: null,
+            updated_by: userId
+          },
+          $setOnInsert: {
+            phone_number: recipientNumber,
+            name: recipientNumber,
+            source: 'whatsapp',
+            user_id: userId,
+            created_by: userId,
+            status: 'lead'
+          }
+        },
+        {
+          new: true,
+          setDefaultsOnInsert: true,
+          upsert: true
+        }
+      );
     } else {
       contact = { _id: params.contactId || null };
     }

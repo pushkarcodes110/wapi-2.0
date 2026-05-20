@@ -56,9 +56,9 @@ async function seedDefaultSettings() {
         'pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'ppt', 'pptx', 'txt',
         'json'
       ],
-      app_id: process.env.app_id || null,
-      app_secret: process.env.app_secret || null,
-      configuration_id: null,
+      app_id: process.env.APP_ID || process.env.app_id || null,
+      app_secret: process.env.APP_SECRET || process.env.app_secret || null,
+      configuration_id: process.env.CONFIGURATION_ID || process.env.configuration_id || null,
       max_groups_per_user: 500,
       max_group_members: 1024,
       whatsapp_webhook_url: `/whatsapp/webhook`,
