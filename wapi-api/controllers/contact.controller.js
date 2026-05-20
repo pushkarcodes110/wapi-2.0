@@ -260,13 +260,12 @@ export const createContact = async (req, res) => {
 
     const cleanedPhoneNumber = phoneValidation.cleanedNumber;
 
-    const existingContact = await Contact.findOne({
+    let existingContact = await Contact.findOne({
       phone_number: cleanedPhoneNumber,
-      created_by: req.user.id,
-      deleted_at: null
+      user_id: userId
     });
 
-    if (existingContact) {
+    if (existingContact && !existingContact.deleted_at) {
       return res.status(409).json({
         success: false,
         message: 'Contact with this phone number already exists'
@@ -318,7 +317,8 @@ export const createContact = async (req, res) => {
       });
     }
 
-    const contact = await Contact.create({
+    let contact;
+    const contactData = {
       phone_number: cleanedPhoneNumber,
       name: name.trim(),
       source,
@@ -328,8 +328,17 @@ export const createContact = async (req, res) => {
       status,
       custom_fields,
       user_id: userId,
-      created_by: req.user.id
-    });
+      created_by: existingContact?.created_by || req.user.id,
+      deleted_at: null
+    };
+
+    if (existingContact) {
+      Object.assign(existingContact, contactData);
+      existingContact.updated_by = req.user.id;
+      contact = await existingContact.save();
+    } else {
+      contact = await Contact.create(contactData);
+    }
 
     if (req.body.segments && Array.isArray(req.body.segments)) {
       await segmentService.updateContactSegments(contact._id, req.body.segments, userId);
