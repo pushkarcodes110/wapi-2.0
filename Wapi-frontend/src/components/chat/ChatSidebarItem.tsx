@@ -34,6 +34,9 @@ const ChatSidebarItem: React.FC<ChatSidebarItemProps> = ({ chat, isSelected, isS
   const { userSetting } = useAppSelector((state) => state.setting);
   const userSettingData = userSetting?.data;
   const finalColor = userSettingData?.theme_color == "null" ? "var(--primary)" : "var(--chat-theme-color)";
+  const hasContactName = Boolean(contact.name?.trim()) && contact.name !== contact.number;
+  const displayName = hasContactName ? contact.name : contact.number;
+  const displayNumber = maskSensitiveData(contact.number, "phone", is_demo_mode);
 
   let parsedLocation;
   if (lastMessage.messageType === "location" && lastMessage.content) {
@@ -72,7 +75,7 @@ const ChatSidebarItem: React.FC<ChatSidebarItemProps> = ({ chat, isSelected, isS
         ) : (
           <div className="relative shrink-0">
             <div className="h-10 w-10 rounded-full flex items-center justify-center text-white font-bold border border-slate-100 dark:border-(--card-border-color) overflow-hidden" style={{ backgroundColor: finalColor }}>
-              {contact.avatar ? <Image src={contact.avatar} alt={contact.name} className="w-full h-full object-cover" width={48} height={48} unoptimized /> : getInitials(app_name || "W")}
+              {contact.avatar ? <Image src={contact.avatar} alt={displayName} className="w-full h-full object-cover" width={48} height={48} unoptimized /> : getInitials(displayName || app_name || "W")}
             </div>
           </div>
         )}
@@ -81,7 +84,7 @@ const ChatSidebarItem: React.FC<ChatSidebarItemProps> = ({ chat, isSelected, isS
           <div className="flex justify-between items-center pe-2">
             <div className="flex items-center gap-2 truncate">
               <h3 className={cn("font-semibold truncate text-sm", selectedChatId === contact.id ? "" : "text-slate-900 dark:text-white")} style={selectedChatId === contact.id ? { color: finalColor } : {}}>
-                {isAgent && user?.is_phoneno_hide ? "Customer" : maskSensitiveData(contact.number, "phone", is_demo_mode)}
+                {isAgent && user?.is_phoneno_hide ? "Customer" : displayName}
               </h3>
               {contact.chat_status === "resolved" && <Badge className="h-4 px-1.5 text-[8px] bg-emerald-100 text-emerald-700 border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20 font-bold uppercase tracking-tighter">Resolved</Badge>}
             </div>
@@ -100,7 +103,10 @@ const ChatSidebarItem: React.FC<ChatSidebarItemProps> = ({ chat, isSelected, isS
             </div>
           </div>
           <div className="flex justify-between items-center gap-2">
-            <p className={cn("text-xs truncate max-w-45", lastMessage.unreadCount ? "text-slate-900 dark:text-white font-medium" : "text-slate-500 dark:text-gray-500")}>{lastMessage.messageType === "location" ? parsedLocation?.address : lastMessage?.content || "No messages yet"}</p>
+            <div className="min-w-0 flex-1">
+              {hasContactName && !(isAgent && user?.is_phoneno_hide) && <p className="text-[11px] truncate text-slate-400 dark:text-gray-500">{displayNumber}</p>}
+              <p className={cn("text-xs truncate max-w-45", lastMessage.unreadCount ? "text-slate-900 dark:text-white font-medium" : "text-slate-500 dark:text-gray-500")}>{lastMessage.messageType === "location" ? parsedLocation?.address : lastMessage?.content || "No messages yet"}</p>
+            </div>
           </div>
         </div>
       </div>

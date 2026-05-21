@@ -33,7 +33,7 @@ export const contactApi = baseApi.enhanceEndpoints({ addTagTypes: ["Contact"] })
         method: "PUT",
         body: data,
       }),
-      invalidatesTags: (result, error, { id }) => ["Contact", { type: "Contact", id }],
+      invalidatesTags: (result, error, { id }) => ["Contact", "Chats", { type: "Contact", id }],
     }),
     deleteContact: builder.mutation({
       query: (ids) => ({

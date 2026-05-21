@@ -83,6 +83,12 @@ const chatSlice = createSlice({
         storage.setItem("selectedChat", state.selectedChat);
       }
     },
+    updateSelectedChatContactName: (state, action: PayloadAction<string>) => {
+      if (state.selectedChat) {
+        state.selectedChat.contact.name = action.payload;
+        storage.setItem("selectedChat", state.selectedChat);
+      }
+    },
     setReplyToMessage: (state, action: PayloadAction<RecentChatResponseItem["lastMessage"] | null>) => {
       state.replyToMessage = action.payload;
     },
@@ -100,5 +106,5 @@ const chatSlice = createSlice({
   },
 });
 
-export const { selectChat, selSelectPhoneNumber, setProfileToggle, setProfileToggleStatus, rehydrateChat, setLeftSidebartoggle, setIsMobileScreen, resetChatState, updateSelectedChatStatus, setReplyToMessage, clearReplyToMessage } = chatSlice.actions;
+export const { selectChat, selSelectPhoneNumber, setProfileToggle, setProfileToggleStatus, rehydrateChat, setLeftSidebartoggle, setIsMobileScreen, resetChatState, updateSelectedChatStatus, updateSelectedChatContactName, setReplyToMessage, clearReplyToMessage } = chatSlice.actions;
 export default chatSlice.reducer;

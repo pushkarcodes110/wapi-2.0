@@ -4,7 +4,6 @@ import { useSendMessageMutation } from "@/src/redux/api/chatApi";
 import { useAppSelector } from "@/src/redux/hooks";
 import { RootState } from "@/src/redux/store";
 import { BaseMessageProps } from "@/src/types/components/chat";
-import { maskSensitiveData } from "@/src/utils/masking";
 import { safeParseDate } from "@/src/utils/safeDate";
 import { AlertCircle, Check, CheckCheck, Clock, FileText, Image as ImageIcon, Mic, Video } from "lucide-react";
 import React, { useState } from "react";
@@ -37,7 +36,6 @@ const BaseMessage: React.FC<BaseMessageProps> = ({ message, children, isWindowEx
   const { user } = useAppSelector((state) => state.auth);
   const { selectedChat, selectedPhoneNumberId } = useAppSelector((state: RootState) => state.chat);
   const [sendMessage] = useSendMessageMutation();
-  const { is_demo_mode } = useAppSelector((state) => state.setting);
   const { selectedWorkspace } = useAppSelector((state) => state.workspace);
   const isBaileys = selectedWorkspace?.waba_type === "baileys";
   const isAgent = user?.role === "agent";
@@ -48,6 +46,10 @@ const BaseMessage: React.FC<BaseMessageProps> = ({ message, children, isWindowEx
   const time = dateObj.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   const isOutgoing = message?.direction === "outbound";
   const showSenderName = !isOutgoing;
+  const selectedContactName = selectedChat?.contact.name;
+  const selectedContactNumber = selectedChat?.contact.number;
+  const hasSelectedContactName = Boolean(selectedContactName?.trim()) && selectedContactName !== selectedContactNumber;
+  const inboundSenderName = hasSelectedContactName ? selectedContactName : message.sender.name;
 
   const handleRemoveReaction = async () => {
     if (!selectedChat || !selectedPhoneNumberId || !message.wa_message_id) return;
@@ -74,7 +76,7 @@ const BaseMessage: React.FC<BaseMessageProps> = ({ message, children, isWindowEx
           {!isOutgoing && showSenderName && (
             <div className="flex items-center gap-2 mb-2">
               <span className="text-[13px] font-semibold" style={{ color: userSettingData?.theme_color == "null" ? "var(--primary)" : "var(--chat-theme-color)" }}>
-                {isAgent && user?.is_phoneno_hide ? "Customer" : maskSensitiveData(message.sender.name, "phone", is_demo_mode)}
+                {isAgent && user?.is_phoneno_hide ? "Customer" : inboundSenderName}
               </span>
             </div>
           )}

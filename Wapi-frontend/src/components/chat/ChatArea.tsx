@@ -1,19 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/src/elements/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/src/elements/ui/dialog";
+import { Input } from "@/src/elements/ui/input";
 import { Textarea } from "@/src/elements/ui/textarea";
 import { useChatTheme } from "@/src/hooks/useChatTheme";
 import { cn } from "@/src/lib/utils";
+import { useUpdateContactMutation } from "@/src/redux/api/contactApi";
 import { useGetMessagesQuery, useSendMessageMutation, useUpdateChatStatusMutation } from "@/src/redux/api/chatApi";
 import { useCreateAttachmentMutation } from "@/src/redux/api/mediaApi";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
-import { clearReplyToMessage, selSelectPhoneNumber, setIsMobileScreen, setLeftSidebartoggle, setProfileToggle, updateSelectedChatStatus } from "@/src/redux/reducers/messenger/chatSlice";
+import { clearReplyToMessage, selSelectPhoneNumber, setIsMobileScreen, setLeftSidebartoggle, setProfileToggle, updateSelectedChatContactName, updateSelectedChatStatus } from "@/src/redux/reducers/messenger/chatSlice";
 import { openPreview } from "@/src/redux/reducers/previewSlice";
 import { RootState } from "@/src/redux/store";
 import { Attachment } from "@/src/types/components";
 import { ChatAreaProps, SendMessagePayload, SuggestReplyMessage } from "@/src/types/components/chat";
 import { getInitials } from "@/src/utils";
 import { maskSensitiveData } from "@/src/utils/masking";
-import { BotMessageSquare, ChevronLeft, FileText, Filter, Image as ImageIcon, LayoutTemplate, Loader2, MessageSquareQuote, Mic, MoreVertical, Search, Send, Sparkles, Video, X } from "lucide-react";
+import { BotMessageSquare, ChevronLeft, FileText, Filter, Image as ImageIcon, LayoutTemplate, Loader2, MessageSquareQuote, Mic, MoreVertical, Pencil, Search, Send, Sparkles, Video, X } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -56,6 +59,9 @@ const ChatArea: React.FC<ChatAreaProps> = ({ contactId, phoneNumberId, contactNa
   const currentContactName = contactName || selectedChat?.contact.name;
   const currentContactNumber = contactNumber || selectedChat?.contact.number;
   const currentContactAvatar = contactAvatar || selectedChat?.contact.avatar;
+  const hasContactName = Boolean(currentContactName?.trim()) && currentContactName !== currentContactNumber;
+  const displayContactName = hasContactName ? currentContactName : currentContactNumber;
+  const displayContactNumber = currentContactNumber ? maskSensitiveData(currentContactNumber, "phone", is_demo_mode) : "";
 
   const { app_name } = useAppSelector((state: RootState) => state.setting);
   const [messageText, setMessageText] = useState("");
@@ -73,6 +79,8 @@ const ChatArea: React.FC<ChatAreaProps> = ({ contactId, phoneNumberId, contactNa
   const [isQuickReplyModalOpen, setIsQuickReplyModalOpen] = useState(false);
   const [isPaymentLinkModalOpen, setIsPaymentLinkModalOpen] = useState(false);
   const [isAudioRecording, setIsAudioRecording] = useState(false);
+  const [isEditNameOpen, setIsEditNameOpen] = useState(false);
+  const [contactNameInput, setContactNameInput] = useState("");
   const [interactiveType, setInteractiveType] = useState<"button" | "list">("button");
   const [dateFilters, setDateFilters] = useState<{ startDate?: string; endDate?: string }>({});
   const activeFilterCount = Object.keys(dateFilters).length;
@@ -103,6 +111,21 @@ const ChatArea: React.FC<ChatAreaProps> = ({ contactId, phoneNumberId, contactNa
   const [sendMessage, { isLoading: isSending }] = useSendMessageMutation();
   const [createAttachment] = useCreateAttachmentMutation();
   const [updateStatus, { isLoading: isStatusUpdating }] = useUpdateChatStatusMutation();
+  const [updateContact, { isLoading: isUpdatingContactName }] = useUpdateContactMutation();
+
+  const handleUpdateContactName = async () => {
+    const nextName = contactNameInput.trim();
+    if (!nextName || !currentContactId) return;
+
+    try {
+      await updateContact({ id: currentContactId, name: nextName }).unwrap();
+      dispatch(updateSelectedChatContactName(nextName));
+      setIsEditNameOpen(false);
+      toast.success("Contact name updated");
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Failed to update contact name");
+    }
+  };
 
   const handleToggleStatus = async () => {
     if (!selectedChat || !selectedPhoneNumberId) return;
@@ -449,12 +472,30 @@ const ChatArea: React.FC<ChatAreaProps> = ({ contactId, phoneNumberId, contactNa
             <ChevronLeft size={20} />
           </div>
         )}
-        <div className="flex items-center gap-3 contact-info [@media(max-width:991px)]:mr-auto rtl:[@media(max-width:991px)]:mr-0 rtl:[@media(max-width:991px)]:ml-auto" onClick={() => !isModal && onToggleProfile()}>
+        <div className="flex items-center gap-3 contact-info min-w-0 [@media(max-width:991px)]:mr-auto rtl:[@media(max-width:991px)]:mr-0 rtl:[@media(max-width:991px)]:ml-auto" onClick={() => !isModal && onToggleProfile()}>
           <div className="h-10 w-10 rounded-full flex items-center justify-center text-white font-bold overflow-hidden" style={{ backgroundColor: userSettingData?.theme_color == "null" ? "var(--primary)" : "var(--chat-theme-color)" }}>
-            {currentContactAvatar ? <Image src={currentContactAvatar} alt={currentContactName || ""} width={40} height={40} className="object-cover" unoptimized /> : getInitials(app_name || "W")}
+            {currentContactAvatar ? <Image src={currentContactAvatar} alt={displayContactName || ""} width={40} height={40} className="object-cover" unoptimized /> : getInitials(displayContactName || app_name || "W")}
           </div>
-          <div>
-            <h3 className="font-semibold text-sm truncate  [@media(max-width:390px)]:max-w-16.5">{isAgent && user?.is_phoneno_hide ? "Customer" : maskSensitiveData(currentContactNumber, "phone", is_demo_mode)}</h3>
+          <div className="min-w-0">
+            <div className="flex items-center gap-1.5 min-w-0">
+              <h3 className="font-semibold text-sm truncate [@media(max-width:390px)]:max-w-16.5">{isAgent && user?.is_phoneno_hide ? "Customer" : displayContactName}</h3>
+              {!isAgent && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-6 w-6 shrink-0 text-slate-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary"
+                  title="Edit contact name"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    setContactNameInput(hasContactName ? currentContactName || "" : "");
+                    setIsEditNameOpen(true);
+                  }}
+                >
+                  <Pencil size={13} />
+                </Button>
+              )}
+            </div>
+            {hasContactName && !(isAgent && user?.is_phoneno_hide) && <p className="text-[11px] leading-none text-slate-500 dark:text-gray-400 truncate">{displayContactNumber}</p>}
           </div>
         </div>
         <div className="flex items-center sm:gap-1 gap-0 [@media(max-width:430px)]:ml-auto rtl:[@media(max-width:430px)]:ml-0 rtl:[@media(max-width:430px)]:mr-auto [@media(max-width:430px)]:flex-wrap">
@@ -510,6 +551,27 @@ const ChatArea: React.FC<ChatAreaProps> = ({ contactId, phoneNumberId, contactNa
       </div>
 
       {currentContactId && currentPhoneNumberId && !isModal && <MessageSearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} contactId={currentContactId} phoneNumberId={currentPhoneNumberId} onMessageSelect={handleMessageSelect} />}
+
+      <Dialog open={isEditNameOpen} onOpenChange={setIsEditNameOpen}>
+        <DialogContent className="sm:max-w-md dark:bg-(--card-color)">
+          <DialogHeader>
+            <DialogTitle>Update contact name</DialogTitle>
+            <DialogDescription>Change how this contact appears in WA chat and your contact directory.</DialogDescription>
+          </DialogHeader>
+          <div className="space-y-2">
+            <Input value={contactNameInput} onChange={(event) => setContactNameInput(event.target.value)} placeholder="Enter contact name" className="h-11" autoFocus />
+            {displayContactNumber && <p className="text-xs text-slate-500 dark:text-gray-400">{displayContactNumber}</p>}
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsEditNameOpen(false)} disabled={isUpdatingContactName}>
+              Cancel
+            </Button>
+            <Button onClick={handleUpdateContactName} disabled={isUpdatingContactName || !contactNameInput.trim()}>
+              {isUpdatingContactName ? <Loader2 size={16} className="animate-spin" /> : "Save"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       <div className="flex-1 overflow-hidden flex flex-col relative">
         <div
