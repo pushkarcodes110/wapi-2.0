@@ -5,19 +5,22 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/src/elements/ui/tooltip";
 import { cn } from "@/src/lib/utils";
 import { useGetRecentChatsQuery, useTogglePinChatMutation } from "@/src/redux/api/chatApi";
+import { useCreateContactMutation, useGetContactQuery } from "@/src/redux/api/contactApi";
 import { useGetWabaPhoneNumbersQuery } from "@/src/redux/api/whatsappApi";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import { rehydrateChat, selectChat, selSelectPhoneNumber, setLeftSidebartoggle } from "@/src/redux/reducers/messenger/chatSlice";
 import { RootState } from "@/src/redux/store";
+import { Contact } from "@/src/types/components";
 import ConfirmModal from "@/src/shared/ConfirmModal";
 import { RecentChatResponseItem } from "@/src/types/components/chat";
+import { getChatDeepLink, normalizeChatPhone } from "@/src/utils/chatDeepLink";
 import { useChatSelection } from "@/src/utils/hooks/useChatSelection";
 import useDebounce from "@/src/utils/hooks/useDebounce";
 import { useNotifications } from "@/src/utils/hooks/useNotifications";
 import { maskSensitiveData } from "@/src/utils/masking";
 import { BellRing, CheckSquare, Filter, ListChecks, Search, Trash2, X } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ChatFilterModal from "./ChatFilterModal";
 import ChatSidebarItem from "./ChatSidebarItem";
 import { ChatSidebarSkeleton } from "./ChatSkeleton";
@@ -43,6 +46,8 @@ const ChatSidebar = () => {
   const { permission } = useNotifications();
   const searchParams = useSearchParams();
   const contactIdFromQuery = searchParams.get("contact_id");
+  const chatDeepLink = useMemo(() => getChatDeepLink(searchParams), [searchParams]);
+  const handledDeepLinkRef = useRef<string | null>(null);
   const { userSetting } = useAppSelector((state) => state.setting);
   const userSettingData = userSetting?.data;
 
@@ -51,6 +56,14 @@ const ChatSidebar = () => {
   const activeFilterCount = Object.keys(filters).length;
 
   const { data: phoneNumbersData, isLoading: isLoadingPhones } = useGetWabaPhoneNumbersQuery(selectedWabaId || "", { skip: !selectedWabaId });
+  const { data: linkedContactsData, isFetching: isFindingLinkedContact } = useGetContactQuery(
+    {
+      search: chatDeepLink?.phone,
+      limit: 10,
+    },
+    { skip: !chatDeepLink?.phone }
+  );
+  const [createContact, { isLoading: isCreatingLinkedContact }] = useCreateContactMutation();
 
   const phoneNumbers = useMemo(() => {
     const list = (phoneNumbersData as any)?.data || [];
@@ -103,6 +116,41 @@ const ChatSidebar = () => {
     });
   }, [chatsData]);
 
+  const handleSelectChat = useCallback(
+    (chat: RecentChatResponseItem) => {
+      dispatch(selectChat(chat));
+      if (window.innerWidth <= 991) {
+        dispatch(
+          setLeftSidebartoggle({
+            isMobile: true,
+            forceState: false,
+          })
+        );
+      }
+    },
+    [dispatch]
+  );
+
+  const buildChatFromContact = useCallback((contact: Contact): RecentChatResponseItem => {
+    return {
+      contact: {
+        id: contact._id,
+        name: contact.name,
+        number: contact.phone_number,
+        avatar: (contact as any).avatar || null,
+        labels: [],
+        chat_status: "open",
+      },
+      lastMessage: {
+        id: "",
+        content: "",
+        messageType: "text",
+        createdAt: new Date().toISOString(),
+        unreadCount: "0",
+      },
+    };
+  }, []);
+
   useEffect(() => {
     if (contactIdFromQuery && sortedChats.length > 0 && isRehydrated) {
       const targetChat = sortedChats.find((c) => c.contact.id === contactIdFromQuery);
@@ -111,7 +159,47 @@ const ChatSidebar = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contactIdFromQuery, sortedChats, isRehydrated]);
+  }, [contactIdFromQuery, sortedChats, isRehydrated, handleSelectChat]);
+
+  useEffect(() => {
+    if (!chatDeepLink || !isRehydrated || !selectedPhoneNumberId || isLoading || isFindingLinkedContact || isCreatingLinkedContact) return;
+    if (handledDeepLinkRef.current === chatDeepLink.key) return;
+
+    const matchingChat = sortedChats.find((chat) => normalizeChatPhone(chat.contact.number) === chatDeepLink.phone);
+    if (matchingChat) {
+      handledDeepLinkRef.current = chatDeepLink.key;
+      handleSelectChat(matchingChat);
+      return;
+    }
+
+    const contacts = linkedContactsData?.data?.contacts || [];
+    const matchingContact = contacts.find((contact: Contact) => normalizeChatPhone(contact.phone_number) === chatDeepLink.phone);
+    if (matchingContact) {
+      handledDeepLinkRef.current = chatDeepLink.key;
+      handleSelectChat(buildChatFromContact(matchingContact));
+      return;
+    }
+
+    const openLinkedContact = async () => {
+      handledDeepLinkRef.current = chatDeepLink.key;
+      try {
+        const response = await createContact({
+          name: chatDeepLink.phone,
+          phone_number: chatDeepLink.phone,
+          source: selectedWorkspace?.waba_type === "baileys" ? "baileys" : "whatsapp",
+        }).unwrap();
+
+        if (response?.data) {
+          handleSelectChat(buildChatFromContact(response.data));
+        }
+      } catch (error: any) {
+        handledDeepLinkRef.current = null;
+        toast.error(error?.data?.message || "Failed to open chat from link");
+      }
+    };
+
+    openLinkedContact();
+  }, [buildChatFromContact, chatDeepLink, createContact, handleSelectChat, isCreatingLinkedContact, isFindingLinkedContact, isLoading, isRehydrated, linkedContactsData, selectedPhoneNumberId, selectedWorkspace?.waba_type, sortedChats]);
 
   const handleTogglePin = async (e: React.MouseEvent, chat: RecentChatResponseItem) => {
     e.stopPropagation();
@@ -122,18 +210,6 @@ const ChatSidebar = () => {
       }).unwrap();
     } catch (error: any) {
       toast.error(error?.data?.data || "Failed to toggle pin chat");
-    }
-  };
-
-  const handleSelectChat = (chat: RecentChatResponseItem) => {
-    dispatch(selectChat(chat));
-    if (window.innerWidth <= 991) {
-      dispatch(
-        setLeftSidebartoggle({
-          isMobile: true,
-          forceState: false,
-        })
-      );
     }
   };
 

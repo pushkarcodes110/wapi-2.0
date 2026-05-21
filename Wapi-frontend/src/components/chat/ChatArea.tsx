@@ -19,7 +19,7 @@ import { maskSensitiveData } from "@/src/utils/masking";
 import { BotMessageSquare, ChevronLeft, FileText, Filter, Image as ImageIcon, LayoutTemplate, Loader2, MessageSquareQuote, Mic, MoreVertical, Pencil, Search, Send, Sparkles, Video, X } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import AiTextTransformModal from "../feature/chat/AiTextTransformModal";
@@ -38,6 +38,7 @@ import QuickReplyModal from "./QuickReplyModal";
 import ResolvedChatBanner from "./ResolvedChatBanner";
 import WhatsAppTimer from "./WhatsAppTimer";
 import { ROUTES } from "@/src/constants";
+import { getChatDeepLink } from "@/src/utils/chatDeepLink";
 
 const LocationPickerModal = dynamic(() => import("./LocationPickerModal"), {
   ssr: false,
@@ -47,6 +48,8 @@ const ChatArea: React.FC<ChatAreaProps> = ({ contactId, phoneNumberId, contactNa
   const dispatch = useAppDispatch();
   const { isCustom } = useChatTheme();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const deepLinkText = getChatDeepLink(searchParams)?.text || "";
   const { user } = useAppSelector((state) => state.auth);
   const { is_demo_mode } = useAppSelector((state) => state.setting);
   const isAgent = user?.role === "agent";
@@ -64,7 +67,7 @@ const ChatArea: React.FC<ChatAreaProps> = ({ contactId, phoneNumberId, contactNa
   const displayContactNumber = currentContactNumber ? maskSensitiveData(currentContactNumber, "phone", is_demo_mode) : "";
 
   const { app_name } = useAppSelector((state: RootState) => state.setting);
-  const [messageText, setMessageText] = useState("");
+  const [messageText, setMessageText] = useState(() => deepLinkText);
   const [isMediaModalOpen, setIsMediaModalOpen] = useState(false);
   const [selectedMedia, setSelectedMedia] = useState<Attachment[]>([]);
   const scrollListRef = useRef<{ scrollToTop: () => void; scrollToBottom: () => void }>(null);
