@@ -3,7 +3,7 @@
 import { Button } from "@/src/elements/ui/button";
 import { CKEditorComponentProps } from "@/src/types/shared";
 import { Bold, Code, Italic, Link, List, ListOrdered, Quote, Redo2, Strikethrough, Undo2 } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState, type ElementType } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type ClipboardEvent, type ElementType } from "react";
 
 type EditorCommand = "bold" | "italic" | "strikeThrough" | "insertUnorderedList" | "insertOrderedList" | "formatBlock" | "createLink" | "removeFormat" | "undo" | "redo";
 
@@ -26,7 +26,29 @@ const toolbarButtons: ToolbarButton[] = [
   { command: "formatBlock", icon: Code, label: "Code block", value: "pre" },
 ];
 
-const normalizeHtml = (html: string) => html || "";
+const sanitizeRichHtml = (html: string) => {
+  if (!html) return "";
+
+  let sanitized = html
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
+    .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, "")
+    .replace(/\s(?:data-[\w-]+|class|style|id|role|aria-[\w-]+|contenteditable|spellcheck|lang|dir|start|end)=("[^"]*"|'[^']*'|[^\s>]*)/gi, "")
+    .replace(/<span\b[^>]*>/gi, "")
+    .replace(/<\/span>/gi, "")
+    .replace(/<(\/?)div\b[^>]*>/gi, "<$1p>")
+    .replace(/<br><\/p>/gi, "</p>")
+    .replace(/<p>\s*(?:<br\s*\/?>)?\s*<\/p>/gi, "");
+
+  sanitized = sanitized.replace(/<a\b([^>]*)>/gi, (_match, attrs: string) => {
+    const href = attrs.match(/\shref=("[^"]*"|'[^']*'|[^\s>]*)/i)?.[1];
+    return href ? `<a href=${href}>` : "<a>";
+  });
+
+  return sanitized.replace(/<(?!\/?(?:p|br|b|strong|i|em|u|s|strike|ul|ol|li|blockquote|pre|code|a)\b)[^>]*>/gi, "").trim();
+};
+
+const normalizeHtml = (html: string) => sanitizeRichHtml(html || "");
 
 const CKEditorComponent = ({ value, onChange, onReady, placeholder = "Type your answer here...", minHeight = "160px" }: CKEditorComponentProps) => {
   const editorRef = useRef<HTMLDivElement>(null);
@@ -38,7 +60,10 @@ const CKEditorComponent = ({ value, onChange, onReady, placeholder = "Type your 
     const editorElement = editorRef.current;
     if (!editorElement) return;
 
-    const html = editorElement.innerHTML;
+    const html = normalizeHtml(editorElement.innerHTML);
+    if (editorElement.innerHTML !== html) {
+      editorElement.innerHTML = html;
+    }
     lastValueRef.current = html;
     setIsEmpty(editorElement.innerText.trim() === "" && html.replace(/<br\s*\/?>/gi, "").trim() === "");
     onChange(html);
@@ -60,6 +85,15 @@ const CKEditorComponent = ({ value, onChange, onReady, placeholder = "Type your 
     }
 
     document.execCommand(command, false, commandValue);
+    emitChange();
+  };
+
+  const handlePaste = (event: ClipboardEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const html = event.clipboardData.getData("text/html");
+    const text = event.clipboardData.getData("text/plain");
+    const nextContent = html ? normalizeHtml(html) : text;
+    document.execCommand(html ? "insertHTML" : "insertText", false, nextContent);
     emitChange();
   };
 
@@ -173,6 +207,7 @@ const CKEditorComponent = ({ value, onChange, onReady, placeholder = "Type your 
             emitChange();
           }}
           onFocus={() => setIsFocused(true)}
+          onPaste={handlePaste}
           className="rich-text-editor min-h-25 w-full overflow-y-auto break-words bg-white p-4 text-sm leading-relaxed text-gray-900 outline-none dark:bg-page-body dark:text-gray-100 [&_a]:text-primary [&_blockquote]:border-l-4 [&_blockquote]:border-primary/40 [&_blockquote]:pl-3 [&_ol]:list-decimal [&_ol]:pl-6 [&_pre]:rounded-md [&_pre]:bg-gray-100 [&_pre]:p-3 [&_pre]:font-mono [&_ul]:list-disc [&_ul]:pl-6"
           style={{ minHeight, maxHeight: "400px" }}
         />

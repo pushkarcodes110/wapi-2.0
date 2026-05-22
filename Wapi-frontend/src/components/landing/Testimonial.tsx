@@ -7,6 +7,25 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Images from "../../shared/Image";
 import { TestimonialPopulated, TestimonialProps } from "../../types/landingPage";
 
+const sanitizeRichText = (html: string = "") => {
+  let sanitized = html
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
+    .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, "")
+    .replace(/\s(?:data-[\w-]+|class|style|id|role|aria-[\w-]+|contenteditable|spellcheck|lang|dir|start|end)=("[^"]*"|'[^']*'|[^\s>]*)/gi, "")
+    .replace(/<span\b[^>]*>/gi, "")
+    .replace(/<\/span>/gi, "")
+    .replace(/<(\/?)div\b[^>]*>/gi, "<$1p>")
+    .replace(/<p>\s*(?:<br\s*\/?>)?\s*<\/p>/gi, "");
+
+  sanitized = sanitized.replace(/<a\b([^>]*)>/gi, (_match, attrs: string) => {
+    const href = attrs.match(/\shref=("[^"]*"|'[^']*'|[^\s>]*)/i)?.[1];
+    return href ? `<a href=${href}>` : "<a>";
+  });
+
+  return sanitized.replace(/<(?!\/?(?:p|br|b|strong|i|em|u|s|strike|ul|ol|li|blockquote|pre|code|a)\b)[^>]*>/gi, "").trim();
+};
+
 const Testimonial: React.FC<TestimonialProps> = ({ data }) => {
   const testimonials = (data.testimonials || []).map((item) => item._id).filter((item): item is TestimonialPopulated => !!item && typeof item === "object");
 
@@ -63,7 +82,10 @@ const Testimonial: React.FC<TestimonialProps> = ({ data }) => {
                         </div>
                       </div>
 
-                      <p className="text-slate-500 text-[18px] mb-5 grow font-regular">{item.description}</p>
+                      <div
+                        className="mb-5 grow text-[18px] font-regular text-slate-500 [&_a]:text-primary [&_blockquote]:border-l-4 [&_blockquote]:border-primary/40 [&_blockquote]:pl-3 [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:mb-3 [&_p:last-child]:mb-0 [&_strong]:font-bold [&_ul]:list-disc [&_ul]:pl-6"
+                        dangerouslySetInnerHTML={{ __html: sanitizeRichText(item.description) }}
+                      />
 
                       <div className="flex items-center gap-3">
                         <Images src={item?.user_image} alt={item?.user_name || "image"} className="w-10 h-10 max-w-10 max-h-10 rounded-full object-cover shrink-0" width={100} height={100} unoptimized />
