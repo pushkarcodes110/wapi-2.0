@@ -3,9 +3,10 @@
 import { Button } from "@/src/elements/ui/button";
 import { ArrowLeft, Check } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { Page } from "@/src/types/store";
 
 // Sub-components
 import PageContentForm from "./forms/PageContentForm";
@@ -14,8 +15,7 @@ import MetaImageForm from "./forms/MetaImageForm";
 import VisibilitySettingsForm from "./forms/VisibilitySettingsForm";
 
 interface PageFormProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  initialData?: any;
+  initialData?: Page;
   onSubmit: (data: FormData) => Promise<void>;
   isLoading?: boolean;
   isEdit?: boolean;
@@ -24,6 +24,7 @@ interface PageFormProps {
 const PageForm = ({ initialData, onSubmit, isLoading, isEdit }: PageFormProps) => {
   const { t } = useTranslation();
   const router = useRouter();
+  const hydratedPageIdRef = useRef<string | null>(null);
 
   const RESERVED_SLUGS = ["terms-and-conditions", "privacy-policy", "refund-policy"];
   const isReservedSlug = (slug: string) => RESERVED_SLUGS.includes(slug);
@@ -39,22 +40,25 @@ const PageForm = ({ initialData, onSubmit, isLoading, isEdit }: PageFormProps) =
 
   const [metaImage, setMetaImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [shouldRemoveMetaImage, setShouldRemoveMetaImage] = useState(false);
 
   useEffect(() => {
-    if (initialData) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setForm({
-        title: initialData.title || "",
-        slug: initialData.slug || "",
-        content: initialData.content || "",
-        meta_title: initialData.meta_title || "",
-        meta_description: initialData.meta_description || "",
-        status: initialData.status ?? true,
-      });
-      if (initialData.meta_image) {
-        setImagePreview(initialData.meta_image);
-      }
+    if (!initialData || hydratedPageIdRef.current === initialData._id) {
+      return;
     }
+
+    hydratedPageIdRef.current = initialData._id;
+    setForm({
+      title: initialData.title || "",
+      slug: initialData.slug || "",
+      content: initialData.content || "",
+      meta_title: initialData.meta_title || "",
+      meta_description: initialData.meta_description || "",
+      status: initialData.status ?? true,
+    });
+    setMetaImage(null);
+    setImagePreview(initialData.meta_image || null);
+    setShouldRemoveMetaImage(false);
   }, [initialData]);
 
   const generateSlug = (text: string) => {
@@ -89,6 +93,7 @@ const PageForm = ({ initialData, onSubmit, isLoading, isEdit }: PageFormProps) =
       }
       setMetaImage(file);
       setImagePreview(URL.createObjectURL(file));
+      setShouldRemoveMetaImage(false);
       e.target.value = "";
     }
   };
@@ -96,6 +101,7 @@ const PageForm = ({ initialData, onSubmit, isLoading, isEdit }: PageFormProps) =
   const removeImage = () => {
     setMetaImage(null);
     setImagePreview(null);
+    setShouldRemoveMetaImage(Boolean(initialData?.meta_image));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -119,7 +125,8 @@ const PageForm = ({ initialData, onSubmit, isLoading, isEdit }: PageFormProps) =
 
     if (metaImage) {
       formData.append("meta_image", metaImage);
-    } else if (imagePreview && !imagePreview.startsWith("blob:")) {
+    } else if (shouldRemoveMetaImage) {
+      formData.append("remove_meta_image", "true");
     }
 
     await onSubmit(formData);

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ImageIcon, Pencil, Upload, Image as ImageLucide } from "lucide-react";
+import { Pencil, Upload, Image as ImageLucide } from "lucide-react";
 import MediaUploadModal from "./MediaUploadModal";
 import Images from "@/src/shared/Image";
 

@@ -15,7 +15,7 @@ import {
 import CKEditorComponent from "@/src/shared/CkEditor";
 import { ArrowLeft, Check, HelpCircle, MessageSquare } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
@@ -35,6 +35,7 @@ const AddFaqPage = ({ id }: AddFaqPageProps) => {
 
   const faqId = id;
   const isEditMode = !!faqId;
+  const hydratedFaqIdRef = useRef<string | null>(null);
 
   const { data: faqData, isLoading: isLoadingFaq } = useGetFaqByIdQuery(
     faqId ?? "",
@@ -46,22 +47,6 @@ const AddFaqPage = ({ id }: AddFaqPageProps) => {
 
   const isLoading = isCreating || isUpdating || isLoadingFaq;
 
-  const initialFormState: FaqFormState = useMemo(() => {
-    if (isEditMode && faqData?.data) {
-      return {
-        title: faqData.data.title || "",
-        description: faqData.data.description || "",
-        status: faqData.data.status || true,
-      };
-    }
-
-    return {
-      title: "",
-      description: "",
-      status: true,
-    };
-  }, [isEditMode, faqData]);
-
   const [form, setForm] = useState<FaqFormState>({
     title: "",
     description: "",
@@ -69,19 +54,21 @@ const AddFaqPage = ({ id }: AddFaqPageProps) => {
   });
 
   useEffect(() => {
-    if (isEditMode && faqData?.data) {
-      setForm({
-        title: faqData.data.title || "",
-        description: faqData.data.description || "",
-        status: faqData.data.status ?? true,
-      });
+    if (!isEditMode || !faqData?.data || hydratedFaqIdRef.current === faqData.data._id) {
+      return;
     }
+    hydratedFaqIdRef.current = faqData.data._id;
+    setForm({
+      title: faqData.data.title || "",
+      description: faqData.data.description || "",
+      status: faqData.data.status ?? true,
+    });
   }, [isEditMode, faqData]);
 
   const handleSubmit = async () => {
-    if (!form.title || !form.description) return;
+    if (!form.title || !stripHtml(form.description).trim()) return;
 
-    const plainDescription = stripHtml(form.description);
+    const richDescription = form.description.trim();
 
     try {
       if (isEditMode && faqId) {
@@ -89,7 +76,7 @@ const AddFaqPage = ({ id }: AddFaqPageProps) => {
           id: faqId,
           data: {
             title: form.title,
-            description: plainDescription,
+            description: richDescription,
             status: form.status,
           },
         }).unwrap();
@@ -97,7 +84,7 @@ const AddFaqPage = ({ id }: AddFaqPageProps) => {
       } else {
         await createFaq({
           title: form.title,
-          description: plainDescription,
+          description: richDescription,
           status: form.status,
         }).unwrap();
         toast.success(t("faq_success_created"));
@@ -252,7 +239,7 @@ const AddFaqPage = ({ id }: AddFaqPageProps) => {
           onClick={handleSubmit}
           className="px-6 py-5 h-11 bg-(--text-green-primary) hover:bg-(--text-green-primary)/90 text-white font-medium shadow-sm transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed gap-2"
           disabled={
-            isLoading || !form.title || !form.description || isLoadingFaq
+            isLoading || !form.title || !stripHtml(form.description).trim() || isLoadingFaq
           }
         >
           {isLoading ? (

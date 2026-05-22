@@ -1,8 +1,15 @@
+/* eslint-disable @next/next/no-img-element */
 import { ImagePath } from "@/src/constants";
 import { ImageProps } from "@/src/types/shared";
-import { getResolvedImageUrl } from "@/src/utils/image";
+import { getResolvedImageUrl, isAbsoluteUrl } from "@/src/utils/image";
 import Image from "next/image";
-import { useState, useMemo, type FC } from "react";
+import { useState, useMemo, type CSSProperties, type FC, type ImgHTMLAttributes } from "react";
+
+type NativeImageProps = ImgHTMLAttributes<HTMLImageElement> & {
+  fill?: boolean;
+  priority?: boolean;
+  unoptimized?: boolean;
+};
 
 const Images: FC<ImageProps> = ({ src, fallbackSrc, alt, className = "", ...rest }) => {
   const [hasError, setHasError] = useState<boolean>(false);
@@ -33,27 +40,41 @@ const Images: FC<ImageProps> = ({ src, fallbackSrc, alt, className = "", ...rest
     }
   };
 
-  const imageProps = {
-    src: displaySrc,
-    alt: alt || "image",
-    onError: handleError,
-    className: className,
-    unoptimized: rest.unoptimized !== undefined ? rest.unoptimized : true,
-    priority: rest.priority,
-    ...rest,
-  };
+  if (isAbsoluteUrl(displaySrc)) {
+    const nativeImageProps = { ...(rest as unknown as NativeImageProps) };
+    const { fill, width, height, style } = nativeImageProps;
+    delete nativeImageProps.fill;
+    delete nativeImageProps.priority;
+    delete nativeImageProps.unoptimized;
+    delete nativeImageProps.width;
+    delete nativeImageProps.height;
+    delete nativeImageProps.style;
 
-  // If fill is true, we must not pass width and height
-  if (rest.fill) {
-    delete (imageProps as any).width;
-    delete (imageProps as any).height;
-  } else {
-    // If not fill, ensure width/height are at least 100 if not provided
-    imageProps.width = rest.width || 100;
-    imageProps.height = rest.height || 100;
+    const fillStyle: CSSProperties | undefined = fill
+      ? { position: "absolute", height: "100%", width: "100%", inset: 0, color: "transparent", ...style }
+      : style;
+
+    return (
+      <img
+        src={displaySrc}
+        alt={alt || "image"}
+        {...nativeImageProps}
+        onError={handleError}
+        className={className}
+        width={fill ? undefined : width || 100}
+        height={fill ? undefined : height || 100}
+        style={fillStyle}
+      />
+    );
   }
 
-  return <Image {...(imageProps as any)} />;
+  const { fill, width, height, ...nextImageProps } = rest;
+
+  if (fill) {
+    return <Image {...nextImageProps} src={displaySrc} alt={alt || "image"} onError={handleError} className={className} unoptimized={rest.unoptimized !== undefined ? rest.unoptimized : true} priority={rest.priority} fill />;
+  }
+
+  return <Image {...nextImageProps} src={displaySrc} alt={alt || "image"} onError={handleError} className={className} unoptimized={rest.unoptimized !== undefined ? rest.unoptimized : true} priority={rest.priority} width={width || 100} height={height || 100} />;
 };
 
 export default Images;

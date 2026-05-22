@@ -13,6 +13,7 @@ import {
   useUpdateTestimonialMutation,
 } from "@/src/redux/api/testimonialApi";
 import CKEditorComponent from "@/src/shared/CkEditor";
+import CustomImage from "@/src/shared/Image";
 import {
   ArrowLeft,
   Check,
@@ -22,7 +23,7 @@ import {
   User,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { ROUTES } from "../../constants";
@@ -35,6 +36,7 @@ const AddTestimonialPage = ({ id }: AddTestimonialPageProps) => {
   const { t } = useTranslation();
   const testimonialId = id;
   const isEditMode = !!testimonialId;
+  const hydratedTestimonialIdRef = useRef<string | null>(null);
 
   const router = useRouter();
   const [createTestimonial, { isLoading: isCreating }] =
@@ -55,22 +57,22 @@ const AddTestimonialPage = ({ id }: AddTestimonialPageProps) => {
   const [status, setStatus] = useState(true);
   const [userImage, setUserImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const plainContent = useMemo(() => stripHtml(content).trim(), [content]);
 
   useEffect(() => {
-    if (testimonialData?.data && isEditMode) {
-      const testimonial = testimonialData.data;
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setTitle(testimonial.title || "");
-      setClientName(testimonial.user_name || "");
-      setClientDesignation(testimonial.user_post || "");
-      setContent(testimonial.description || "");
-      setRating(testimonial.rating || 5);
-      setStatus(testimonial.status ?? true);
-
-      if (testimonial.user_image) {
-        setImagePreview(getResolvedImageUrl(testimonial.user_image));
-      }
+    if (!testimonialData?.data || !isEditMode || hydratedTestimonialIdRef.current === testimonialData.data._id) {
+      return;
     }
+    const testimonial = testimonialData.data;
+    hydratedTestimonialIdRef.current = testimonial._id;
+    setTitle(testimonial.title || "");
+    setClientName(testimonial.user_name || "");
+    setClientDesignation(testimonial.user_post || "");
+    setContent(testimonial.description || "");
+    setRating(testimonial.rating || 5);
+    setStatus(testimonial.status ?? true);
+    setUserImage(null);
+    setImagePreview(testimonial.user_image ? getResolvedImageUrl(testimonial.user_image) : null);
   }, [testimonialData, isEditMode]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,15 +88,14 @@ const AddTestimonialPage = ({ id }: AddTestimonialPageProps) => {
   };
 
   const handleSubmit = async () => {
-    if (!title || !clientName || !clientDesignation || !content) return;
+    if (!title || !clientName || !clientDesignation || !plainContent) return;
 
-    const plainContent = stripHtml(content);
 
     const formData = new FormData();
     formData.append("title", title);
     formData.append("user_name", clientName);
     formData.append("user_post", clientDesignation);
-    formData.append("description", plainContent);
+    formData.append("description", content.trim());
     formData.append("rating", rating.toString());
     formData.append("status", status.toString());
 
@@ -117,7 +118,6 @@ const AddTestimonialPage = ({ id }: AddTestimonialPageProps) => {
           router.push(ROUTES.ManageTestimonials);
         }, 1000);
       }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       const errorMessage =
         error?.data?.message ||
@@ -201,9 +201,11 @@ const AddTestimonialPage = ({ id }: AddTestimonialPageProps) => {
                     <div className="shrink-0">
                       {imagePreview ? (
                         <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-gray-200 dark:border-(--card-border-color)">
-                          <img
+                          <CustomImage
                             src={imagePreview}
                             alt="Avatar"
+                            width={96}
+                            height={96}
                             className="w-full h-full object-cover"
                           />
                         </div>
@@ -297,7 +299,7 @@ const AddTestimonialPage = ({ id }: AddTestimonialPageProps) => {
                     {t("testimonial_labels_feedback")}
                   </Label>
                   <span className="text-xs text-gray-500">
-                    0 / 400 characters
+                    {plainContent.length} / 400 characters
                   </span>
                 </div>
                 <div className="border border-gray-300 dark:bg-(--card-color) dark:border-(--card-border-color) rounded-lg overflow-hidden focus-within:border-(--text-green-primary) focus-within:ring-1 focus-within:ring-(--text-green-primary) transition-all bg-gray-50">
@@ -393,7 +395,7 @@ const AddTestimonialPage = ({ id }: AddTestimonialPageProps) => {
             !title ||
             !clientName ||
             !clientDesignation ||
-            !content ||
+            !plainContent ||
             isLoadingTestimonial
           }
         >

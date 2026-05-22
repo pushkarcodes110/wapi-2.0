@@ -6,8 +6,12 @@ import "ckeditor5/ckeditor5.css";
 import { CKEditorComponentProps } from "@/src/types/shared";
 import { useEffect, useRef, useState } from "react";
 
-const CKEditorComponent = ({ value, onChange, placeholder = "Type your answer here...", minHeight = "160px" }: CKEditorComponentProps) => {
+const CKEditorComponent = ({ value, onChange, onReady, placeholder = "Type your answer here...", minHeight = "160px" }: CKEditorComponentProps) => {
   const editorRef = useRef<HTMLDivElement>(null);
+  const editorInstanceRef = useRef<any>(null);
+  const lastAppliedValueRef = useRef(value || "");
+  const isInternalChangeRef = useRef(false);
+  const [initialEditorData] = useState(() => value || "");
   const [editor, setEditor] = useState<any>(null);
   const [isEditorReady, setIsEditorReady] = useState(false);
 
@@ -151,9 +155,28 @@ const CKEditorComponent = ({ value, onChange, placeholder = "Type your answer he
 
     return () => {
       isMounted = false;
+      editorInstanceRef.current = null;
       setIsEditorReady(false);
     };
   }, []);
+
+  useEffect(() => {
+    const editorInstance = editorInstanceRef.current;
+    if (!editorInstance) return;
+
+    const nextValue = value || "";
+
+    if (isInternalChangeRef.current) {
+      isInternalChangeRef.current = false;
+      lastAppliedValueRef.current = nextValue;
+      return;
+    }
+
+    if (nextValue !== lastAppliedValueRef.current && editorInstance.getData() !== nextValue) {
+      editorInstance.setData(nextValue);
+      lastAppliedValueRef.current = nextValue;
+    }
+  }, [value]);
 
   if (!isEditorReady || !editor) {
     return (
@@ -169,7 +192,7 @@ const CKEditorComponent = ({ value, onChange, placeholder = "Type your answer he
     <div ref={editorRef} style={{ width: "100%", maxWidth: "100%", overflow: "hidden" }}>
       <CKEditor
         editor={ClassicEditor}
-        data={value}
+        data={initialEditorData}
         config={{
           licenseKey: "GPL",
           placeholder,
@@ -177,6 +200,14 @@ const CKEditorComponent = ({ value, onChange, placeholder = "Type your answer he
           toolbar: ["undo", "redo", "|", "heading", "|", "bold", "italic", "strikethrough", "|", "link", "|", "bulletedList", "numberedList", "|", "blockQuote", "code", "codeBlock"],
         }}
         onReady={(editorInstance: any) => {
+          editorInstanceRef.current = editorInstance;
+          const currentValue = value || "";
+          if (editorInstance.getData() !== currentValue) {
+            editorInstance.setData(currentValue);
+          }
+          lastAppliedValueRef.current = currentValue;
+          onReady?.(editorInstance);
+
           // Apply custom styles to the editor
           const editorElement = editorInstance.ui.view.element;
           if (editorElement) {
@@ -213,6 +244,8 @@ const CKEditorComponent = ({ value, onChange, placeholder = "Type your answer he
         }}
         onChange={(_event: any, editorInstance: any) => {
           const data = editorInstance.getData();
+          isInternalChangeRef.current = true;
+          lastAppliedValueRef.current = data;
           onChange(data);
         }}
       />

@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { ImagePath, ROUTES } from "@/src/constants";
 import { ImageProps } from "@/src/types/shared";
-import { getResolvedImageUrl } from "@/src/utils/image";
+import { getResolvedImageUrl, isAbsoluteUrl } from "@/src/utils/image";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useMemo, useState, type FC } from "react";
@@ -54,6 +55,33 @@ const Images: FC<ImageProps> = ({ src, fallbackSrc, alt, className = "", ...rest
   } else {
     imageProps.width = rest.width || 100;
     imageProps.height = rest.height || 100;
+  }
+
+  if (isAbsoluteUrl(displaySrc)) {
+    const nativeImageProps = { ...(rest as any) };
+    const { fill, width, height } = nativeImageProps;
+    delete nativeImageProps.fill;
+    delete nativeImageProps.priority;
+    delete nativeImageProps.unoptimized;
+    delete nativeImageProps.width;
+    delete nativeImageProps.height;
+
+    const fillStyle = fill
+      ? { position: "absolute", height: "100%", width: "100%", inset: 0, color: "transparent" }
+      : undefined;
+
+    return (
+      <img
+        {...nativeImageProps}
+        src={displaySrc}
+        alt={alt || "image"}
+        onError={handleError}
+        className={className}
+        width={fill ? undefined : width || 100}
+        height={fill ? undefined : height || 100}
+        style={fillStyle}
+      />
+    );
   }
 
   // eslint-disable-next-line jsx-a11y/alt-text

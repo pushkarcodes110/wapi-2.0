@@ -261,9 +261,12 @@ export const updatePage = async (req, res) => {
         }
 
         const oldMetaImage = page.meta_image;
+        const shouldRemoveMetaImage = updateData.remove_meta_image === true || updateData.remove_meta_image === 'true';
 
         if (req.file) {
             page.meta_image = req.file.path;
+        } else if (shouldRemoveMetaImage) {
+            page.meta_image = null;
         }
 
         if (updateData.title !== undefined) page.title = updateData.title.trim();
@@ -274,7 +277,7 @@ export const updatePage = async (req, res) => {
 
         await page.save();
 
-        if (req.file && oldMetaImage && oldMetaImage !== page.meta_image) {
+        if ((req.file || shouldRemoveMetaImage) && oldMetaImage && oldMetaImage !== page.meta_image) {
             await deleteFile(oldMetaImage);
         }
 
