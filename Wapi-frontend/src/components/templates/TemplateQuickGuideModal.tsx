@@ -98,7 +98,7 @@ const TemplateQuickGuideModal = () => {
         </div>
 
         <div className="sm:px-6 px-4 py-4 bg-gray-50/50 dark:bg-(--page-body-bg)/50 border-t border-gray-100 dark:border-(--card-border-color) flex flex-col items-center gap-3 shrink-0">
-          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center shrink-0">WAPI Documentation</p>
+          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center shrink-0">Synqzy Documentation</p>
           <div className="flex gap-2 w-full">
             {selectedTopic && (
               <Button variant="outline" size="sm" onClick={() => setSelectedTopic(null)} className="flex-1 h-9 text-xs font-bold border-gray-200 dark:border-primary/20 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-primary/10 transition-colors cursor-pointer">

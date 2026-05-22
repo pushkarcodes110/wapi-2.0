@@ -66,7 +66,7 @@ const HeroSection: React.FC<ProductPageTemplateProps["hero"]> = ({ title, descri
           </motion.div>
 
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.1 }} className="flex-1 w-full lg:w-auto relative ">
-            <Images src={image} alt="Wapi Product Interface" width={800} height={500} unoptimized className="w-full h-auto rounded-lg" />
+            <Images src={image} alt="Synqzy Product Interface" width={800} height={500} unoptimized className="w-full h-auto rounded-lg" />
           </motion.div>
         </div>
       </div>

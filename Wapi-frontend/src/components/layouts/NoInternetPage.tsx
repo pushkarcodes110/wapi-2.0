@@ -59,7 +59,7 @@ const NoInternetPage = ({ onRetry, isRetrying = false }: NoInternetPageProps) =>
 
           <div className="space-y-3">
             <h1 className="text-[calc(20px+(30-20)*((100vw-320px)/(1920-320)))]! font-black text-white leading-tight tracking-tight">{no_internet_title || "No Internet Connection"}</h1>
-            <p className="text-slate-400 text-sm sm:text-base leading-relaxed max-w-sm mx-auto font-medium">{no_internet_content || "It looks like you're offline. Please check your connection to continue using Wapi."}</p>
+            <p className="text-slate-400 text-sm sm:text-base leading-relaxed max-w-sm mx-auto font-medium">{no_internet_content || "It looks like you're offline. Please check your connection to continue using Synqzy."}</p>
           </div>
 
           <div className="h-px w-full bg-linear-to-r from-transparent via-white/10 to-transparent" />

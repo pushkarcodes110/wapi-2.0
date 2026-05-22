@@ -33,13 +33,22 @@ const initialState: SettingState & Partial<SettingResponse> & { subscription: Su
   allow_user_signup: false,
 };
 
+const normalizeLegacyAppName = (appName?: string) => {
+  if (!appName) return appName;
+  return appName.trim().toLowerCase() === "wapi" ? "Synqzy" : appName;
+};
+
 const settingSlice = createSlice({
   name: "setting",
   initialState,
   reducers: {
     setSetting: (state, action: PayloadAction<SettingResponse>) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const settings = (action.payload as any)?.data || action.payload;
+      const rawSettings = (action.payload as any)?.data || action.payload;
+      const settings = {
+        ...rawSettings,
+        app_name: normalizeLegacyAppName(rawSettings.app_name),
+      };
       state.setting = settings;
       state.app_name = settings.app_name || state.app_name;
       state.app_description = settings.app_description || state.app_description;

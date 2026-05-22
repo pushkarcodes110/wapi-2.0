@@ -216,7 +216,7 @@ const LivePreview: React.FC<LivePreviewProps> = ({ allFields, submitSettings }) 
             </div>
           </div>
           <div className="ml-1">
-            <h4 className="text-[13px] font-bold line-clamp-1 leading-tight">Wapi Business</h4>
+            <h4 className="text-[13px] font-bold line-clamp-1 leading-tight">Synqzy Business</h4>
             <p className="text-[10px] opacity-80 mt-0.5">Online</p>
           </div>
         </div>

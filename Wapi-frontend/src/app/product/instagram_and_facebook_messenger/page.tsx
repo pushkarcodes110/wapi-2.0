@@ -8,7 +8,7 @@ const MultiChannelPage = () => {
     <ComingSoonTemplate
       featureName="Social Commerce"
       title="Sell more by connecting Instagram and Facebook to your WhatsApp"
-      description="Manage all your social media sales and customer queries in one simple dashboard. Engage with customers on Instagram and Messenger without leaving Wapi."
+      description="Manage all your social media sales and customer queries in one simple dashboard. Engage with customers on Instagram and Messenger without leaving Synqzy."
       icon={<Instagram className="w-12 h-12" />}
     />
   );

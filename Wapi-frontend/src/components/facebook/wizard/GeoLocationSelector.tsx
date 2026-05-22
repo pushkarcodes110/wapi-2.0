@@ -78,7 +78,7 @@ const GeoLocationSelector: React.FC<GeoLocationSelectorProps> = ({ selectedCount
         `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
           countryName
         )}&limit=1`,
-        { headers: { "User-Agent": "Wapi-Ads-Wizard" } }
+        { headers: { "User-Agent": "Synqzy-Ads-Wizard" } }
       );
       const data = await response.json();
       if (data && data.length > 0) {
@@ -101,7 +101,7 @@ const GeoLocationSelector: React.FC<GeoLocationSelectorProps> = ({ selectedCount
     try {
       const response = await fetch(
         `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=3&addressdetails=1`,
-        { headers: { "User-Agent": "Wapi-Ads-Wizard" } }
+        { headers: { "User-Agent": "Synqzy-Ads-Wizard" } }
       );
       const data = await response.json();
       const countryCode = data?.address?.country_code?.toUpperCase();

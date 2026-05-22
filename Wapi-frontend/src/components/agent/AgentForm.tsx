@@ -166,7 +166,7 @@ const AgentForm: React.FC<AgentFormdDataProps> = ({ agent, onSave, onCancel, isL
                   <Input
                     id="email"
                     type="email"
-                    placeholder="sarah@wapi.ai"
+                    placeholder="sarah@synqzy.com"
                     className={cn(
                       "pl-14 h-11 rounded-lg border border-(--input-border-color) dark:border-(--card-border-color) bg-(--input-color) dark:bg-(--page-body-bg) focus:border-primary focus:ring-8 focus:ring-primary/5 transition-all text-sm ",
                       formik.touched.email && formik.errors.email

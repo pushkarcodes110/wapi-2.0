@@ -1,35 +1,22 @@
 "use client";
 
-import { useAppSelector } from "@/src/redux/hooks";
+import Images from "@/src/shared/Image";
 import { motion, AnimatePresence } from "framer-motion";
 
+const LIGHT_LOGO = "https://i.postimg.cc/xCz3j5Wh/ss.png";
+const DARK_LOGO = "https://i.postimg.cc/tCfw2v9D/sidebarlogo.png";
+
 const Loading = () => {
-  const { app_name } = useAppSelector((state) => state.setting);
-
   return (
-    <div className="fixed inset-0 z-100 bg-sidebar dark:bg-dark-body flex items-center justify-center font-sans overflow-hidden">
+    <div className="fixed inset-0 z-100 flex items-center justify-center overflow-hidden bg-white dark:bg-dark-body">
       <AnimatePresence>
-        <motion.div className="flex flex-col items-center gap-8">
-          <div className="flex flex-col items-center gap-1">
-            <motion.h1 className="text-4xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white">
-              {app_name || "Wapi"}
-              <span className="text-primary italic">.</span>
-            </motion.h1>
-            <motion.p className="text-[10px] uppercase tracking-[0.4em] font-bold text-slate-400 dark:text-slate-500 pl-1">
-              One and only {app_name || "Wapi"}
-            </motion.p>
-          </div>
-
-          <div className="relative w-40 h-0.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden border border-black/5 dark:border-white/5">
-            <motion.div
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="absolute top-0 left-0 w-1/3 h-full bg-primary shadow-[0_0_15px_rgba(16,185,129,0.3)]"
-            />
-          </div>
+        <motion.div
+          animate={{ opacity: [0.72, 1, 0.72], scale: [0.98, 1, 0.98] }}
+          transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+          className="flex h-20 w-56 items-center justify-center"
+        >
+          <Images src={LIGHT_LOGO} alt="Synqzy" width={224} height={80} className="block max-h-full max-w-full object-contain dark:hidden" unoptimized />
+          <Images src={DARK_LOGO} alt="Synqzy" width={224} height={80} className="hidden max-h-full max-w-full object-contain dark:block" unoptimized />
         </motion.div>
       </AnimatePresence>
     </div>

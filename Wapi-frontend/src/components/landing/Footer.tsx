@@ -59,7 +59,7 @@ const Footer: React.FC<FooterProps> = ({ data }) => {
       <div className="flex flex-col md:flex-row justify-between items-center gap-[calc(16px+(32-16)*((100vw-320px)/(1920-320)))] pb-8 border-b border-white/10">
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center gap-3">
-            <Images src={logo_dark_url || Logo1} alt={`${app_name || "wapi"} logo`} className="h-7.75 object-contain" width={100} height={100} />
+            <Images src={logo_dark_url || Logo1} alt={`${app_name || "Synqzy"} logo`} className="h-7.75 object-contain" width={100} height={100} />
           </Link>
         </div>
 
@@ -122,7 +122,7 @@ const Footer: React.FC<FooterProps> = ({ data }) => {
       </div>
 
       <div className="mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
-        <p className="text-[18px] text-white">© {data.copy_rights_text || `${app_name || "Wapi"} 2026. All Rights Reserved.`}</p>
+        <p className="text-[18px] text-white">© {data.copy_rights_text || `${app_name || "Synqzy"} 2026. All Rights Reserved.`}</p>
         <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-[18px] text-white">
           {legalPages.map((page, index) => (
             <React.Fragment key={page._id}>

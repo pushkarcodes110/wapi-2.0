@@ -78,7 +78,7 @@ export const TEMPLATEGUIDEDATA: GuideTopic[] = [
       },
       {
         example:
-          "Hi {{1}}, Welcome to WAPI! We have a special offer for you. Use code {{2}} at checkout.",
+          "Hi {{1}}, Welcome to Synqzy! We have a special offer for you. Use code {{2}} at checkout.",
       },
     ],
   },

@@ -354,7 +354,7 @@ const ProductForm = ({ initialData, onSubmit, isLoading, title }: ProductFormPro
                 </Label>
                 <div className="relative">
                   <Tag size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                  <Input id="brand" name="brand" value={formData.brand} onChange={handleChange} placeholder="e.g. WAPI" className="h-10 pl-9 bg-slate-50/50 dark:border-none border-slate-200 rounded-lg text-sm" />
+                  <Input id="brand" name="brand" value={formData.brand} onChange={handleChange} placeholder="e.g. Synqzy" className="h-10 pl-9 bg-slate-50/50 dark:border-none border-slate-200 rounded-lg text-sm" />
                 </div>
               </div>
 

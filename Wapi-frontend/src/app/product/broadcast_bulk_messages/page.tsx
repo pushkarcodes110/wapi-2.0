@@ -12,7 +12,7 @@ const BroadcastPage = () => {
     <ProductLayout>
       <ProductPageTemplate
         hero={{
-          badge: "Wapi for Marketing",
+          badge: "Synqzy for Marketing",
           title: "Broadcast official WhatsApp messages to thousands at once",
           description: "Reach your entire customer base with 98% open rates. Send promotions, alerts, and updates safely through the official WhatsApp Business API.",
           primaryCTA: { text: "Manage Campaigns", link: ROUTES.MessageCampaigns },
@@ -52,7 +52,7 @@ const BroadcastPage = () => {
         ]}
         finalCTA={{
           title: "Reach your customers instantly",
-          description: "Wapi Broadcasts achieve up to 98% open rates compared to traditional email marketing.",
+          description: "Synqzy Broadcasts achieve up to 98% open rates compared to traditional email marketing.",
           buttonText: "Launch Sample Broadcast",
           buttonLink: "/register",
         }}

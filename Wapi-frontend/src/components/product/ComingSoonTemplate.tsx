@@ -100,7 +100,7 @@ const ComingSoonTemplate: React.FC<ComingSoonTemplateProps> = ({ title, descript
                 </svg>
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-3">Official Meta Security</h3>
-              <p className="text-slate-600 leading-relaxed">Wapi is an official WhatsApp Business Solution Provider, ensuring your data is always secure and compliant.</p>
+              <p className="text-slate-600 leading-relaxed">Synqzy is an official WhatsApp Business Solution Provider, ensuring your data is always secure and compliant.</p>
             </div>
           </div>
         </div>

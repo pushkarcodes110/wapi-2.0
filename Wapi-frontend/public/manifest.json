@@ -1,6 +1,6 @@
 {
-    "name": "Wapi",
-    "short_name": "Wapi",
+    "name": "Synqzy",
+    "short_name": "Synqzy",
     "start_url": "/auth/login",
     "display": "standalone",
     "theme_color": "#059669",

@@ -62,7 +62,7 @@ const SubscriptionGuard: React.FC<SubscriptionGuardProps> = ({ children }) => {
             <DialogHeader>
               <DialogTitle className="text-2xl font-bold text-center text-slate-900 dark:text-white pb-2">Free Trial Complete</DialogTitle>
               <DialogDescription className="text-center text-slate-600 dark:text-slate-400 text-base leading-relaxed">
-                Your free trial has ended. To continue using all premium features of <span className="font-bold text-primary">WAPI</span>, please choose a subscription plan.
+                Your free trial has ended. To continue using all premium features of <span className="font-bold text-primary">Synqzy</span>, please choose a subscription plan.
               </DialogDescription>
             </DialogHeader>
 

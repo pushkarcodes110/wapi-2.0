@@ -12,7 +12,7 @@ const NoCodeChatbotPage = () => {
     <ProductLayout>
       <ProductPageTemplate
         hero={{
-          badge: "Wapi for Automation",
+          badge: "Synqzy for Automation",
           title: "Build smart WhatsApp chat flows without writing code",
           description:
             "Automate your customer interactions with a simple drag-and-drop builder. Create bots that answer FAQs, qualify leads, and route chats to your team instantly.",

@@ -12,7 +12,7 @@ const SharedInboxPage = () => {
     <ProductLayout>
       <ProductPageTemplate
         hero={{
-          badge: "Wapi for Service",
+          badge: "Synqzy for Service",
           title: "One Shared WhatsApp Inbox for your entire team",
           description: "Stop sharing physical phones. Centralize all WhatsApp chats in one dashboard where your team can collaborate, assign chats, and respond faster.",
           primaryCTA: { text: "Make Your Chat", link: ROUTES.WAChat },
@@ -52,7 +52,7 @@ const SharedInboxPage = () => {
         ]}
         finalCTA={{
           title: "Bring your team together",
-          description: "Join over 5,000 teams using Wapi to optimize their WhatsApp customer operations.",
+          description: "Join over 5,000 teams using Synqzy to optimize their WhatsApp customer operations.",
           buttonText: "Create Team Inbox",
           buttonLink: "/register",
         }}

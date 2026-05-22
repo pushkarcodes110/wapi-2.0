@@ -3,7 +3,7 @@ import FacebookInsightsDashboard from "@/src/components/facebook/insights/Facebo
 import { RotateCw } from "lucide-react";
 
 export const metadata = {
-  title: "Facebook Ad Insights | Wapi",
+  title: "Facebook Ad Insights | Synqzy",
   description: "View detailed performance metrics for your Facebook ad campaigns.",
 };
 

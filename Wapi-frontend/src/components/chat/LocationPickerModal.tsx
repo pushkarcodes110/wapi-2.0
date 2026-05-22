@@ -54,7 +54,7 @@ const LocationPickerModal = ({ isOpen, onClose, onSend }: LocationPickerModalPro
   const fetchAddress = useCallback(async (lat: number, lng: number) => {
     setIsReverseGeocoding(true);
     try {
-      const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`, { headers: { "User-Agent": "Wapi-Chat-App" } });
+      const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`, { headers: { "User-Agent": "Synqzy-Chat-App" } });
       const data = await response.json();
       setAddress(data.display_name || `${lat.toFixed(6)}, ${lng.toFixed(6)}`);
     } catch (error) {
@@ -81,7 +81,7 @@ const LocationPickerModal = ({ isOpen, onClose, onSend }: LocationPickerModalPro
 
     setIsSearching(true);
     try {
-      const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}&limit=1`, { headers: { "User-Agent": "Wapi-Chat-App" } });
+      const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}&limit=1`, { headers: { "User-Agent": "Synqzy-Chat-App" } });
       const data = await response.json();
       if (data && data.length > 0) {
         const lat = parseFloat(data[0].lat);

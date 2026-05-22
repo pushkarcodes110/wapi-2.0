@@ -12,7 +12,7 @@ const AISupportPage = () => {
     <ProductLayout>
       <ProductPageTemplate
         hero={{
-          badge: "Wapi for Support",
+          badge: "Synqzy for Support",
           title: "Let AI resolve your customer support chats 24/7",
           description: "Train an AI agent on your business documents (PDFs, Website, FAQs) to instantly answer customer questions. It's like having your best agent working around the clock.",
           secondaryCTA: { text: "Book a Demo", link: ROUTES.DefaultAction },
@@ -51,7 +51,7 @@ const AISupportPage = () => {
         ]}
         finalCTA={{
           title: "Scale your support, not your costs",
-          description: "Businesses using Wapi AI reduce support ticket volume by over 65% in the first month.",
+          description: "Businesses using Synqzy AI reduce support ticket volume by over 65% in the first month.",
           buttonText: "Deploy Your AI Support",
           buttonLink: "/register",
         }}
