@@ -21,6 +21,7 @@ import ProfileAssignAICallAgent from "./profile/ProfileAssignAICallAgent";
 import ProfileChatNote from "./profile/ProfileChatNote";
 import ProfileContactSummary from "./profile/ProfileContactSummary";
 import ProfileMediaAssets from "./profile/ProfileMediaAssets";
+import ProfilePipelineAssign from "./profile/ProfilePipelineAssign";
 import { useTranslation } from "react-i18next";
 
 const ChatProfile = () => {
@@ -206,6 +207,8 @@ const ChatProfile = () => {
       ) : (
         <div className="space-y-4 overflow-y-auto custom-scrollbar">
           <ProfileContactSummary profileData={profileData} onDelete={handleDeleteContact} onOpenTagModal={() => setIsTagModalOpen(true)} onRemoveLabel={handleRemoveLabel} />
+
+          <ProfilePipelineAssign contactId={contactId as string} />
 
           {!isAgent && <ProfileAssignAgent agents={agents?.map((a: any) => ({ id: a?._id, name: a?.name, email: a?.email })) || []} selectedAgentId={profileData?.assigned_agent?._id || profileData?.contact?.assigned_agent} onAssign={handleAssignAgent} onUnassign={handleUnassignAgent} isLoading={isAssigningAgent} isUnassigning={isUnassigningAgent} />}
 
