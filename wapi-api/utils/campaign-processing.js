@@ -6,6 +6,8 @@ import Contact from '../models/contact.model.js';
 const API_VERSION = 'v23.0';
 
 import { getCampaignQueue } from '../queues/campaign-queue.js';
+import { enqueueCampaignJobWithFallback } from './campaign-enqueue.js';
+import { processCampaignMessageJob } from './campaign-job-processor.js';
 
 const OBJECT_ID_REGEX = /^[a-f0-9]{24}$/i;
 
@@ -91,7 +93,25 @@ export const processCampaignInBackground = async (campaign) => {
 
     const { campaignQueue } = await getQueueSystem();
 
+    campaign.status = 'sending';
+    campaign.sent_at = campaign.sent_at || new Date();
+    campaign.stats.total_recipients = campaign.recipients.length;
+    campaign.stats.pending_count = campaign.recipients.filter((r) => r.status === 'pending').length;
+    campaign.stats.sent_count = campaign.recipients.filter((r) => r.status === 'sent').length;
+    campaign.stats.failed_count = campaign.recipients.filter((r) => r.status === 'failed').length;
+    await Campaign.findByIdAndUpdate(campaign._id, {
+      $set: {
+        status: 'sending',
+        sent_at: campaign.sent_at,
+        'stats.total_recipients': campaign.stats.total_recipients,
+        'stats.pending_count': campaign.stats.pending_count,
+        'stats.sent_count': campaign.stats.sent_count,
+        'stats.failed_count': campaign.stats.failed_count
+      }
+    });
+
     const jobs = [];
+    let inlineCount = 0;
     for (const recipient of campaign.recipients) {
       if (recipient.status !== 'pending') continue;
 
@@ -117,7 +137,7 @@ export const processCampaignInBackground = async (campaign) => {
         variables
       };
 
-      const job = await campaignQueue.add('send_campaign_message', {
+      const jobData = {
         campaignId: campaign._id.toString(),
         recipient: {
           contact_id: recipient.contact_id,
@@ -126,49 +146,52 @@ export const processCampaignInBackground = async (campaign) => {
         userId: campaign.user_id,
         templateData: recipientTemplateData,
         wabaId: campaign.waba_id
-      }, {
-        attempts: 1,
-        backoff: {
-          type: 'fixed',
-          delay: 1000
+      };
+
+      const enqueueResult = await enqueueCampaignJobWithFallback({
+        queue: campaignQueue,
+        name: 'send_campaign_message',
+        data: jobData,
+        options: {
+          attempts: 1,
+          backoff: {
+            type: 'fixed',
+            delay: 1000
+          },
+          timeout: 30000,
+          jobId: `${campaign._id}-${recipient.contact_id}`
         },
-        timeout: 30000,
-        jobId: `${campaign._id}-${recipient.contact_id}`
+        processJob: processCampaignMessageJob,
+        onFallback: async (error) => {
+          console.error(`Campaign queue add failed for ${recipient.phone_number}; sending inline:`, error.message);
+        }
       });
 
-      jobs.push(job);
+      if (enqueueResult.mode === 'queued') {
+        jobs.push(enqueueResult.job);
+      } else {
+        inlineCount += 1;
+      }
     }
 
-    console.log(`Added ${jobs.length} jobs to campaign queue for campaign ${campaign._id}`);
-
-    campaign.status = 'sending';
-    campaign.sent_at = new Date();
-    campaign.stats.total_recipients = campaign.recipients.length;
-    campaign.stats.pending_count = campaign.recipients.length;
-    campaign.stats.sent_count = 0;
-    campaign.stats.failed_count = 0;
-    await Campaign.findByIdAndUpdate(campaign._id, {
-      $set: {
-        status: 'sending',
-        sent_at: new Date(),
-        'stats.total_recipients': campaign.recipients.length,
-        'stats.pending_count': campaign.recipients.length,
-        'stats.sent_count': 0,
-        'stats.failed_count': 0
-      }
-    });
+    console.log(`Added ${jobs.length} jobs to campaign queue and processed ${inlineCount} inline for campaign ${campaign._id}`);
 
     console.log(`Campaign ${campaign._id} queued for sending. Total recipients: ${campaign.recipients.length}`);
 
   } catch (error) {
     console.error('Error processing campaign:', error);
 
-    campaign.status = 'failed';
-    campaign.error_log.push({
-      timestamp: new Date(),
-      error: error.message
+    await Campaign.findByIdAndUpdate(campaign._id, {
+      $set: {
+        status: 'failed',
+        updated_at: new Date()
+      },
+      $push: {
+        error_log: {
+          timestamp: new Date(),
+          error: error.message
+        }
+      }
     });
-
-    await campaign.save();
   }
 };

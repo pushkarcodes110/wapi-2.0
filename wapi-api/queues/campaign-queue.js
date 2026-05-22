@@ -8,8 +8,17 @@ let _campaignWorker = null;
 let _isInitialized = false;
 let _redisErrorLogged = false;
 
+const getRedisOptions = () => ({
+  host: process.env.REDIS_HOST || '127.0.0.1',
+  port: parseInt(process.env.REDIS_PORT) || 6379,
+  password: process.env.REDIS_PASSWORD || undefined,
+  maxRetriesPerRequest: null,
+  enableReadyCheck: false,
+  enableOfflineQueue: false,
+  connectTimeout: 5000,
+});
+
 const initializeQueueSystem = () => {
-  console.log("caleleddd");
   if (_isInitialized) {
     return { queue: _campaignQueue, worker: _campaignWorker, redisConnection: _redisConnection };
   }
@@ -17,13 +26,9 @@ const initializeQueueSystem = () => {
   _isInitialized = true;
 
   try {
-    _redisConnection = new IORedis(process.env.REDIS_URL || {
-      host: process.env.REDIS_HOST || '127.0.0.1',
-      port: parseInt(process.env.REDIS_PORT) || 6379,
-      password: process.env.REDIS_PASSWORD || undefined,
-      maxRetriesPerRequest: null,
-      enableReadyCheck: false,
-    });
+    _redisConnection = process.env.REDIS_URL
+      ? new IORedis(process.env.REDIS_URL, getRedisOptions())
+      : new IORedis(getRedisOptions());
 
     _campaignQueue = new Queue('campaign', {
       connection: _redisConnection,
@@ -98,8 +103,9 @@ const initializeQueueSystem = () => {
     }
 
     _campaignQueue = {
+      inlineFallback: true,
       add: async (name, data, options) => {
-        console.warn('Redis not available. Running campaign job synchronously:', name);
+        console.warn('Redis not available. Campaign job will run inline:', name);
         return { id: Math.random().toString(36).substr(2, 9) };
       }
     };
