@@ -735,16 +735,25 @@ class AutomationEngine {
     }
 
     try {
-
-      const processedBody = this.processTemplateString(JSON.stringify(body || {}), inputData);
+      const requestMethod = method || 'POST';
+      const requestBody = (body && Object.keys(body).length > 0) ? body : inputData;
+      
       const processedUrl = this.processTemplateString(url, inputData);
-      const processedHeaders = this.processHeaders(headers || {}, inputData);
+      
+      const defaultHeaders = { 'Content-Type': 'application/json' };
+      const mergedHeaders = { ...defaultHeaders, ...(headers || {}) };
+      const processedHeaders = this.processHeaders(mergedHeaders, inputData);
 
-      const response = await fetch(processedUrl, {
-        method: method || 'POST',
-        headers: processedHeaders,
-        body: processedBody
-      });
+      const fetchOptions = {
+        method: requestMethod,
+        headers: processedHeaders
+      };
+
+      if (requestMethod !== 'GET' && requestMethod !== 'HEAD') {
+        fetchOptions.body = this.processTemplateString(JSON.stringify(requestBody), inputData);
+      }
+
+      const response = await fetch(processedUrl, fetchOptions);
 
       const responseText = await response.text();
       const responseJson = this.isJsonString(responseText) ? JSON.parse(responseText) : responseText;
