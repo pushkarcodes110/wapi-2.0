@@ -16,6 +16,53 @@ const getValidId = (item) => {
   return null;
 };
 
+const PLAN_PUBLIC_FIELDS = '_id name price currency billing_cycle features is_featured is_active sort_order description taxes deleted_at';
+
+const getPlanId = (plan) => {
+  if (!plan) return null;
+  const id = plan._id;
+  if (!id) return null;
+  if (typeof id === 'string') return id;
+  if (id._id) return String(id._id);
+  return String(id);
+};
+
+const buildPricingPlanItem = (plan) => ({ _id: plan });
+
+const syncPricingPlansWithActiveCatalog = async (landingPage) => {
+  if (!landingPage?.pricing_section) return landingPage;
+
+  const activePlans = await Plan.find({ is_active: true, deleted_at: null })
+    .select(PLAN_PUBLIC_FIELDS)
+    .sort({ sort_order: 1, price: 1 })
+    .populate('currency taxes')
+    .lean();
+
+  const activePlanIds = new Set(activePlans.map((plan) => String(plan._id)));
+  const activePlanById = new Map(activePlans.map((plan) => [String(plan._id), plan]));
+  const selectedPlans = landingPage.pricing_section.plans || [];
+  const selectedPlanIds = selectedPlans
+    .map(getPlanId)
+    .filter((id) => id && activePlanIds.has(id));
+
+  const orderedPlanIds = [...selectedPlanIds];
+
+  activePlans.forEach((plan) => {
+    const id = String(plan._id);
+    if (!orderedPlanIds.includes(id)) {
+      orderedPlanIds.push(id);
+    }
+  });
+
+  const normalizedPlans = orderedPlanIds
+    .map((id) => activePlanById.get(id))
+    .filter(Boolean)
+    .map(buildPricingPlanItem);
+
+  landingPage.pricing_section.plans = normalizedPlans;
+  return landingPage;
+};
+
 const getLandingPage = async (req, res) => {
   try {
     let landingPage = await LandingPage.findOne();
@@ -213,17 +260,21 @@ const getLandingPage = async (req, res) => {
     const populatedLandingPage = await LandingPage.findById(landingPage._id)
       .populate({
         path: 'pricing_section.plans._id',
-        select: '_id name price features is_featured',
+        select: PLAN_PUBLIC_FIELDS,
+        match: { is_active: true, deleted_at: null },
         populate: {
           path: 'currency taxes',
         }
       })
       .populate('testimonials_section.testimonials._id', '_id title description user_name user_post user_image status rating')
-      .populate('faq_section.faqs._id', '_id title description status');``
+      .populate('faq_section.faqs._id', '_id title description status')
+      .lean();
+
+    const landingPageWithPlans = await syncPricingPlansWithActiveCatalog(populatedLandingPage);
 
     res.status(200).json({
       success: true,
-      data: populatedLandingPage
+      data: landingPageWithPlans
     });
   } catch (error) {
     console.error('Error getting landing page:', error);
@@ -325,14 +376,24 @@ const updateLandingPage = async (req, res) => {
     }
 
     const updatedLandingPage = await LandingPage.findById(landingPage._id)
-      .populate('pricing_section.plans._id', '_id name price features is_featured')
+      .populate({
+        path: 'pricing_section.plans._id',
+        select: PLAN_PUBLIC_FIELDS,
+        match: { is_active: true, deleted_at: null },
+        populate: {
+          path: 'currency taxes',
+        }
+      })
       .populate('testimonials_section.testimonials._id')
-      .populate('faq_section.faqs._id');
+      .populate('faq_section.faqs._id')
+      .lean();
+
+    const landingPageWithPlans = await syncPricingPlansWithActiveCatalog(updatedLandingPage);
 
     res.status(200).json({
       success: true,
       message: 'Landing page updated successfully',
-      data: updatedLandingPage
+      data: landingPageWithPlans
     });
   } catch (error) {
     console.error('Error updating landing page:', error);
