@@ -9,6 +9,8 @@ import FreeTrialModal from "./FreeTrialModal";
 const PlanContainer = () => {
   const { data, isLoading, refetch, isFetching } = useGetAllPlansQuery({
     limit: 100,
+    sort_by: "sort_order",
+    sort_order: "ASC",
   });
 
   const [deletePlan, { isLoading: isDeleting }] = useDeletePlanMutation();

@@ -13,7 +13,7 @@ import CurrencyValue from "@/src/shared/CurrencyValue";
 
 type PricingFeature = {
   label: string;
-  value: string | number | boolean;
+  value?: string | number | boolean;
 };
 
 type DisplayPlan = {
@@ -22,9 +22,43 @@ type DisplayPlan = {
   price: number;
   currencyCode?: { code?: string } | string | null;
   priceSuffix: string;
-  features: PricingFeature[];
-  isPopular: boolean;
+  usageLimits: PricingFeature[];
+  capabilities: PricingFeature[];
   is_featured?: boolean;
+  sort_order?: number;
+};
+
+const numericFeatures = [
+  { id: "contacts", label: "Contacts" },
+  { id: "template_bots", label: "Template Bots" },
+  { id: "message_bots", label: "Message Bots" },
+  { id: "campaigns", label: "Campaigns" },
+  { id: "ai_prompts", label: "AI Prompts" },
+  { id: "staff", label: "Agent" },
+  { id: "conversations", label: "Conversations" },
+  { id: "teams", label: "Teams" },
+  { id: "bot_flow", label: "Bot Flow" },
+  { id: "custom_fields", label: "Custom Fields" },
+  { id: "tags", label: "Tags" },
+  { id: "forms", label: "Whatsapp Form" },
+  { id: "whatsapp_calling", label: "AI calling agent" },
+  { id: "appointment_bookings", label: "Appointment Bookings" },
+  { id: "facebookAds_campaign", label: "Facebook Ads Campaign" },
+  { id: "kanban_funnels", label: "Kanban Funnels" },
+  { id: "segments", label: "Segments" },
+];
+
+const booleanFeatures = [
+  { id: "rest_api", label: "Rest API" },
+  { id: "whatsapp_webhook", label: "WhatsApp Webhook" },
+  { id: "auto_replies", label: "Auto Replies" },
+  { id: "analytics", label: "Analytics" },
+  { id: "priority_support", label: "Priority Support" },
+];
+
+const formatLimitValue = (value: unknown) => {
+  if (value === 0) return "Unlimited";
+  return value as string | number | boolean | undefined;
 };
 
 const PricingPlan: React.FC<PricingPlanProps> = ({ data }) => {
@@ -38,44 +72,34 @@ const PricingPlan: React.FC<PricingPlanProps> = ({ data }) => {
       if (!planDoc) return null;
 
       const featureLimits = planDoc.features || {};
-      const formattedFeatures = [
-        { label: "Contacts", value: featureLimits.contacts },
-        { label: "Campaigns", value: featureLimits.campaigns },
-        { label: "Staff", value: featureLimits.staff },
-        { label: "Conversations", value: featureLimits.conversations },
-        { label: "AI Prompts", value: featureLimits.ai_prompts },
-        { label: "Bot Flow", value: featureLimits.bot_flow },
-        {
-          label: "Rest API",
-          value: featureLimits.rest_api ? "Included" : "No",
-        },
-        {
-          label: "Webhook",
-          value: featureLimits.whatsapp_webhook ? "Included" : "No",
-        },
-      ].filter((f) => f.value !== undefined);
+      const usageLimits = numericFeatures
+        .map((feature) => ({
+          label: feature.label,
+          value: formatLimitValue(featureLimits[feature.id]),
+        }))
+        .filter((feature) => feature.value !== undefined && feature.value !== null && feature.value !== "");
+
+      const capabilities = booleanFeatures
+        .filter((feature) => !!featureLimits[feature.id])
+        .map((feature) => ({
+          label: feature.label,
+          value: "Included",
+        }));
 
       return {
         name: planDoc.name,
-        description: planDoc.name.toLowerCase() === "pro" ? "Best for growing teams" : "Ideal for small projects",
+        description: planDoc.description || "Perfect for growing teams.",
         price: planDoc.price,
         currencyCode: planDoc?.currency,
         priceSuffix: `/per ${planDoc.billing_cycle || "user"}`,
-        features: formattedFeatures,
-        isPopular: planDoc.name.toLowerCase() === "pro",
+        usageLimits,
+        capabilities,
         is_featured: planDoc.is_featured,
+        sort_order: planDoc.sort_order,
       };
     })
-    .filter((plan): plan is DisplayPlan => plan !== null);
-
-  if (plans.length === 3) {
-    const featuredIdx = plans.findIndex((p) => p && p.is_featured);
-    if (featuredIdx !== -1 && featuredIdx !== 1) {
-      const featured = plans[featuredIdx];
-      plans.splice(featuredIdx, 1);
-      plans.splice(1, 0, featured);
-    }
-  }
+    .filter((plan): plan is DisplayPlan => plan !== null)
+    .sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0));
 
   const handleChoosePlan = () => {
     if (isAuthenticated) {
@@ -116,16 +140,37 @@ const PricingPlan: React.FC<PricingPlanProps> = ({ data }) => {
             </div>
           </div>
 
-          <div className="mt-6 mb-8 flex-1 space-y-3">
-            {plan.features.map((feature, fIdx) => (
-              <div key={fIdx} className="flex items-center gap-3">
-                <BadgeCheck size={18} className="shrink-0 text-primary opacity-80" />
-                <p className="text-[14px] leading-snug text-slate-600">
-                  <span className="text-slate-500 opacity-90">{feature.label}: </span>
-                  <span className="ml-1 font-bold text-slate-800">{feature.value}</span>
-                </p>
+          <div className="mt-6 mb-8 flex-1 space-y-5">
+            {plan.usageLimits.length > 0 && (
+              <div>
+                <h4 className="mb-3 text-[14px] font-bold text-slate-900">Usage Restrictions</h4>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+                  {plan.usageLimits.map((feature, fIdx) => (
+                    <div key={fIdx} className="flex items-start gap-2.5">
+                      <BadgeCheck size={18} className="mt-0.5 shrink-0 text-primary opacity-80" />
+                      <p className="text-[14px] leading-snug text-slate-600">
+                        <span className="font-bold text-slate-800">{feature.value}</span>{" "}
+                        <span className="text-slate-500 opacity-90">{feature.label}</span>
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
+            )}
+
+            {plan.capabilities.length > 0 && (
+              <div>
+                <h4 className="mb-3 text-[14px] font-bold text-slate-900">Features</h4>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+                  {plan.capabilities.map((feature, fIdx) => (
+                    <div key={fIdx} className="flex items-start gap-2.5">
+                      <BadgeCheck size={18} className="mt-0.5 shrink-0 text-primary opacity-80" />
+                      <p className="text-[14px] leading-snug text-slate-600">{feature.label}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="mt-auto space-y-3">

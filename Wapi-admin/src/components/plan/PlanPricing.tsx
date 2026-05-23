@@ -10,7 +10,7 @@ import { useGetAllCurrenciesQuery } from "@/src/redux/api/currencyApi";
 import { useGetAllTaxesQuery } from "@/src/redux/api/taxApi";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/src/elements/ui/dropdown-menu";
 import { Button } from "@/src/elements/ui/button";
-import { ChevronDown, Percent } from "lucide-react";
+import { ChevronDown, Percent, ListOrdered } from "lucide-react";
 import { Badge } from "@/src/elements/ui/badge";
 
 const PlanPricing = ({ formData, onFieldChange }: PlanPricingProps) => {
@@ -98,6 +98,27 @@ const PlanPricing = ({ formData, onFieldChange }: PlanPricingProps) => {
             <option value="yearly">{t("plan_billing_cycle_yearly") || "Yearly"}</option>
             <option value="free Trial">{t("plan_billing_cycle_trial") || "Free Plan"}</option>
           </select>
+        </div>
+
+        <div className="space-y-2.5 flex flex-col">
+          <Label htmlFor="sort_order" className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+            {t("plan_display_sequence") || "Display Sequence"}
+          </Label>
+          <div className="relative">
+            <ListOrdered className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+            <Input
+              id="sort_order"
+              type="number"
+              min="0"
+              placeholder="0"
+              value={formData.sort_order}
+              onChange={(e) => onFieldChange("sort_order", e.target.value)}
+              className="dark:bg-page-body dark:border-(--card-border-color) h-11 p-3 pl-10 bg-gray-50/50 border-gray-200 focus:border-(--text-green-primary) focus:ring-1 focus:ring-(--text-green-primary) transition-all rounded-lg"
+            />
+          </div>
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            {t("plan_display_sequence_desc") || "Lower numbers appear first on the landing page."}
+          </p>
         </div>
 
         <div className="space-y-2.5 flex flex-col">

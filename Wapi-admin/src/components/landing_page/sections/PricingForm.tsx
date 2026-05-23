@@ -19,7 +19,11 @@ interface PricingFormProps {
 }
 
 const PricingForm = ({ data, onChange }: PricingFormProps) => {
-  const { data: plansData } = useGetAllPlansQuery({});
+  const { data: plansData } = useGetAllPlansQuery({
+    limit: 100,
+    sort_by: "sort_order",
+    sort_order: "ASC",
+  });
   const [open, setOpen] = useState(false);
 
   const handleChange = (field: string, value: any) => {

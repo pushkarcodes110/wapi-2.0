@@ -58,11 +58,13 @@ export interface PlatformSection {
 export interface PlanPopulated {
   _id: string;
   name: string;
+  description?: string;
   price: number;
   currency: any;
   billing_cycle: string;
   features: Record<string, any>;
   is_featured: boolean;
+  sort_order?: number;
 }
 
 export interface PricingPlan {
