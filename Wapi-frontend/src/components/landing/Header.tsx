@@ -154,7 +154,7 @@ const Header = ({ isColor = false }: { isColor?: boolean }) => {
             width={100}
             height={40}
             unoptimized
-            className="h-7.75 object-contain"
+            className="h-9 object-contain"
           />
         </Link>
 
@@ -252,7 +252,7 @@ const Header = ({ isColor = false }: { isColor?: boolean }) => {
                 width={90}
                 height={34}
                 unoptimized
-                className="h-7.75 object-contain"
+                className="h-9 object-contain"
               />
             </Link>
             <button

@@ -59,7 +59,7 @@ const Footer: React.FC<FooterProps> = ({ data }) => {
       <div className="flex flex-col md:flex-row justify-between items-center gap-[calc(16px+(32-16)*((100vw-320px)/(1920-320)))] pb-8 border-b border-white/10">
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center gap-3">
-            <Images src={logo_dark_url || Logo1} alt={`${app_name || "Synqzy"} logo`} className="h-7.75 object-contain" width={100} height={100} />
+            <Images src={logo_dark_url || Logo1} alt={`${app_name || "Synqzy"} logo`} className="h-9 object-contain" width={120} height={100} />
           </Link>
         </div>
 

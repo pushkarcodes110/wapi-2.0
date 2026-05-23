@@ -58,6 +58,11 @@ export const kanbanFunnelApi = baseApi.enhanceEndpoints({ addTagTypes: ["KanbanF
       providesTags: (result, error, { id }) => [{ type: "KanbanFunnel", id: `${id}_items` }],
     }),
 
+    getContactFunnelStatus: builder.query<any, string>({
+      query: (contactId) => `/contacts/${contactId}/funnel-status`,
+      providesTags: (result, error, contactId) => [{ type: "KanbanFunnel", id: `contact_${contactId}_status` }],
+    }),
+
     syncStages: builder.mutation<any, { id: string; stages: any[] }>({
       query: ({ id, stages }) => ({
         url: `/kanban-funnels/${id}/stages`,
@@ -148,9 +153,10 @@ export const kanbanFunnelApi = baseApi.enhanceEndpoints({ addTagTypes: ["KanbanF
           if (sidebarPatchResult) sidebarPatchResult.undo();
         }
       },
-      invalidatesTags: (result, error, { id }) => [
+      invalidatesTags: (result, error, { id, globalItemId }) => [
         { type: "KanbanFunnel", id: `${id}_items` },
         { type: "KanbanFunnel", id },
+        ...(globalItemId ? [{ type: "KanbanFunnel" as const, id: `contact_${globalItemId}_status` }] : []),
       ],
     }),
 
@@ -178,4 +184,4 @@ export const kanbanFunnelApi = baseApi.enhanceEndpoints({ addTagTypes: ["KanbanF
   }),
 });
 
-export const { useGetFunnelsQuery, useGetFunnelByIdQuery, useCreateFunnelMutation, useUpdateFunnelMutation, useDeleteFunnelMutation, useGetAvailableDataQuery, useGetFunnelItemsQuery, useSyncStagesMutation, useMoveFunnelItemMutation, useUpdateFunnelItemMutation, useDeleteFunnelItemMutation } = kanbanFunnelApi;
+export const { useGetFunnelsQuery, useGetFunnelByIdQuery, useCreateFunnelMutation, useUpdateFunnelMutation, useDeleteFunnelMutation, useGetAvailableDataQuery, useGetFunnelItemsQuery, useGetContactFunnelStatusQuery, useSyncStagesMutation, useMoveFunnelItemMutation, useUpdateFunnelItemMutation, useDeleteFunnelItemMutation } = kanbanFunnelApi;

@@ -9,7 +9,6 @@ const planSchema = new mongoose.Schema({
     slug: {
         type: String,
         required: true,
-        unique: true,
         lowercase: true
     },
     description: {
@@ -174,7 +173,7 @@ const planSchema = new mongoose.Schema({
     collection: 'plans'
 });
 
-// planSchema.index({ slug: 1 });
+planSchema.index({ slug: 1 }, { unique: true, partialFilterExpression: { deleted_at: null } });
 planSchema.index({ is_active: 1 });
 planSchema.index({ deleted_at: 1 });
 

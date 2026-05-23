@@ -6,25 +6,7 @@ import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Images from "../../shared/Image";
 import { TestimonialPopulated, TestimonialProps } from "../../types/landingPage";
-
-const sanitizeRichText = (html: string = "") => {
-  let sanitized = html
-    .replace(/<!--[\s\S]*?-->/g, "")
-    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
-    .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, "")
-    .replace(/\s(?:data-[\w-]+|class|style|id|role|aria-[\w-]+|contenteditable|spellcheck|lang|dir|start|end)=("[^"]*"|'[^']*'|[^\s>]*)/gi, "")
-    .replace(/<span\b[^>]*>/gi, "")
-    .replace(/<\/span>/gi, "")
-    .replace(/<(\/?)div\b[^>]*>/gi, "<$1p>")
-    .replace(/<p>\s*(?:<br\s*\/?>)?\s*<\/p>/gi, "");
-
-  sanitized = sanitized.replace(/<a\b([^>]*)>/gi, (_match, attrs: string) => {
-    const href = attrs.match(/\shref=("[^"]*"|'[^']*'|[^\s>]*)/i)?.[1];
-    return href ? `<a href=${href}>` : "<a>";
-  });
-
-  return sanitized.replace(/<(?!\/?(?:p|br|b|strong|i|em|u|s|strike|ul|ol|li|blockquote|pre|code|a)\b)[^>]*>/gi, "").trim();
-};
+import { sanitizeRichHtml } from "@/src/utils/richText";
 
 const Testimonial: React.FC<TestimonialProps> = ({ data }) => {
   const testimonials = (data.testimonials || []).map((item) => item._id).filter((item): item is TestimonialPopulated => !!item && typeof item === "object");
@@ -71,11 +53,11 @@ const Testimonial: React.FC<TestimonialProps> = ({ data }) => {
               <SwiperSlide key={idx} className="h-auto! py-10 px-2 sm:px-4">
                 {({ isActive }) => (
                   <div
-                    className={`feature-box transition-all duration-700 ease-in-out h-full max-w-117.5 max-h-104
+                    className={`feature-box transition-all duration-700 ease-in-out h-full max-w-117.5 min-h-104
                       ${isActive ? "md:translate-y-4 scale-105 z-10 opacity-100" : "md:-translate-y-4 scale-95 opacity-50"}
                     `}
                   >
-                    <div className="testimonial-card bg-white rounded-4xl p-7 h-full flex flex-col shadow-[0_16px_60px_rgba(15,184,129,0.12)] relative ">
+                    <div className="testimonial-card bg-white rounded-4xl p-7 h-full flex flex-col shadow-[0_16px_60px_rgba(15,184,129,0.12)] relative overflow-hidden">
                       <div className="mb-6">
                         <div className="bg-primary w-13 h-13 rounded-[14px] flex items-center justify-center shadow-[0_6px_20px_rgba(15,184,129,0.25)]">
                           <Quote className="text-white fill-white transform scale-x-[-1]" size={24} strokeWidth={0} />
@@ -84,18 +66,18 @@ const Testimonial: React.FC<TestimonialProps> = ({ data }) => {
 
                       <div
                         className="mb-5 grow text-[18px] font-regular text-slate-500 [&_a]:text-primary [&_blockquote]:border-l-4 [&_blockquote]:border-primary/40 [&_blockquote]:pl-3 [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:mb-3 [&_p:last-child]:mb-0 [&_strong]:font-bold [&_ul]:list-disc [&_ul]:pl-6"
-                        dangerouslySetInnerHTML={{ __html: sanitizeRichText(item.description) }}
+                        dangerouslySetInnerHTML={{ __html: sanitizeRichHtml(item.description) }}
                       />
 
-                      <div className="flex items-center gap-3">
+                      <div className="mt-auto flex items-center gap-3 border-t border-slate-100 pt-4">
                         <Images src={item?.user_image} alt={item?.user_name || "image"} className="w-10 h-10 max-w-10 max-h-10 rounded-full object-cover shrink-0" width={100} height={100} unoptimized />
-                        <div>
-                          <h4 className="font-bold text-landing-accent-dark text-[16px] leading-tight">{item.user_name}</h4>
-                          <div className="flex items-center gap-1.5 mt-0.5">
-                            <span className="text-[16px] text-slate-500 italic">{item.user_post}</span>
-                            <Star size={12} className="fill-landing-warning text-landing-warning ml-1 shrink-0" />
-                            <span className="text-[13px] font-bold text-landing-accent-dark">{item.rating?.toFixed(1) || "5.0"}</span>
-                          </div>
+                        <div className="min-w-0 flex-1">
+                          <h4 className="truncate font-bold text-landing-accent-dark text-[16px] leading-tight">{item.user_name}</h4>
+                          <p className="mt-0.5 line-clamp-2 text-[14px] text-slate-500 italic leading-snug">{item.user_post}</p>
+                        </div>
+                        <div className="ml-auto flex shrink-0 items-center gap-1 rounded-full bg-slate-50 px-2 py-1">
+                          <Star size={12} className="fill-landing-warning text-landing-warning" />
+                          <span className="text-[13px] font-bold text-landing-accent-dark">{item.rating?.toFixed(1) || "5.0"}</span>
                         </div>
                       </div>
                     </div>

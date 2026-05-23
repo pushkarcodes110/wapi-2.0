@@ -30,6 +30,11 @@ const sanitizeRichHtml = (html: string) => {
   if (!html) return "";
 
   let sanitized = html
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .replace(/&amp;/gi, "&")
     .replace(/<!--[\s\S]*?-->/g, "")
     .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
     .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, "")
@@ -45,7 +50,7 @@ const sanitizeRichHtml = (html: string) => {
     return href ? `<a href=${href}>` : "<a>";
   });
 
-  return sanitized.replace(/<(?!\/?(?:p|br|b|strong|i|em|u|s|strike|ul|ol|li|blockquote|pre|code|a)\b)[^>]*>/gi, "").trim();
+  return sanitized.replace(/<(?!\/?(?:p|br|b|strong|i|em|u|s|strike|ul|ol|li|blockquote|pre|code|a|h1|h2|h3|h4|h5|h6)\b)[^>]*>/gi, "").trim();
 };
 
 const normalizeHtml = (html: string) => sanitizeRichHtml(html || "");
@@ -92,8 +97,10 @@ const CKEditorComponent = ({ value, onChange, onReady, placeholder = "Type your 
     event.preventDefault();
     const html = event.clipboardData.getData("text/html");
     const text = event.clipboardData.getData("text/plain");
-    const nextContent = html ? normalizeHtml(html) : text;
-    document.execCommand(html ? "insertHTML" : "insertText", false, nextContent);
+    const plainTextLooksLikeHtml = /<\/?[a-z][\s\S]*>/i.test(text);
+    const shouldRenderHtml = Boolean(html) || plainTextLooksLikeHtml;
+    const nextContent = shouldRenderHtml ? normalizeHtml(html || text) : text;
+    document.execCommand(shouldRenderHtml ? "insertHTML" : "insertText", false, nextContent);
     emitChange();
   };
 

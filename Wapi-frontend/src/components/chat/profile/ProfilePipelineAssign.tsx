@@ -5,16 +5,26 @@ import { Label } from "@/src/elements/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/src/elements/ui/select";
 import { useChatTheme } from "@/src/hooks/useChatTheme";
 import { cn } from "@/src/lib/utils";
-import { useGetFunnelsQuery, useMoveFunnelItemMutation } from "@/src/redux/api/kanbanFunnelApi";
+import { useGetContactFunnelStatusQuery, useGetFunnelsQuery, useMoveFunnelItemMutation } from "@/src/redux/api/kanbanFunnelApi";
 import { useAppSelector } from "@/src/redux/hooks";
 import { KanbanFunnel, KanbanStage } from "@/src/types/kanban-funnel";
-import { GitBranch, Loader2, PlusCircle } from "lucide-react";
+import { CheckCircle2, GitBranch, Loader2, PlusCircle } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 interface ProfilePipelineAssignProps {
   contactId: string;
+}
+
+interface ContactFunnelStatus {
+  funnelId: string;
+  funnelName: string;
+  funnelType: string;
+  stageId: string;
+  stageName: string;
+  priority: string;
+  isArchived: boolean;
 }
 
 const getSortedStages = (pipeline?: KanbanFunnel): KanbanStage[] => {
@@ -46,10 +56,14 @@ const ProfilePipelineAssign = ({ contactId }: ProfilePipelineAssignProps) => {
     sort_by: "name",
     sort_order: "ASC",
   });
+  const { data: statusResult, isLoading: isLoadingStatus, refetch: refetchStatus } = useGetContactFunnelStatusQuery(contactId, { skip: !contactId });
   const [moveFunnelItem, { isLoading: isAssigning }] = useMoveFunnelItemMutation();
 
   const pipelines = useMemo<KanbanFunnel[]>(() => pipelinesResult?.data || [], [pipelinesResult?.data]);
   const effectivePipelineId = selectedPipelineId || pipelines[0]?._id;
+  const contactPipelineStatuses = useMemo<ContactFunnelStatus[]>(() => statusResult?.data || [], [statusResult?.data]);
+  const activeContactPipelineStatuses = useMemo(() => contactPipelineStatuses.filter((status) => !status.isArchived), [contactPipelineStatuses]);
+  const currentStatusForSelection = useMemo(() => activeContactPipelineStatuses.find((status) => String(status.funnelId) === String(effectivePipelineId)), [activeContactPipelineStatuses, effectivePipelineId]);
   const selectedPipeline = useMemo(() => pipelines.find((pipeline) => pipeline._id === effectivePipelineId), [pipelines, effectivePipelineId]);
   const stages = useMemo(() => getSortedStages(selectedPipeline), [selectedPipeline]);
   const effectiveStageId = selectedStageId || stages[0]?._id;
@@ -73,6 +87,7 @@ const ProfilePipelineAssign = ({ contactId }: ProfilePipelineAssignProps) => {
         toStageId: effectiveStageId,
         position: 0,
       }).unwrap();
+      await refetchStatus();
       toast.success(t("contact_added_to_pipeline_success"));
     } catch (error: unknown) {
       toast.error(getErrorMessage(error) || t("contact_added_to_pipeline_failed"));
@@ -82,6 +97,7 @@ const ProfilePipelineAssign = ({ contactId }: ProfilePipelineAssignProps) => {
   const isEmpty = !isLoadingPipelines && pipelines.length === 0;
   const hasNoStages = !!selectedPipeline && stages.length === 0;
   const isDisabled = isLoadingPipelines || isAssigning || isEmpty || hasNoStages || !effectivePipelineId || !effectiveStageId;
+  const isAlreadyInSelectedPipeline = !!currentStatusForSelection;
 
   return (
     <div className="dark:border-none border-b border-gray-100 dark:bg-(--table-hover)! dark:border-(--card-border-color) p-5 space-y-4 mb-0" style={isCustom ? { backgroundColor: "color-mix(in srgb, var(--chat-theme-color), transparent 95%)" } : {}}>
@@ -110,6 +126,31 @@ const ProfilePipelineAssign = ({ contactId }: ProfilePipelineAssignProps) => {
         </div>
       ) : (
         <>
+          <div className={cn("rounded-lg border p-3 text-xs", activeContactPipelineStatuses.length > 0 ? "border-primary/20 bg-primary/5 text-slate-700 dark:text-gray-200" : "border-dashed border-slate-200 bg-white/60 text-slate-500 dark:border-(--card-border-color) dark:bg-(--page-body-bg) dark:text-gray-400")}>
+            {isLoadingStatus ? (
+              <span className="inline-flex items-center gap-2">
+                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                {t("loading_pipelines")}
+              </span>
+            ) : activeContactPipelineStatuses.length > 0 ? (
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 font-semibold text-slate-900 dark:text-white">
+                  <CheckCircle2 className="h-4 w-4 text-primary" />
+                  <span>{t("contact_already_in_pipeline", "Contact is already in pipeline")}</span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {activeContactPipelineStatuses.map((status) => (
+                    <span key={`${status.funnelId}-${status.stageId}`} className="rounded-full bg-white px-2.5 py-1 font-medium text-slate-700 shadow-sm ring-1 ring-primary/15 dark:bg-(--card-color) dark:text-gray-200">
+                      {status.funnelName} · {status.stageName}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <span>{t("contact_not_in_pipeline_yet", "Contact isn't in pipeline yet. Add them below.")}</span>
+            )}
+          </div>
+
           <div className="space-y-1.5 relative">
             <Label className="text-[10px] font-medium text-slate-400 absolute -top-2 left-3 bg-white dark:bg-(--page-body-bg) px-1 z-10">{t("pipeline")}</Label>
             <Select value={effectivePipelineId} onValueChange={handlePipelineChange} disabled={isLoadingPipelines || isAssigning}>
@@ -157,7 +198,7 @@ const ProfilePipelineAssign = ({ contactId }: ProfilePipelineAssignProps) => {
             className={cn("w-full h-10 rounded-lg bg-primary text-white hover:bg-primary/90", isCustom && "shadow-sm")}
           >
             {isAssigning ? <Loader2 className="h-4 w-4 animate-spin" /> : <PlusCircle size={16} />}
-            {t("add_to_pipeline")}
+            {isAlreadyInSelectedPipeline ? t("update_pipeline_stage", "Update Pipeline Stage") : t("add_to_pipeline")}
           </Button>
         </>
       )}

@@ -18,13 +18,18 @@ const ProfileContactSummary = ({ profileData, onDelete, onOpenTagModal, onRemove
   const userSettingData = userSetting?.data;
 
   const isAgent = user?.role === "agent";
+  const contactName = profileData?.contact?.name?.trim();
+  const phoneNumber = maskSensitiveData(profileData?.contact?.phone_number, "phone", is_demo_mode);
+  const displayName = isAgent && user?.is_phoneno_hide ? "Customer" : contactName || phoneNumber;
+  const shouldShowPhone = !isAgent || !user?.is_phoneno_hide;
 
   return (
     <div className="relative border-b dark:bg-(--table-hover)! dark:border-none border-gray-100 dark:border-(--card-border-color) p-5 mb-0 flex items-center justify-center flex-col" style={isCustom ? { backgroundColor: "color-mix(in srgb, var(--chat-theme-color), transparent 95%)" } : {}}>
       <div className="h-12 w-12 shrink-0 mb-4 rounded-full flex items-center justify-center text-white font-bold text-xl overflow-hidden" style={isCustom ? { backgroundColor: userSettingData?.bg_color == "null" ? "var(--primary)" : "var(--chat-theme-color)" } : { backgroundColor: userSettingData?.bg_color == "null" ? "var(--primary)" : "var(--primary)" }}>
-        {profileData?.contact?.avatar ? <Image src={profileData?.contact?.avatar} alt={profileData?.contact?.name} width={64} height={64} className="object-cover" unoptimized /> : getInitials(app_name || "W")}
+        {profileData?.contact?.avatar ? <Image src={profileData?.contact?.avatar} alt={displayName || app_name || "W"} width={64} height={64} className="object-cover" unoptimized /> : getInitials(displayName || app_name || "W")}
       </div>
-      <h3 className="font-bold text-slate-900 dark:text-white truncate">{isAgent && user?.is_phoneno_hide ? "Customer" : maskSensitiveData(profileData?.contact?.phone_number, "phone", is_demo_mode)}</h3>
+      <h3 className="max-w-full font-bold text-slate-900 dark:text-white truncate">{displayName}</h3>
+      {contactName && shouldShowPhone && <p className="max-w-full text-sm text-slate-500 dark:text-gray-500 truncate">{phoneNumber}</p>}
       <p className="text-sm text-slate-500 dark:text-gray-500 truncate">{profileData?.contact?.status}</p>
       {!isAgent && (
         <Button variant="ghost" size="icon" className="absolute top-2 right-2 h-8 w-8 text-rose-500 hover:text-rose-600 bg-rose-50 hover:bg-rose-50 dark:bg-rose-400/30 dark:hover:bg-rose-500/10 rounded-lg" onClick={onDelete}>

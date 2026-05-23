@@ -3,6 +3,7 @@
 import { Minus, Plus } from "lucide-react";
 import React, { useState } from "react";
 import { FaqProps } from "../../types/landingPage";
+import { sanitizeRichHtml } from "@/src/utils/richText";
 
 const Faq: React.FC<FaqProps> = ({ data }) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
@@ -54,7 +55,10 @@ const Faq: React.FC<FaqProps> = ({ data }) => {
                     </div>
                   </button>
                   <div className={`overflow-hidden transition-colors duration-300 ${activeIndex === index ? "max-h-96 pb-[calc(12px+(24-12)*((100vw-320px)/(1920-320)))] px-[calc(12px+(24-12)*((100vw-320px)/(1920-320)))] sm:px-10 lg:px-14 bg-landing-bg-light rounded-tl-none rounded-tr-none rounded-bl-[10px] rounded-br-[10px]" : "max-h-0 bg-primary "}`}>
-                    <p className="text-gray-600 text-sm leading-relaxed">{item.description}</p>
+                    <div
+                      className="text-gray-600 text-sm leading-relaxed [&_a]:text-primary [&_blockquote]:border-l-4 [&_blockquote]:border-primary/40 [&_blockquote]:pl-3 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-2 [&_p:last-child]:mb-0 [&_strong]:font-bold [&_ul]:list-disc [&_ul]:pl-5"
+                      dangerouslySetInnerHTML={{ __html: sanitizeRichHtml(item.description) }}
+                    />
                   </div>
                 </div>
               ))}

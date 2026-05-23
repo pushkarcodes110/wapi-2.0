@@ -83,6 +83,28 @@ const generateSlug = (name) => {
         .replace(/^-+|-+$/g, '');
 };
 
+const normalizeSlug = (slug, fallbackName) => {
+    return generateSlug(slug || fallbackName || '');
+};
+
+const releaseDeletedPlanSlug = async (slug) => {
+    if (!slug) return;
+
+    const deletedPlans = await Plan.find({
+        slug: createCaseInsensitivePattern(slug),
+        deleted_at: { $ne: null }
+    }).select('_id slug').lean();
+
+    if (deletedPlans.length === 0) return;
+
+    await Plan.bulkWrite(deletedPlans.map(plan => ({
+        updateOne: {
+            filter: { _id: plan._id },
+            update: { $set: { slug: `${plan.slug}-deleted-${plan._id}` } }
+        }
+    })));
+};
+
 
 const validatePlanData = (data) => {
     const { name, price, billing_cycle, features } = data;
@@ -293,7 +315,8 @@ export const createPlan = async (req, res) => {
             });
         }
 
-        const slug = planData.slug || generateSlug(planData.name);
+        const slug = normalizeSlug(planData.slug, planData.name);
+        await releaseDeletedPlanSlug(slug);
 
         const existingPlan = await Plan.findOne({
             slug: createCaseInsensitivePattern(slug),
@@ -434,9 +457,10 @@ export const updatePlan = async (req, res) => {
             });
         }
 
-        const slug = planData.slug || (planData.name !== existingPlan.name
-            ? generateSlug(planData.name)
-            : existingPlan.slug);
+        const slug = normalizeSlug(planData.slug || (planData.name !== existingPlan.name
+            ? planData.name
+            : existingPlan.slug), existingPlan.name);
+        await releaseDeletedPlanSlug(slug);
 
         const duplicatePlan = await Plan.findOne({
             slug: createCaseInsensitivePattern(slug),
@@ -681,10 +705,18 @@ export const deletePlan = async (req, res) => {
         const foundIds = existingPlans.map(plan => plan._id.toString());
         const notFoundIds = validIds.filter(id => !foundIds.includes(id.toString()));
 
-        const deleteResult = await Plan.updateMany(
-            { _id: { $in: foundIds } },
-            { $set: { deleted_at: new Date() } }
-        );
+        const deletedAt = new Date();
+        const deleteResult = await Plan.bulkWrite(existingPlans.map(plan => ({
+            updateOne: {
+                filter: { _id: plan._id },
+                update: {
+                    $set: {
+                        deleted_at: deletedAt,
+                        slug: `${plan.slug}-deleted-${plan._id}`
+                    }
+                }
+            }
+        })));
 
         const response = {
             success: true,

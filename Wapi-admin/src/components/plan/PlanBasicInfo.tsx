@@ -9,14 +9,27 @@ import { useTranslation } from "react-i18next";
 
 const PlanBasicInfo = ({ formData, onFieldChange }: PlanBasicInfoProps) => {
   const { t } = useTranslation();
-  const handleNameChange = (value: string) => {
-    onFieldChange("name", value);
-    const autoSlug = value
+  const normalizeSlug = (value: string) =>
+    value
       .toLowerCase()
       .trim()
       .replace(/\s+/g, "-")
-      .replace(/[^a-z0-9-]/g, "");
-    onFieldChange("slug", autoSlug);
+      .replace(/[^a-z0-9-]/g, "")
+      .replace(/-+/g, "-")
+      .replace(/^-+|-+$/g, "");
+
+  const handleNameChange = (value: string) => {
+    const previousAutoSlug = normalizeSlug(formData.name);
+    const shouldUpdateSlug = !formData.slug || formData.slug === previousAutoSlug;
+
+    onFieldChange("name", value);
+    if (shouldUpdateSlug) {
+      onFieldChange("slug", normalizeSlug(value));
+    }
+  };
+
+  const handleSlugChange = (value: string) => {
+    onFieldChange("slug", normalizeSlug(value));
   };
 
   return (
@@ -43,7 +56,8 @@ const PlanBasicInfo = ({ formData, onFieldChange }: PlanBasicInfoProps) => {
           <Label htmlFor="slug" className="text-sm font-semibold text-gray-700 dark:text-gray-300">
             {t("plan_slug_label")}
           </Label>
-          <Input id="slug" placeholder={t("plan_slug_placeholder") || "pro-plan"} value={formData.slug} disabled className="dark:bg-page-body dark:border-(--card-border-color) p-3 h-11 bg-gray-100/50 border-gray-200 cursor-not-allowed opacity-70 rounded-lg" />
+          <Input id="slug" placeholder={t("plan_slug_placeholder") || "pro-plan"} value={formData.slug} onChange={(e) => handleSlugChange(e.target.value)} className="dark:bg-page-body dark:border-(--card-border-color) p-3 h-11 bg-gray-50/50 border-gray-200 focus:border-(--text-green-primary) focus:ring-1 focus:ring-(--text-green-primary) transition-all rounded-lg" />
+          <p className="text-[11px] text-gray-400">{t("plan_slug_edit_hint") || "Auto-filled from the plan name. You can edit it before saving."}</p>
         </div>
 
         <div className="md:col-span-2 space-y-2.5 flex flex-col">
