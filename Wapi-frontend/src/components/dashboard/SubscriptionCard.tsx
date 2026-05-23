@@ -12,6 +12,9 @@ import CurrencyValue from "@/src/shared/CurrencyValue";
 import { SUBSCRIPTIONINFO } from "@/src/data";
 import { useTranslation } from "react-i18next";
 import { ROUTES } from "@/src/constants";
+import type { Plan } from "@/src/types/subscription";
+
+const getPlanFromSubscription = (plan: string | Plan | undefined) => (typeof plan === "object" ? plan : null);
 
 const SubscriptionCard = () => {
   const { t } = useTranslation();
@@ -28,7 +31,34 @@ const SubscriptionCard = () => {
   const isFreeTrial = userSettings?.is_free_trial;
   const trialDaysRemaining = userSettings?.free_trial_days_remaining || 0;
 
-  const planName = typeof subscription?.plan_id === "object" ? subscription?.plan_id?.name : t("professional_plan");
+  const activePlan = getPlanFromSubscription(subscription?.plan_id);
+  const planName = activePlan?.name || t("current_plan");
+
+  const getBillingUnit = (billingCycle?: string) => {
+    switch (billingCycle) {
+      case "monthly":
+        return t("month_unit");
+      case "yearly":
+        return t("per_year").replace("/", "").toLowerCase();
+      case "lifetime":
+        return t("lifetime").toLowerCase();
+      default:
+        return "cycle";
+    }
+  };
+
+  const getBillingDescription = (billingCycle?: string) => {
+    switch (billingCycle) {
+      case "yearly":
+        return t("billed_annually");
+      case "monthly":
+        return t("billed_monthly");
+      case "lifetime":
+        return t("one_time_payment");
+      default:
+        return "Billing cycle";
+    }
+  };
 
   if (isSubLoading || isUserLoading) {
     return <div className="h-full bg-white dark:bg-(--card-color) rounded-2xl p-7 border border-slate-100 dark:border-(--card-border-color) animate-pulse shadow-sm" />;
@@ -56,8 +86,11 @@ const SubscriptionCard = () => {
   const renewalInfo = getRenewalInfo();
 
   if (isActive) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const plan = typeof subscription?.plan_id === "object" ? (subscription?.plan_id as any) : null;
+    const plan = activePlan;
+    const currencyCode = plan?.currency?.code || subscription?.currency || "USD";
+    const currencySymbol = plan?.currency?.symbol || subscription?.currency;
+    const displayAmount = plan?.price ?? subscription?.amount_paid ?? 0;
+    const billingCycle = plan?.billing_cycle;
 
     return (
       <div className="h-full flex flex-col bg-white dark:bg-(--card-color) rounded-lg sm:p-6 p-4 border border-slate-100 dark:border-(--card-border-color) shadow-sm relative overflow-hidden group transition-all duration-500 hover:shadow-xl">
@@ -81,12 +114,12 @@ const SubscriptionCard = () => {
           <div className="mt-8 mb-6">
             <div className="flex items-baseline gap-1">
               <span className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white">
-                <CurrencyValue amount={plan?.price || 0} fromCode={plan?.currency.code || "USD"} fallbackSymbol={plan?.currency.symbol} />
+                <CurrencyValue amount={displayAmount} fromCode={currencyCode} fallbackSymbol={currencySymbol} />
               </span>
-              <span className="text-sm font-bold text-slate-400">/{plan?.billing_cycle || t("month_unit")}</span>
+              <span className="text-sm font-bold text-slate-400">/{getBillingUnit(billingCycle)}</span>
             </div>
             <p className="text-[13px] font-semibold text-slate-400 mt-2 tracking-wide">
-              {t("billed_annually").split(" ")[0]} {plan?.billing_cycle === "year" ? t("billed_annually").split(" ")[1] : t("billed_monthly").split(" ")[1]} • {user?.email || t("account_owner")}
+              {getBillingDescription(billingCycle)} • {user?.email || t("account_owner")}
             </p>
           </div>
 
