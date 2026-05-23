@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "wapi",
+  title: "Synqzy",
   description: "One solution...",
 };
 

@@ -230,9 +230,9 @@ const TranslationManagement = ({ id }: TranslationManagementProps) => {
                 <SelectValue placeholder="Select Component" />
               </SelectTrigger>
               <SelectContent className="dark:bg-(--card-color)">
-                <SelectItem value="front">Wapi Front</SelectItem>
-                <SelectItem value="admin">Wapi Admin</SelectItem>
-                <SelectItem value="app">Wapi App</SelectItem>
+                <SelectItem value="front">Synqzy Front</SelectItem>
+                <SelectItem value="admin">Synqzy Admin</SelectItem>
+                <SelectItem value="app">Synqzy App</SelectItem>
               </SelectContent>
             </Select>
           </div>

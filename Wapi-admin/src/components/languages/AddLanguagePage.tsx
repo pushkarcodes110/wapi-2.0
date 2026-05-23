@@ -323,7 +323,7 @@ const AddLanguagePage = ({ id }: AddLanguagePageProps) => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {/* Front JSON */}
                   <div className="space-y-4 flex flex-col">
-                    <Label className="text-sm font-medium text-gray-900 dark:text-gray-400">Wapi Front JSON</Label>
+                    <Label className="text-sm font-medium text-gray-900 dark:text-gray-400">Synqzy Front JSON</Label>
                     <div className="relative border-2 border-dashed border-gray-200 dark:border-(--card-border-color) rounded-lg p-6 bg-gray-50/50 dark:bg-(--card-color) hover:bg-gray-100/50 dark:hover:bg-(--table-hover) hover:border-(--text-green-primary) transition-all group overflow-hidden">
                       <input id="front_json" type="file" accept=".json,application/json" onChange={(e) => handleJsonChange(e, "front")} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
                       <div className="flex flex-col items-center justify-center text-center">
@@ -351,7 +351,7 @@ const AddLanguagePage = ({ id }: AddLanguagePageProps) => {
 
                   {/* Admin JSON */}
                   <div className="space-y-4 flex flex-col">
-                    <Label className="text-sm font-medium text-gray-900 dark:text-gray-400">Wapi Admin JSON</Label>
+                    <Label className="text-sm font-medium text-gray-900 dark:text-gray-400">Synqzy Admin JSON</Label>
                     <div className="relative border-2 border-dashed border-gray-200 dark:border-(--card-border-color) rounded-lg p-6 bg-gray-50/50 dark:bg-(--card-color) hover:bg-gray-100/50 dark:hover:bg-(--table-hover) hover:border-(--text-green-primary) transition-all group overflow-hidden">
                       <input id="admin_json" type="file" accept=".json,application/json" onChange={(e) => handleJsonChange(e, "admin")} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
                       <div className="flex flex-col items-center justify-center text-center">
@@ -379,7 +379,7 @@ const AddLanguagePage = ({ id }: AddLanguagePageProps) => {
 
                   {/* App JSON */}
                   <div className="space-y-4 flex flex-col">
-                    <Label className="text-sm font-medium text-gray-900 dark:text-gray-400">Wapi App JSON</Label>
+                    <Label className="text-sm font-medium text-gray-900 dark:text-gray-400">Synqzy App JSON</Label>
                     <div className="relative border-2 border-dashed border-gray-200 dark:border-(--card-border-color) rounded-lg p-6 bg-gray-50/50 dark:bg-(--card-color) hover:bg-gray-100/50 dark:hover:bg-(--table-hover) hover:border-(--text-green-primary) transition-all group overflow-hidden">
                       <input id="app_json" type="file" accept=".json,application/json" onChange={(e) => handleJsonChange(e, "app")} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
                       <div className="flex flex-col items-center justify-center text-center">

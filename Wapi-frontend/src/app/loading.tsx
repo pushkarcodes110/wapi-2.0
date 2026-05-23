@@ -3,8 +3,8 @@
 import Images from "@/src/shared/Image";
 import { motion, AnimatePresence } from "framer-motion";
 
-const LIGHT_LOGO = "https://i.postimg.cc/xCz3j5Wh/ss.png";
-const DARK_LOGO = "https://i.postimg.cc/tCfw2v9D/sidebarlogo.png";
+const LIGHT_LOGO = "/assets/logos/logo1.png";
+const DARK_LOGO = "/assets/logos/sidebarLogo.png";
 
 const Loading = () => {
   return (
