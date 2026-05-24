@@ -407,6 +407,8 @@ export interface ProfileChatNoteProps {
 
 export interface ProfileContactSummaryProps {
   profileData: any;
+  gymforceLookup?: any;
+  isLoadingGymforceLookup?: boolean;
   onDelete: () => void;
   onOpenTagModal: () => void;
   onRemoveLabel: (id: string) => void;

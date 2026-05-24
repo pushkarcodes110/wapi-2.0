@@ -3,7 +3,7 @@
 
 import { Button } from "@/src/elements/ui/button";
 import { useGetAgentDataQuery } from "@/src/redux/api/agentApi";
-import { useAddChatNoteMutation, useAddChatTagMutation, useAssignAgentMutation, useDeleteChatNoteMutation, useDeleteChatTagMutation, useGetContactProfileQuery, useUnassignAgentMutation } from "@/src/redux/api/chatApi";
+import { useAddChatNoteMutation, useAddChatTagMutation, useAssignAgentMutation, useDeleteChatNoteMutation, useDeleteChatTagMutation, useGetContactProfileQuery, useGetGymforceContactLookupQuery, useUnassignAgentMutation } from "@/src/redux/api/chatApi";
 import { useAssignAgentToContactMutation, useGetCallAgentsQuery, useRemoveAgentFromContactMutation } from "@/src/redux/api/whatsappCallingApi";
 import { useDeleteContactMutation } from "@/src/redux/api/contactApi";
 import { useCreateTagMutation } from "@/src/redux/api/tagsApi";
@@ -30,6 +30,7 @@ const ChatProfile = () => {
   const { selectedChat, selectedPhoneNumberId } = useSelector((state: RootState) => state.chat);
   const contactId = selectedChat?.contact?.id;
   const { data: profileData, isLoading: isLoadingProfile } = useGetContactProfileQuery({ contact_id: contactId as string, whatsapp_phone_number_id: selectedPhoneNumberId as string }, { skip: !contactId });
+  const { data: gymforceLookup, isLoading: isLoadingGymforceLookup } = useGetGymforceContactLookupQuery({ contact_id: contactId as string }, { skip: !contactId });
   const { data: agentsData } = useGetAgentDataQuery({ status: "active" });
   const { data: aiAgentsData } = useGetCallAgentsQuery({ limit: 100 });
   const agents = agentsData?.data?.agents || [];
@@ -206,7 +207,7 @@ const ChatProfile = () => {
         </div>
       ) : (
         <div className="space-y-4 overflow-y-auto custom-scrollbar">
-          <ProfileContactSummary profileData={profileData} onDelete={handleDeleteContact} onOpenTagModal={() => setIsTagModalOpen(true)} onRemoveLabel={handleRemoveLabel} />
+          <ProfileContactSummary profileData={profileData} gymforceLookup={gymforceLookup} isLoadingGymforceLookup={isLoadingGymforceLookup} onDelete={handleDeleteContact} onOpenTagModal={() => setIsTagModalOpen(true)} onRemoveLabel={handleRemoveLabel} />
 
           <ProfilePipelineAssign contactId={contactId as string} />
 

@@ -159,6 +159,7 @@ import taxRoutes from "./routes/tax.routes.js";
 import appointmentRoutes from "./routes/appointment.routes.js";
 import paymentGatewayConfigRoutes from "./routes/payment-gateway-config.routes.js";
 import paymentWebhookRoutes from "./routes/payment-webhook.routes.js";
+import gymforceIntegrationRoutes from "./routes/gymforce-integration.routes.js";
 
 
 import { redirectShortLink } from "./controllers/short-link.controller.js";
@@ -254,6 +255,7 @@ app.use("/api/submissions", submissionRoutes);
 app.use("/api/quick-replies", quickReplyRoutes);
 app.use("/api/kanban-funnels", kanbanFunnelRoutes);
 app.use("/api/segments", segmentRoutes);
+app.use("/api/integrations/gymforce", gymforceIntegrationRoutes);
 app.use("/api/facebook", facebookRoutes);
 app.use("/api/facebook-ads", facebookAdRoutes);
 app.use("/api/facebook-leads", facebookLeadRoutes);

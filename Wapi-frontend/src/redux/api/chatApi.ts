@@ -248,6 +248,13 @@ export const chatApi = baseApi.injectEndpoints({
       }),
       providesTags: (result, error, { contact_id }) => [{ type: "Chats", id: contact_id }],
     }),
+    getGymforceContactLookup: builder.query<any, { contact_id: string }>({
+      query: (params) => ({
+        url: "/integrations/gymforce/contact-lookup",
+        method: "GET",
+        params,
+      }),
+    }),
     assignAgent: builder.mutation<void, { contact_id: string; agent_id: string; whatsapp_phone_number_id: string }>({
       query: (body) => ({
         url: "/whatsapp/assign-chat",
@@ -386,4 +393,4 @@ export const chatApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetRecentChatsQuery, useGetMessagesQuery, useLazyGetMessagesQuery, useSendMessageMutation, useGetContactProfileQuery, useAssignAgentMutation, useUnassignAgentMutation, useSuggestReplyMutation, useTransformMessageMutation, useAddChatNoteMutation, useDeleteChatNoteMutation, useAddChatTagMutation, useDeleteChatTagMutation, useTogglePinChatMutation, useUpdateChatStatusMutation, useDeleteChatMutation } = chatApi;
+export const { useGetRecentChatsQuery, useGetMessagesQuery, useLazyGetMessagesQuery, useSendMessageMutation, useGetContactProfileQuery, useGetGymforceContactLookupQuery, useAssignAgentMutation, useUnassignAgentMutation, useSuggestReplyMutation, useTransformMessageMutation, useAddChatNoteMutation, useDeleteChatNoteMutation, useAddChatTagMutation, useDeleteChatTagMutation, useTogglePinChatMutation, useUpdateChatStatusMutation, useDeleteChatMutation } = chatApi;
