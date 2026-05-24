@@ -15,7 +15,8 @@ const resolveUrl = (url?: string): string => {
   return url.startsWith("http") ? url : `${API_URL}${url}`;
 };
 
-const DEFAULT_FAVICON = "/assets/logos/sidebarLogo.png";
+const DEFAULT_FAVICON = "/assets/logos/app.png";
+const DEFAULT_DESCRIPTION = "Synqzy WhatsApp automation platform for CRM, campaigns, live chat, lead generation, and business messaging.";
 
 function applyFavicon(href: string) {
   if (typeof window === "undefined" || !href) return;
@@ -45,7 +46,7 @@ interface DynamicSettingsProviderProps {
 const DynamicSettingsProvider = ({ children }: DynamicSettingsProviderProps) => {
   const dispatch = useAppDispatch();
   const pathname = usePathname();
-  const { data: settingsData, isSuccess } = useGetSettingsQuery({});
+  const { data: settingsData } = useGetSettingsQuery({});
   const { app_name, favicon_url, app_description, pageTitle, pageDescription } = useAppSelector((state) => state.setting);
   const [mounted, setMounted] = useState(false);
   const { setTheme } = useTheme();
@@ -88,14 +89,14 @@ const DynamicSettingsProvider = ({ children }: DynamicSettingsProviderProps) => 
     const baseTitle = app_name || "Synqzy";
     const fullTitle = pageTitle 
       ? `${pageTitle} | ${baseTitle}`
-      : `${baseTitle} | All-in-One WhatsApp Marketing & Automation Platform`;
+      : `${baseTitle} | WhatsApp Automation Platform`;
 
     if (document.title !== fullTitle) {
       document.title = fullTitle;
     }
 
     // Description update
-    const description = pageDescription || app_description;
+    const description = pageDescription || app_description || DEFAULT_DESCRIPTION;
     if (description) {
       let meta = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
       if (!meta) {

@@ -4,6 +4,7 @@ import { store } from "@/src/redux/store";
 import { pageApi } from "@/src/redux/api/pageApi";
 
 const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || "";
+const DEFAULT_OG_IMAGE = "/assets/logos/app.png";
 
 const resolveUrl = (url?: string): string => {
   if (!url) return "";
@@ -25,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
     const title = page.title;
     const description = page.meta_description || "Synqzy Dynamic Page";
-    const image = resolveUrl(page.meta_image);
+    const image = resolveUrl(page.meta_image) || DEFAULT_OG_IMAGE;
 
     return {
       title,
@@ -33,14 +34,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       openGraph: {
         title,
         description,
-        images: image ? [{ url: image }] : [],
+        siteName: "Synqzy",
+        images: [{ url: image }],
         type: "website",
       },
       twitter: {
-        card: "summary_large_image",
+        card: "summary",
         title,
         description,
-        images: image ? [image] : [],
+        images: [image],
       },
     };
   } catch (error) {

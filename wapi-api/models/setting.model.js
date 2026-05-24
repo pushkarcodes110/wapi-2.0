@@ -3,11 +3,11 @@ import mongoose from 'mongoose';
 const settingSchema = new mongoose.Schema({
   app_name: {
     type: String,
-    default: 'Wapi'
+    default: 'Synqzy'
   },
   app_description: {
     type: String,
-    default: 'Whatsapp Marketing Platform'
+    default: 'Synqzy WhatsApp automation platform'
   },
   app_email: {
     type: String,
@@ -115,7 +115,7 @@ const settingSchema = new mongoose.Schema({
   },
   mail_from_name: {
     type: String,
-    default: 'Wapi'
+    default: 'Synqzy'
   },
   mail_from_email: {
     type: String,

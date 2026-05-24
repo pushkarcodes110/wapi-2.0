@@ -2,7 +2,7 @@ import "@xyflow/react/dist/style.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
-import { Geist_Mono, Mona_Sans } from "next/font/google";
+import { Mona_Sans } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
 import { ReactNode } from "react";
 import { Toaster } from "sonner";
@@ -22,21 +22,55 @@ import "./globals.css";
 import I18nProvider from "./I18nProvider";
 import ReduxProvider from "./ReduxProvider";
 import { ThemeProvider } from "./ThemeProvider";
-import Script from "next/script";
 import { ToastManager } from "../components/providers/ToastManager";
+
+const APP_NAME = "Synqzy";
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://synqzy.com";
+const APP_DESCRIPTION = "Synqzy WhatsApp automation platform for CRM, campaigns, live chat, lead generation, and business messaging.";
+const APP_ICON = "/assets/logos/app.png";
 
 const geistSans = Mona_Sans({
   variable: "--font-mona-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  description: "All-in-One WhatsApp Marketing & Automation Platform with CRM, Campaigns, Live Chat, Lead Generation, Business API SaaS Platform",
+  metadataBase: new URL(APP_URL),
+  title: {
+    default: `${APP_NAME} | WhatsApp Automation Platform`,
+    template: `%s | ${APP_NAME}`,
+  },
+  description: APP_DESCRIPTION,
+  applicationName: APP_NAME,
+  manifest: "/manifest.json",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: APP_ICON, type: "image/png", sizes: "192x192" },
+    ],
+    apple: [{ url: APP_ICON, sizes: "192x192", type: "image/png" }],
+  },
+  openGraph: {
+    title: `${APP_NAME} | WhatsApp Automation Platform`,
+    description: APP_DESCRIPTION,
+    url: APP_URL,
+    siteName: APP_NAME,
+    images: [
+      {
+        url: APP_ICON,
+        width: 192,
+        height: 192,
+        alt: `${APP_NAME} logo`,
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: `${APP_NAME} | WhatsApp Automation Platform`,
+    description: APP_DESCRIPTION,
+    images: [APP_ICON],
+  },
 };
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
@@ -45,8 +79,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   return (
     <html lang="en" className="h-full" suppressHydrationWarning>
       <head>
-        <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="/assets/logos/app.png" />
+        <meta name="theme-color" content="#059669" />
       </head>
       <body className={`${geistSans.variable} antialiased h-full custom-scrollbar`} suppressHydrationWarning>
         <ThemeProvider>

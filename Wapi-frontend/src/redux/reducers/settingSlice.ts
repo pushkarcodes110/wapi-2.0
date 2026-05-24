@@ -38,6 +38,19 @@ const normalizeLegacyAppName = (appName?: string) => {
   return appName.trim().toLowerCase() === "wapi" ? "Synqzy" : appName;
 };
 
+const normalizeLegacyDescription = (description?: string) => {
+  if (!description) return description;
+  return description.trim().toLowerCase() === "whatsapp marketing platform"
+    ? "Synqzy WhatsApp automation platform for CRM, campaigns, live chat, lead generation, and business messaging."
+    : description;
+};
+
+const normalizeLegacyFavicon = (url?: string) => {
+  if (!url) return url;
+  const normalized = url.replace(/\\/g, "/").toLowerCase();
+  return normalized.endsWith("/uploads/attachments/favicon.png") ? "/assets/logos/app.png" : url;
+};
+
 const settingSlice = createSlice({
   name: "setting",
   initialState,
@@ -48,6 +61,8 @@ const settingSlice = createSlice({
       const settings = {
         ...rawSettings,
         app_name: normalizeLegacyAppName(rawSettings.app_name),
+        app_description: normalizeLegacyDescription(rawSettings.app_description),
+        favicon_url: normalizeLegacyFavicon(rawSettings.favicon_url),
       };
       state.setting = settings;
       state.app_name = settings.app_name || state.app_name;

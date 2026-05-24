@@ -15,7 +15,8 @@ const resolveUrl = (url?: string): string => {
   return url.startsWith("http") ? url : `${API_URL}${url}`;
 };
 
-const DEFAULT_FAVICON = "/assets/logos/sidebarLogo.png";
+const DEFAULT_FAVICON = "/assets/logos/app.png";
+const DEFAULT_DESCRIPTION = "Synqzy admin portal for WhatsApp automation, CRM, campaigns, and business messaging.";
 
 function applyFavicon(href: string) {
   if (typeof window === "undefined") return;
@@ -71,17 +72,18 @@ const DynamicSettingsProvider = ({ children }: DynamicSettingsProviderProps) => 
     const faviconHref = resolveUrl(favicon_url) || DEFAULT_FAVICON;
 
     const applyAll = () => {
-      const fullTitle = `${pageTitle ? `${pageTitle} | ` : ""}${app_name || "Synqzy"} | All-in-One WhatsApp Marketing & Automation Platform with CRM, Campaigns, Live Chat, Lead Generation, Business API SaaS Platform`;
+      const fullTitle = `${pageTitle ? `${pageTitle} | ` : ""}${app_name || "Synqzy"} Admin`;
       if (document.title !== fullTitle) document.title = fullTitle;
-      if (app_description) {
+      const description = app_description || DEFAULT_DESCRIPTION;
+      if (description) {
         let meta = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
         if (!meta) {
           meta = document.createElement("meta");
           meta.setAttribute("name", "description");
           document.head.appendChild(meta);
         }
-        if (meta.getAttribute("content") !== app_description) {
-          meta.setAttribute("content", app_description);
+        if (meta.getAttribute("content") !== description) {
+          meta.setAttribute("content", description);
         }
       }
       if (faviconHref) applyFavicon(faviconHref);

@@ -15,12 +15,30 @@ const initialState: SettingsState = {
   pageTitle: "",
 };
 
+const normalizeLegacySettings = (settings: Partial<AppSettings>) => {
+  const normalized = { ...settings };
+
+  if (normalized.app_name?.trim().toLowerCase() === "wapi") {
+    normalized.app_name = "Synqzy";
+  }
+
+  if (normalized.app_description?.trim().toLowerCase() === "whatsapp marketing platform") {
+    normalized.app_description = "Synqzy admin portal for WhatsApp automation, CRM, campaigns, and business messaging.";
+  }
+
+  if (normalized.favicon_url?.replace(/\\/g, "/").toLowerCase().endsWith("/uploads/attachments/favicon.png")) {
+    normalized.favicon_url = "/assets/logos/app.png";
+  }
+
+  return normalized;
+};
+
 const settingsSlice = createSlice({
   name: "settings",
   initialState,
   reducers: {
     setSettings: (state, action: PayloadAction<Partial<AppSettings>>) => {
-      state.data = action.payload;
+      state.data = normalizeLegacySettings(action.payload);
       state.isDirty = false;
       state.errors = {};
     },
