@@ -8,6 +8,7 @@ import { WhatsappConnection } from '../models/index.js';
 import { assignChatToAgent as assignChatToAgentFromChat } from './chat.controller.js';
 import paymentLinkService from '../services/payment-link.service.js';
 import mongoose from 'mongoose';
+import { findOrRestoreContactForSend } from '../utils/contact-upsert.js';
 
 const processedAuthCodes = new Set();
 
@@ -278,16 +279,12 @@ export const sendMessage = async (req, res) => {
         });
       }
 
-      let contact = await Contact.findOne({ phone_number: cleanedPhone, user_id: userId, deleted_at: null }).lean();
-      if (!contact) {
-        contact = await Contact.create({
-          phone_number: cleanedPhone,
-          name: contactNoInput,
-          user_id: userId,
-          created_by: userId,
-          status: 'lead'
-        });
-      }
+      const contact = await findOrRestoreContactForSend(Contact, {
+        phoneNumber: cleanedPhone,
+        displayName: contactNoInput,
+        userId,
+        source: provider === PROVIDER_TYPES.BAILEY ? 'baileys' : 'whatsapp'
+      });
       if (contact) {
         contactId = contact._id.toString();
       }
