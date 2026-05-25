@@ -14,9 +14,10 @@ import { openPreview } from "@/src/redux/reducers/previewSlice";
 import { RootState } from "@/src/redux/store";
 import { Attachment } from "@/src/types/components";
 import { ChatAreaProps, SendMessagePayload, SuggestReplyMessage } from "@/src/types/components/chat";
+import { buildPhoneCallHref } from "@/src/utils/callIntent";
 import { getInitials } from "@/src/utils";
 import { maskSensitiveData } from "@/src/utils/masking";
-import { BotMessageSquare, ChevronLeft, FileText, Filter, Image as ImageIcon, LayoutTemplate, Loader2, MessageSquareQuote, Mic, MoreVertical, Pencil, Search, Send, Sparkles, Video, X } from "lucide-react";
+import { BotMessageSquare, ChevronLeft, FileText, Filter, Image as ImageIcon, LayoutTemplate, Loader2, MessageSquareQuote, Mic, MoreVertical, Pencil, PhoneCall, Search, Send, Sparkles, Video, X } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -65,6 +66,8 @@ const ChatArea: React.FC<ChatAreaProps> = ({ contactId, phoneNumberId, contactNa
   const hasContactName = Boolean(currentContactName?.trim()) && currentContactName !== currentContactNumber;
   const displayContactName = hasContactName ? currentContactName : currentContactNumber;
   const displayContactNumber = currentContactNumber ? maskSensitiveData(currentContactNumber, "phone", is_demo_mode) : "";
+  const callHref = buildPhoneCallHref(currentContactNumber);
+  const canCallContact = Boolean(callHref) && !(isAgent && user?.is_phoneno_hide);
 
   const { app_name } = useAppSelector((state: RootState) => state.setting);
   const [messageText, setMessageText] = useState(() => deepLinkText);
@@ -534,6 +537,13 @@ const ChatArea: React.FC<ChatAreaProps> = ({ contactId, phoneNumberId, contactNa
           {!isAgent && !isBaileys && (
             <Button variant="ghost" size="icon" onClick={() => router.push(`${ROUTES.MessageCampaignsAdd}?contact_id=${currentContactId}&redirect_to=${isModal ? ROUTES.ContactDirectory : ROUTES.WAChat}`)} className="dark:hover:bg-(--table-hover) dark:text-white transition-colors" style={isCustom ? { color: "var(--chat-theme-color)" } : {}} title="Send Template">
               <LayoutTemplate size={20} />
+            </Button>
+          )}
+          {canCallContact && (
+            <Button asChild variant="ghost" size="icon" className="text-slate-600 hover:text-primary dark:text-white dark:hover:text-primary dark:hover:bg-(--table-hover) transition-colors" style={isCustom ? { color: "var(--chat-theme-color)" } : {}} title="Call contact">
+              <a href={callHref} aria-label={`Call ${displayContactName || currentContactNumber}`}>
+                <PhoneCall size={20} />
+              </a>
             </Button>
           )}
           {!isModal && (

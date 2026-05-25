@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Badge } from "@/src/elements/ui/badge";
+import { Button } from "@/src/elements/ui/button";
 import { Checkbox } from "@/src/elements/ui/checkbox";
 import { useChatTheme } from "@/src/hooks/useChatTheme";
 import { cn } from "@/src/lib/utils";
 import { useAppSelector } from "@/src/redux/hooks";
 import { RecentChatResponseItem } from "@/src/types/components/chat";
+import { buildPhoneCallHref } from "@/src/utils/callIntent";
 import { getInitials } from "@/src/utils";
 import { maskSensitiveData } from "@/src/utils/masking";
-import { CircleCheck, Pin } from "lucide-react";
+import { CircleCheck, PhoneCall, Pin } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import ChatListItemDropdown from "./ChatListItemDropdown";
@@ -37,6 +39,8 @@ const ChatSidebarItem: React.FC<ChatSidebarItemProps> = ({ chat, isSelected, isS
   const hasContactName = Boolean(contact.name?.trim()) && contact.name !== contact.number;
   const displayName = hasContactName ? contact.name : contact.number;
   const displayNumber = maskSensitiveData(contact.number, "phone", is_demo_mode);
+  const callHref = buildPhoneCallHref(contact.number);
+  const canCallContact = Boolean(callHref) && !(isAgent && user?.is_phoneno_hide);
 
   let parsedLocation;
   if (lastMessage.messageType === "location" && lastMessage.content) {
@@ -92,6 +96,20 @@ const ChatSidebarItem: React.FC<ChatSidebarItemProps> = ({ chat, isSelected, isS
               {!isSelectionMode && (
                 <>
                   <span className={cn("text-[11px] whitespace-nowrap", lastMessage.unreadCount ? "text-emerald-600 font-bold" : "text-slate-500 dark:text-gray-400")}>{lastMessage.createdAt ? new Date(lastMessage.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "Now"}</span>
+                  {canCallContact && (
+                    <Button
+                      asChild
+                      variant="ghost"
+                      size="icon"
+                      className="h-7 w-7 shrink-0 rounded-lg text-slate-500 transition-all hover:bg-primary/10 hover:text-primary dark:text-gray-400 dark:hover:text-primary"
+                      title="Call contact"
+                      onClick={(event) => event.stopPropagation()}
+                    >
+                      <a href={callHref} aria-label={`Call ${displayName || contact.number}`}>
+                        <PhoneCall size={14} />
+                      </a>
+                    </Button>
+                  )}
                   <ChatListItemDropdown contactId={contact.id} contactName={contact.name} contactNumber={contact.number} phoneNumberId={selectedPhoneNumberId} />
                 </>
               )}
