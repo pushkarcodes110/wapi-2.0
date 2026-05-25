@@ -63,6 +63,14 @@ function getUserId(user) {
   return mongoose.Types.ObjectId.isValid(id) ? new mongoose.Types.ObjectId(id) : null;
 }
 
+export function resolveSubscriptionFeatureLimit(subscription, plan, feature) {
+  if (subscription?.features && Object.prototype.hasOwnProperty.call(subscription.features, feature)) {
+    return subscription.features[feature];
+  }
+
+  return plan?.features?.[feature];
+}
+
 
 export const requireSubscription = async (req, res, next) => {
 
@@ -129,7 +137,9 @@ export const requirePlanFeature = (feature) => {
   return (req, res, next) => {
     if (req.user?.role === 'super_admin') return next();
     if (req.isFreeTrial) return next();
-    if (!req.plan?.features || !req.plan.features[feature]) {
+
+    const limit = resolveSubscriptionFeatureLimit(req.subscription, req.plan, feature);
+    if (!limit) {
       return res.status(403).json({
         success: false,
         message: `Your plan does not include this feature: ${feature.replace(/_/g, ' ')}`,
@@ -197,15 +207,15 @@ export const checkPlanLimit = (feature) => {
     if (req.isFreeTrial) return next();
 
     const plan = req.plan;
+    const limit = resolveSubscriptionFeatureLimit(req.subscription, plan, feature);
 
-    if (!plan?.features) {
+    if (!req.subscription?.features && !plan?.features) {
       return res.status(403).json({
         success: false,
         message: 'Plan information not available',
       });
     }
 
-    const limit = plan.features[feature];
     if (typeof limit !== 'number') {
       return res.status(403).json({
         success: false,

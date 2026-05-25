@@ -193,7 +193,6 @@ const ChatSidebar = () => {
           handleSelectChat(buildChatFromContact(response.data));
         }
       } catch (error: any) {
-        handledDeepLinkRef.current = null;
         toast.error(error?.data?.message || "Failed to open chat from link");
       }
     };
