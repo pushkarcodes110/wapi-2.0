@@ -49,4 +49,10 @@ export const booleanFeatures = [
     description: "Get priority customer support",
     icon: <span className="text-(--text-green-primary) font-bold text-sm">⭐</span>,
   },
+  {
+    id: "wa_chat",
+    label: "WA Chat",
+    description: "Enable WhatsApp Chat interface",
+    icon: <span className="text-(--text-green-primary) font-bold text-sm">💬</span>,
+  },
 ];

@@ -112,6 +112,15 @@ const Sidebar = ({ onMenuClick }: SidebarProps) => {
     if (isBaileys && restrictedPaths.some((p) => item.path.startsWith(p))) {
       return false;
     }
+    
+    if (item.path === ROUTES.WAChat) {
+      const currentFeatures = (user?.current_subscription?.is_custom ? user?.current_subscription?.features : user?.current_plan?.features) as any;
+      const isWaChatEnabled = currentFeatures?.wa_chat !== false;
+      if (!isWaChatEnabled) {
+        return false;
+      }
+    }
+
     return !item.permission || hasPermission(item.permission);
   }).map((item) => {
     if (isAgent && item.label === "tasks") {

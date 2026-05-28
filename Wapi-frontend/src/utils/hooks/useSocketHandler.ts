@@ -109,6 +109,9 @@ export const useSocketHandler = () => {
   const router = useRouter();
   const unreadCountRef = useRef(0);
 
+  const currentFeatures = (user?.current_subscription?.is_custom ? user?.current_subscription?.features : user?.current_plan?.features) as any;
+  const isWaChatEnabled = currentFeatures?.wa_chat !== false;
+
   const botFetchTimer1 = useRef<ReturnType<typeof setTimeout> | null>(null);
   const botFetchTimer2 = useRef<ReturnType<typeof setTimeout> | null>(null);
   const recentChatsRef = useRef<any[]>([]);
@@ -304,6 +307,7 @@ export const useSocketHandler = () => {
 
   const handleMessage = useCallback(
     (newMessage: ChatMessage) => {
+      if (!isWaChatEnabled) return;
       try {
         const isCorrectUser = !newMessage.user_id || newMessage.user_id === user?.id;
         if (!isCorrectUser) {
@@ -396,7 +400,7 @@ export const useSocketHandler = () => {
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [updateSidebar, updateChatArea, scheduleBotReplyFetch, pathname, selectedChat, sendNotification, startBlinking, dispatch, router, selectedPhoneNumberId, userSetting]
+    [updateSidebar, updateChatArea, scheduleBotReplyFetch, pathname, selectedChat, sendNotification, startBlinking, dispatch, router, selectedPhoneNumberId, userSetting, isWaChatEnabled]
   );
 
   const handleConnectionUpdate = useCallback(
