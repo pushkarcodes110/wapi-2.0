@@ -99,7 +99,7 @@ export const useSocketHandler = () => {
   const dispatch = useAppDispatch();
   const pathname = usePathname();
   const { selectedChat, selectedPhoneNumberId } = useAppSelector((state) => state.chat);
-  const { userSetting } = useAppSelector((state) => state.setting);
+  const { userSetting, subscription } = useAppSelector((state) => state.setting);
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
   const { selectedWorkspace } = useAppSelector((state) => state.workspace);
   const { sendNotification, startBlinking } = useNotifications();
@@ -110,7 +110,7 @@ export const useSocketHandler = () => {
   const unreadCountRef = useRef(0);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const currentFeatures = ((user as any)?.current_subscription?.is_custom ? (user as any)?.current_subscription?.features : (user as any)?.current_plan?.features) as any;
+  const currentFeatures = ((subscription as any)?.is_custom ? (subscription as any)?.features : (subscription as any)?.plan_id?.features) as any;
   const isWaChatEnabled = currentFeatures?.wa_chat !== false;
 
   const botFetchTimer1 = useRef<ReturnType<typeof setTimeout> | null>(null);

@@ -7,11 +7,11 @@ import { useEffect } from "react";
 import { ROUTES } from "@/src/constants/route";
 
 const InboxPage = () => {
-  const { user } = useAppSelector((state) => state.auth);
+  const { subscription } = useAppSelector((state) => state.setting);
   const router = useRouter();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const currentFeatures = ((user as any)?.current_subscription?.is_custom ? (user as any)?.current_subscription?.features : (user as any)?.current_plan?.features) as any;
+  const currentFeatures = ((subscription as any)?.is_custom ? (subscription as any)?.features : (subscription as any)?.plan_id?.features) as any;
   const isWaChatEnabled = currentFeatures?.wa_chat !== false;
 
   useEffect(() => {

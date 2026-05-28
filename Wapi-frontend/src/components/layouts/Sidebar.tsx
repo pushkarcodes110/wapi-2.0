@@ -77,7 +77,7 @@ const Sidebar = ({ onMenuClick }: SidebarProps) => {
   const { t } = useTranslation();
   const { sidebarToggle } = useAppSelector((state) => state.layout);
   const { theme } = useTheme();
-  const { logo_light_url, logo_dark_url, sidebar_light_logo_url, sidebar_dark_logo_url, app_name } = useAppSelector((state) => state.setting);
+  const { logo_light_url, logo_dark_url, sidebar_light_logo_url, sidebar_dark_logo_url, app_name, subscription } = useAppSelector((state) => state.setting);
   const { user, isAuthenticated } = useAppSelector((state) => state.auth);
   const role = user?.role;
   const isAgent = role === "agent";
@@ -115,7 +115,7 @@ const Sidebar = ({ onMenuClick }: SidebarProps) => {
     
     if (item.path === ROUTES.WAChat) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const currentFeatures = ((user as any)?.current_subscription?.is_custom ? (user as any)?.current_subscription?.features : (user as any)?.current_plan?.features) as any;
+      const currentFeatures = ((subscription as any)?.is_custom ? (subscription as any)?.features : (subscription as any)?.plan_id?.features) as any;
       const isWaChatEnabled = currentFeatures?.wa_chat !== false;
       if (!isWaChatEnabled) {
         return false;
