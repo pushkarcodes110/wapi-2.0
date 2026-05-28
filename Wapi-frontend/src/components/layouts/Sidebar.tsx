@@ -114,7 +114,8 @@ const Sidebar = ({ onMenuClick }: SidebarProps) => {
     }
     
     if (item.path === ROUTES.WAChat) {
-      const currentFeatures = (user?.current_subscription?.is_custom ? user?.current_subscription?.features : user?.current_plan?.features) as any;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const currentFeatures = ((user as any)?.current_subscription?.is_custom ? (user as any)?.current_subscription?.features : (user as any)?.current_plan?.features) as any;
       const isWaChatEnabled = currentFeatures?.wa_chat !== false;
       if (!isWaChatEnabled) {
         return false;

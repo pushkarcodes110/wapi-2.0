@@ -109,7 +109,8 @@ export const useSocketHandler = () => {
   const router = useRouter();
   const unreadCountRef = useRef(0);
 
-  const currentFeatures = (user?.current_subscription?.is_custom ? user?.current_subscription?.features : user?.current_plan?.features) as any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const currentFeatures = ((user as any)?.current_subscription?.is_custom ? (user as any)?.current_subscription?.features : (user as any)?.current_plan?.features) as any;
   const isWaChatEnabled = currentFeatures?.wa_chat !== false;
 
   const botFetchTimer1 = useRef<ReturnType<typeof setTimeout> | null>(null);
