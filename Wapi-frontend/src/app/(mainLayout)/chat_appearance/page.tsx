@@ -14,11 +14,27 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
+import { useRouter } from "next/navigation";
+import { ROUTES } from "@/src/constants/route";
+
 const ChatThemePage = () => {
   const { t } = useTranslation();
   const { isLoading: isLoadingSettings } = useGetUserSettingsQuery();
   const [updateSettings, { isLoading: isUpdating }] = useUpdateUserSettingsMutation();
-  const { userSetting } = useAppSelector((state) => state.setting);
+  const { userSetting, subscription } = useAppSelector((state) => state.setting);
+  const router = useRouter();
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const currentFeatures = ((subscription as any)?.is_custom ? (subscription as any)?.features : (subscription as any)?.plan_id?.features) as any;
+  const isWaChatEnabled = currentFeatures?.wa_chat !== false;
+
+  useEffect(() => {
+    if (!isWaChatEnabled) {
+      router.push(ROUTES.Dashboard);
+    }
+  }, [isWaChatEnabled, router]);
+
+  if (!isWaChatEnabled) return null;
 
   const [formValues, setFormValues] = useState<FormValues>({
     theme_color: null,
